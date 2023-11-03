@@ -1,0 +1,268 @@
+\documentclass[twoside, a4paper, 10pt]{amsart}
+\title[ ]{Mathematical Statistics}
+%\usepackage{amsaddr}
+%\email{Kamil.Bulinski@minetec.com.au}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usetikzlibrary{matrix, arrows}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{listings}
+\usepackage[all]{xy}
+\usepackage[pdftex,colorlinks,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[margin=3cm]{geometry}
+\usepackage{bigints}
+\usepackage{dsfont}
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\linespread{1.3}
+
+
+\setcounter{secnumdepth}{4}
+
+\begin{document}
+\maketitle
+\raggedbottom
+
+
+%% Mathcal large
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+%% Mathbb large
+\newcommand{\bA}{\mathbb{A}}
+\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}
+\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}
+\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}
+\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}
+\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}
+\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}
+\newcommand{\bZ}{\mathbb{Z}}
+
+
+\newcounter{dummy} \numberwithin{dummy}{section}
+
+\theoremstyle{definition}
+\newtheorem{mydef}[dummy]{Definition}
+\newtheorem{prop}[dummy]{Proposition}
+\newtheorem{corol}[dummy]{Corollary}
+\newtheorem{thm}[dummy]{Theorem}
+\newtheorem{lemma}[dummy]{Lemma}
+\newtheorem{eg}[dummy]{Example}
+\newtheorem{notation}[dummy]{Notation}
+\newtheorem{remark}[dummy]{Remark}
+\newtheorem{claim}[dummy]{Claim}
+\newtheorem{Exercise}[dummy]{Exercise}
+\newtheorem{question}[dummy]{Question}
+\newtheorem{conjecture}[dummy]{Conjecture}
+
+\section{Basic Setup}
+
+
+\begin{mydef}[Statistical setup] A \textit{statistical setup} consists of the following data:
+
+We have the following measure spaces:
+
+\begin{itemize}
+	\item The \textit{observation space} $\cX$.
+	\item The \textit{parameter space} $\Theta$.
+	\item The \textit{action space} $\cA$.
+	\item The \textit{sample space} $\Omega$
+\end{itemize}
+
+We also have the following maps:
+
+\begin{itemize}
+	\item A \textit{loss function} $L:\Theta \times \cA \to \bR$.
+	\item An \textit{observation} $X: \Omega \to \cX$.
+	\item A \textit{decision function} $d:\cX \to \cA$.
+
+\end{itemize}
+
+For each parameter $\theta \in \Theta$, we have a probability measure $P_{\theta} \in \operatorname{Prob}(\Omega)$. The associated risk function is then \begin{align*} R(\theta, d) &= E_{\theta} L(\theta, d(X)) \\ &= \int_{\Omega} L(\theta, d(X(\omega)) dP_{\theta}(\omega).\end{align*}
+
+\end{mydef}
+
+Note: It seems that unless otherwise specified, it does not hurt to just assume $\cX = \Omega$ and $X$ is the identity map in which case $$R(\theta, d) = \int_{\cX} L(\theta, d(x)) dP_{\theta}(x).$$
+
+\textbf{Interpretation:} We have an unknown parameter $\theta$ and a given observation $X(\omega) \in \cX$ where $\omega \in \Omega$ was according to $P_{\theta}$. Based on this observation, we take an action $d(x) \in \cA$. Then the loss $L(\theta, d(x))$ measures how wrong we are in taking this action $d(x)$. The risk $R(\theta, d)$ is then the average of this loss (for the fixed $\theta$).
+
+\begin{eg} Suppose now $\Omega = \cX = \bR^n$ and $X$ is identity (as usual) and $\cA = \bR$. Let $\Theta = \bR \times \bR_{\geq 0}$ and for $\theta = (\mu, \sigma^2) \in \Omega$ we let $P_{\theta}$ denote the distribution of the random variable $(X_1, \ldots, X_n) \in \bR^n$ where the $X_i$ are i.i.d $N(\mu, \sigma^2)$. We take a loss function $L(\theta, a) = |\mu - a|^2$. Thus if $d:X \to \cA$ is a decision rule then $L(\theta, d(x))$ will measure how well of an approximation $d(x) \in \bR$ is of the unknown $\mu$. Let us choose $d(x_1, \ldots, x_n) = \frac{1}{n} \sum_{i=1}^n x_i$. Thus $$R(\theta, d) = E |\frac{1}{n}\sum_{i=1}^N X_i - \mu|^2 = Var(\frac{1}{n}(X_1 + \ldots + X_n)) = \frac{\sigma^2}{n}$$ by the independence of the $X_i$. We see that as $R(\theta, d) = O(n^{-1})$ so this seems to be a good decision rule.
+
+If instead we use the loss function $L(\theta, a) = |\sigma^2 - a|$ then a good decision rule seems to be $$d(X) = s^2 := \frac{1}{n-1} \sum_{i=1}^n |X_i - \overline{X}|^2.$$ It turns out that (TODO?) $$R(\theta, d) = \frac{2\sigma^4}{n-1}.$$
+
+\end{eg} 
+
+We can use this language to define hypothesis testing:
+
+\begin{mydef} Suppose now that we have a partition $\Theta = \Theta_0 \sqcup \Theta_1$ of the parameter space and our action space is $\cA = \{ \Theta_0, \Theta_1\}$. We have a $0-1$ loss function given by $$L(\theta, \Theta_i) = 1 - \mathds{1}_{\Theta_i}(\theta).$$ Thus $L(\theta, a)$ measures whether we chose the right partition $a \in \cA$ that $\theta$ landed in. We see that the risk $$R(\theta, d) = P_{\theta} (\left\{ \omega \in \Omega ~|~ \theta \notin d(X(\omega)) \right\} )$$ is the probability that our decision algorithm chooses the wrong partition.
+
+The action $\Theta_0$ is called the \textit{Null Hypothesis} while $\Theta_1$ is called the \textit{Alternative hypothesis}. A \textit{Type I} error is an action that chooses the alternative hypotehesis ($\Theta_1$) when the null hypotheiss is true ($\theta \in \Theta_0$). A \textit{Type II error} is an action that chooses the null hypothesis when the alternative is true.
+
+\end{mydef}
+
+\begin{eg} Suppose we have a dice that is either fair (null hypothesis) or always rolls a 6 (alternative hypothesis). Suppose we have rolled this dice $n$ times and observed the outcomes $(X_1, \ldots, X_n) \in \{1,2,3,4,5,6\}^n = \cX$. Say $\Theta = \{\theta_0, \theta_1\}$ where $P_{\theta_0}$ is the uniform distribution on $\cX$ (dice is fair) while $P_{\theta_1}$ is the probability measure concentrated on $(6, \ldots, 6) \in \cX$. Our decision rule simply chooses $\theta_1$ if and only if we roll all $6$. We have $R(\theta_0, d) = 1/6^n$ while $R(\theta_1,d) = 0$.
+
+\end{eg}
+
+\section{Bayesian Setup}
+
+Suppose now that we have a probability measure $\tau$ on the parameter space $\Theta$ called the \textit{prior distribution} of $\Theta$. Suppose also that we have a positive measure (not necessarily a probability measure) $\nu$ on $\Omega = \cX$ and a measurable function $f:\cX \times \Theta \to \bR_{\geq 0}$ such that $P_{\theta} \ll \nu$ and $$\frac{dP_{\theta}}{d\nu} (x) = f(x|\theta) := f(x, \theta)$$ for all $\theta \in \Theta$.
+
+We thus have a probability measure $P$ on $\cX \times \Theta$ given by $$\frac{dP}{d(\nu \times \tau)}(x,\theta) = f(x|\theta).$$ In other words for integrable $\psi:\cX \times \Theta \to \bR$ we have 
+
+\begin{align*} \int_{\cX \times \Theta} \psi(x,\theta) dP(x,\theta) &= \int_{\cX \times \Omega } \psi(x,\theta) f(x|\theta) d(\nu \times \tau) (x,\theta) \\ &= \int_{\Theta} \left( \int_{\cX} \psi(x,\theta) f(x|\theta) d\nu(x) \right) d\tau(\theta) \\
+&=  \int_{\Theta} \int_{\cX} \psi(x,\theta) dP_{\theta}(x) d\tau(\theta)   \end{align*}
+
+
+
+Let $P_X$ denote the push-forward measure of $P$ onto $\cX$, that is, $P_X(A) = P(A \times \Theta)$ for $A \subset \cX$. We let $$g(x) := \int_{\Theta} f(x,\theta) d\tau(\theta).$$
+
+Observe that for $A \subset \cX$ we have that $$P_X(A) = \int_{A \times \Theta} f(x|\theta) d\tau(\theta) d\nu(x) = \int_{A} g(x) d\nu(x)$$ and thus $P_X$ has a density with respect to $\nu$ given by $g$.
+\begin{lemma} For $P_X$-almost all $x \in \cX $ we have that $$g(x)  > 0.$$
+
+\end{lemma}
+
+\begin{proof} Let $A = \{x \in \cX ~|~ g(x) = 0 \}$. Then $$P_X(A) = \int_{A} g(x) d\nu(x) = 0.  $$
+
+\end{proof}
+
+Given this lemma, we can now define for $P_X$-almost all $x \in \cX$ a probability measure on $\Theta$ given by $$P_{\Theta|X=x}(B) = \frac{1}{g(x)} \int_{B} f(x|\theta) d\tau(\theta)$$ for $B \subset \Theta$. This is known as the \textit{posterior distribution of $\Theta$ given $X = x$}.
+
+\begin{lemma} The measures $\delta_x \times P_{\Theta |X=x}$ are conditional distributions of $P$ given $X=x$ where $X:\cX \times \Theta \to \cX$ is the projection. The conditional expectation of an integrable $\psi:\cX \times \Theta \to \bR$ given $X=x$ is given by $$E(\psi | X=x) = \frac{1}{g(x)}\int_{\Theta} \psi(x,\theta) f(x|\theta) d\tau(\theta).$$ 
+
+\end{lemma}
+
+\begin{proof} Note that the conditional expectation is characterized by the property that for all $A \subset X$ we have that $$\int_{A} E(\psi |X=x) dP_X(x) = \int_{A \times \Theta} \psi(x,\theta) dP(x, \theta).$$
+
+\end{proof}
+
+\appendix
+
+\section{Review of Probability}
+
+\subsection{Conditional expectation}
+
+\begin{thm} Let $(X, \cB, \mu)$ be a probability space and let $\cA \subset \cB$ be a sub-$\sigma$-algebra of $\cB$. Then for $f \in L^1(X,\cB,\mu)$ there exists a unique $g \in L^1(X,\cA,\mu)$ such that $$\int_A f d\mu = \int_A g d\mu \quad\text{for all } A\in \cA.$$
+
+\end{thm}
+
+\begin{mydef} We say that the $g \in L^1(X,\cB,\mu)$ the \textit{conditional expectation of $f$ w.r.t. $\cA$}, and denote it by $g = E(f|\cA)$.
+
+\end{mydef}
+
+\begin{proof} If $f \in L^2(X,\cB,\mu)$ then we define $E(f|\cA)$ to be the orthogonal projection of $f$ onto the closed subspace $L^2(X,\cA,\mu)$. Indeed, for $A \in \cA$ we have that $\mathds{1}_A \in L^2(X, \cA,\mu)$ and so $$\int_A f d\mu = \langle f, \mathds{1}_A \rangle = \langle E(f|\cA), \mathds{1}_A \rangle = \int_A  E(f|\cA) d\mu$$ as required. We will now extend $E(\cdot |\cA)$ to $L^1$. By density of $L^2$ in $L^1$ it is enough to show that $E(\cdot |\cA)$ is a bounded operator w.r.t. to the $L^1$ norm on $L^2$. For $f \in L^2(X,\cB,\mu)$ let $g \in L^{\infty}(X,\cA,\mu)$ be such that $|E(f|\cA)| = gE(f|\cA)$ and $\|g\|_{\infty} \leq 1$. Thus $$\|E(f|\cA)\|_{1} = \int_X gE(f|\cA) d\mu = \langle E(f|\cA), \overline{g} \rangle = \langle f, \overline{g} \rangle = \int_X g f d\mu \leq \|f\|_1.$$ Thus $E(\cdot |\cA)$ has $L^1$ operator norm at most $1$ and thus can be extended to $L^1(X,\cB,\mu) \to L^1(X,\cA\mu)$.
+
+For uniqueness, suppose that $g_1,g_2 \in L^1(X,\cA,\mu)$ are real valued functions such that $$\int_A g_1 d\mu = \int_A g_2 d\mu \quad \text{for all } A \in \cA.$$ Let $$A_{\epsilon} = \{x \in X ~|~ g_1(x) \leq g_2(x) - \epsilon \}$$ and observe that $A_{\epsilon} \in \cA$. Thus $$\int_A g_2 = \int_A g_1 d\mu \leq \int_A g_2 d\mu - \epsilon \mu(A)$$ which implies that $\mu(A_{\epsilon}) = 0$. Thus $g_1 \geq g_2$ almost everywhere. By symmetry, $g_1=g_2$ almost everywhere. For $g_1,g_2$ complex valued uniqueness also follows by equating real and imaginary parts. 
+\end{proof}
+
+\begin{mydef} Let $T:X \to Y$ be a measurable map between measure spaces $(X,\cB_X)$ and $(Y,\cB_Y)$. We define $T^{-1}\cB_Y = \{ T^{-1}B ~|~ B \in \cB_Y\}$.
+
+\end{mydef}
+
+\begin{prop} Suppose that $(X,\cB_X, \mu_X)$ is a probability space, $(Y,\cB_Y)$ is a measurable space $T:X \to Y$ is measurable. Then any function $f:X \to \bR$ that is $T^{-1}\cB_Y$ measurable (that is, $f^{-1}B \in T^{-1}\cB_Y$ for all Borel $B \subset \bR$) can be written as $f = g \circ T$ for some measurable $g:Y \to \bR$. 
+
+In other words, if we let $\mu_Y = T^* \mu_X$ be the push-forward measure then we have an isometric embedding $$L^p(Y, \cB_Y, \mu_Y) \hookrightarrow L^p(X,\cB_X, \mu_X)$$ given by $g \mapsto g \circ T$ whose image is exactly $L^p(\cX, T^{-1}\cA, \mu_X)$.
+\end{prop}
+
+\begin{proof} If $f = \mathds{1}_A$ for some $A \in T^{-1}\cB_Y$ then $A = T^{-1}B$ for some $B \in \cB_Y$ and so we can take $g = \mathds{1}_B$. For general $f$ note that we can write it as a pointwise limit of sums of indicator functions. \end{proof}
+
+This proposition motivates us to define conditional expectation with respect to a random variable (or factor map). 
+
+\begin{mydef} Let $(X, \cB, \mu)$ be a probability space and suppose that $T:X \to Y$ is measurable where $(Y, \cB_Y)$ is a measure space (i.e., a random variable). Then for $f \in L^p(\cX,\cB,\mu)$ we define a function on $Y \to \bC$ denoted $y \mapsto E(f| T=y)$ that is characterized for $\mu$-almost all $x$ by  $$E(f|\cT^{-1}\cB_Y)(x) = E(f| T=y),$$ where $y = Tx$. In other words, the map $E(f|\cT^{-1}\cB_Y) \in L^p(\cX,T^{-1}\cB_Y,\mu)$ is identified with a function of $Y$ using the isometry in the proposition above and this function at $y \in Y$ is  $E(f| T=y)$. Note that $E(f|T=y)$ is uniquely defined for $T^*\mu_X$-almost all $y \in Y$.
+
+\end{mydef}
+
+Note that $E(f|T=y)$ can be characterized by the property that $$\int_A E(f|T=y) d\mu_Y(y) = \int_{T^{-1}A} f(x) d\mu_X(x) \quad \text{for all } A \in \cB_Y.$$ 
+
+\begin{thm}[Conditional probability] Let $X$ be a second-countable complete metric space with Borel $\sigma$-algebra $\cB$ and suppose $\cA \subset \cB$ is a sub $\sigma$-algebra. Let $\mu$ be a probability measure on $(X,\cB)$. Then there exists $X' \in \cA$ with $\mu(X')=1$ and a family of probability measures $\mu_x^{\cA}$ for $x \in X'$ such that the following holds.
+
+\begin{itemize}
+	\item For $\cB$-measurable functions $f:X \to \bC$ with $\|f\|_1 < \infty$ the mapping $X' \to \bC$ given by $$x \mapsto \int_X f(u) d\mu_x^{\cA} (u)$$ is $\cA$-measurable.
+	\item For almost all $x \in X$ we have that $$E(f|\cA)(x) = \int_X f(u) d\mu_x^{\cA} (u).$$
+
+\end{itemize}
+
+\end{thm}
+
+\begin{mydef} We call such a family of measures $\mu^{\cA}_x$ \textit{conditional probabilities of $\mu$ w.r.t $\cA$}.
+
+\end{mydef}
+
+\begin{proof} Using Corollary~\ref{corol: embedding Polish into compact} we may assume $X$ is compact. Thus there exists a countable dense $\bQ$-vector subspace $V$ of $C(X)$ such that $1 \in V$. Now for each $f \in V$ choose a geniune function (not an equivalence class of functions) $g_f:X \to \bC$ such that $$g_f(x) = E(f|\cA)(x)$$ and $$\|g_f\|_{\infty} \leq \|f\|_{\infty}.$$
+
+ Now for any $\alpha,\beta \in \bQ$ and $f_1,f_2 \in V$ we have that $$g_{\alpha f_1 + \beta f_2}(x) = \alpha g_{f_1}(x) + \beta g_{f_2}(x)\quad \text{ for almost all } x \in X.$$ We also have $g_1(x) = 1$ and $g_f(x) \geq 0$ for positive $f \in V$ (i.e, $f\geq 0$) for almost all $x \in X$. Thus we may choose $X' \subset X$ to be a set with $\mu(X')=1$ on which all of thse properties hold (as there are only countably many equations). Thus for each $x \in X'$ we have a linear function $\Lambda'_x: V \to \bC$ given by $$\Lambda'_x (f)= g_f(x).$$ Note that $\Lambda'_x$ is uniformly continuous (since $\|g_f\|_{\infty} \leq \|f\|_{\infty}$) and thus it extends to a linear functional $\Lambda_x:C(X) = \overline{V} \to \bC$ which also satisfies that $$|\Lambda_x (f)| \leq \|f\|_{\infty}.$$ We wish to apply the Riesz representation theorem, thus it remains to show that $\Lambda_x$ is a positive linear functional. Now suppose $f \in C(X)$ is positive. Then there exists $f_i \in V$ such that $f_i \to f$ uniformly. Now fix a positive integer $q$ and let $\epsilon = 1/q$. Then $\Lambda_x(\epsilon) = \epsilon$ since $g_1=1$ and also $f_i + \epsilon \geq 0$ for $i$ sufficiently large (as for $i$ sufficiently large we have $\|f_i - f\|_{\infty} < \epsilon$ and $f$ is positive). As $f_i + \epsilon \in V$ we have that $$\Lambda_x(f_i) + \epsilon = g_{f_i + \epsilon}(x) \geq 0.$$ Thus $$\Lambda_f(x) \geq \Lambda_x(f_i) - \epsilon> -2\epsilon.$$ This shows that $\Lambda_x(f) \geq 0$ and thust $\Lambda_x$ is a positive linear continuous functional on $C(X)$ with $\Lambda_x(1)=1$. Thus there exists a measure $\mu_x$ such that $$\Lambda_x(f) = \int_X f(u) d\mu_x(u) \quad \text{for all } f \in C(X), x \in X'.$$ In particular this means that $$ E(f|\cA)(x) = \int_X f(u) d\mu_x(u) \quad \text{for all } f \in V.$$
+
+This means that \begin{align}\label{eqn: measurable integrand} x \mapsto \int_{X'} f(u) d\mu_x(u) \text{ is $\cA$-measurable on $X'$} \end{align} and \begin{align}\label{eqn: cond probability on f} \int_{A} \int_{X'} f(u) d\mu_x(u) d\mu(x) = \int_A f(x) d\mu(x) \quad\text{ for all } A \in \cA \end{align} holds for all $f \in V$. By density of $V$ in $C(X)$, this also holds for all $f \in C(X)$ and the integrand is indeed $\cA$ measurable (it is a pointwise limit of $\cA$ measurable functions). Since the indicator function of an open set is a monotonic limit of continuous functions, we have that (\ref{eqn: measurable integrand}) and (\ref{eqn: cond probability on f}) holds for $f = \mathds{1}_U$ for all $U \subset X$ open. It also holds for closed sets by linearity. Finally, observe that it also holds for an intersection $U \cap C$ where $U$ is open and $C$ is closed since such a set is a countable nested intersection of open sets.
+
+Now let $$\cR = \{ \cup_{i=1}^n U_i \cap C_i ~|~ U_1, \ldots, U_n \text{ are open and } C_1, \ldots, C_n \text{ are closed.} \}$$ be the set of all finite unions of sets that can be written as an intersection of an open set and a closed set. We claim that any element in $\cR$ can be written as a finite disjoint union of an intersection of an open set with a closed set. Indeed, any such finite union belongs to a finite $\sigma$-algebra generated by such sets but any atom of this $\sigma$-algebra must take this form. It now follows that  (\ref{eqn: measurable integrand}) and (\ref{eqn: cond probability on f}) holds for $f = \mathds{1}_R$ for all $R \in \cR$. By the monotone convergence theorem, these also hold on the monotone class generated by $\cR$. Thus by the monotone class lemma, it holds on all Borel sets since $\cR$ is an algebra. Any measurable $f:X \to \bR_{\geq 0}$ is a monotonic limit of simple functions and so it holds for such $f$ too, which completes the proof for such $f$. The theorem now follows for general $f:X \to \bC$ with $\|f\|_1$ as desired by linearity. \end{proof}
+
+\section{Borel spaces}
+
+\begin{lemma} Let $X$ be a second-countable metric space. Then there exists an embedding $\iota:X \hookrightarrow Y$ where $Y$ is compact and $\iota$ is a homeomorphism onto its image $\iota(X)$.
+
+\end{lemma}
+
+\begin{proof} Let $u_1,u_2,\ldots $ be a countable dense subset of $X$. Suppose that $d(x,x')\leq 1$ for all $x,x'$. Define $$\iota:X \to [0,1]^{\bN}$$ to be $$\iota(x) = (d(x,u_i))_{i=1}^{\infty}$$ where $Y=[0,1]^{\bN}$ has the product topology, thus is a countable metric space. Continuity and injectivity of $\iota$ is clear. Now suppose that $x_1,x_2,\ldots \in X$ and $x\in X$ are such that $\iota(x_i) \to \iota(x)$ as $i \to \infty$. Fix $\epsilon>0$ and choose $u_j$ so that $d(x,u_j)<\epsilon$. Now for all sufficiently large $i$ we have that $|d(x_i, u_j) - d(x,u_j)| < \epsilon$. This implies that $d(x_i,u_j) < 2\epsilon$. Now $$d(x,x_i) \leq d(x,u_j) + d(u_j,x_i) \leq \epsilon + 2\epsilon  = 3\epsilon.$$ Thus $\iota^{-1}$ is continuous on $\iota(X)$. \end{proof}
+
+\begin{lemma} Let $X$ be a complete metric space, with metric $d_X$, and suppose that $Y \subset X$ is a subset of $X$ such that the subspace topology on $Y$ is induced by a complete metric $d_Y$ on $X$. Then $Y$ is a countable intersection of open subsets of $X$, and is thus a borel subet of $Y$.
+
+\end{lemma}
+
+\begin{proof} We first show that for each $\epsilon>0$ and $y \in Y$ there exists an open set $V_{y,\epsilon}$ of $X$ such that $y \in V$ and $\operatorname{diam}_{d_X}(V_{y,\epsilon}) < \epsilon$ and $\operatorname{diam}_{d_Y}(V_{y,\epsilon} \cap Y) < \epsilon$. To see this, observe since $d_X$ and $d_Y$ induce the same topology on $Y$, there is an open set $\tilde{V}$ of $X$ such that $\tilde{V} \cap Y$ is the ball of radius $\epsilon/2$ around $y$ in the $d_Y$ metric. Hence we can take $$V_{y, \epsilon} = \tilde{V} \cap B_{d_X}(y, \epsilon/2).$$ Now let $U_n = \bigcup_{y \in Y} V_{y,1/n}$ (Remark: to avoid axiom of choice, just take the union of $y$ and all the different sets of the form $\tilde{V}$). Observe now that $Y \subset U_n$ for all $n$. We claim that $$Y = \bigcap_{n = 1}^{\infty} U_n.$$ Thus suppose that $x \in U_n$ for all $n \geq 1$. We will show that there exists a sequence of open subsets $W_1 \supset W_2 \supset \ldots$ of $X$ such that $\operatorname{diam}_{d_X}(W_n) < \frac{1}{n}, \operatorname{diam}_{d_Y}(W_n \cup Y) < \frac{1}{n}$, $x \in W_n$ and $Y \cap W_n$ is non-empty. We can take $W_1 = V_{y_1,1}$ for some $y_1 \in Y$ since $x \in U_1$. Now suppose $W_n$ has been constructed. Thus there exists $\epsilon>0$ so that $B_{d_X}(x, \epsilon) \subset W_n$ as $W_n$ is open and $x \in W_n$. Now take $N>n$ such that $1/N< \epsilon$. Now since $x \in U_N$ there exists $y_{n+1} \in Y$ and $W_{n+1} \subset X$ open so that $y_n, x \in W_{n+1}$ and $\operatorname{diam}_{W_X}(W_{n+1}) < 1/N$, $\operatorname{diam}_{d_Y}(W_{n+1} \cap Y) < 1/N$. Now observe that $W_{n+1} \subset B_{d_X}(x, \epsilon) \subset W_n$ since if $x' \in W_{n+1}$ then $$d(x',x') \leq \operatorname{diam}_{d_Y}(W_{n+1} \cap Y) < 1/N < \epsilon.$$ Thus in summary $y_{n+1} \in W_{n+1}$ is non-empty as desired and $W_{n+1} \subset W_n$ and $$\operatorname{diam}_{d_Y}(W_{n+1} \cap Y) < \frac{1}{N} \leq \frac{1}{n+1}.$$ It now follows that $y_n \to x$ in $d_X$ metric and that $y_1,y_2, \ldots$ is a Cauchy sequence in $Y$. Thus by completeness, we have that $y_n \to y \in Y$ for some $y \in Y$. However $$d_X(x,y) \leq d_X(x,y_n) + d_X(y_n,y) \to 0$$ as $n \to \infty$ since $d_Y(y,y_n) \to 0$ and $d_X$ and $d_Y$ induce the same topology. Thus $x=y \in Y$ as required.\end{proof}
+
+\begin{corol}\label{corol: embedding Polish into compact} Let $X$ be a second countable complete metric space. Then $X$ is homeomorphic to a Borel subset of a compact metric space. In fact, we can take this Borel subset to be a countable intersection of open subsets.
+
+\end{corol}
+
+
+\end{document}
