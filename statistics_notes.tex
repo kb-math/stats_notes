@@ -110,7 +110,7 @@
 
 \begin{mydef}[Statistical setup] A \textit{statistical setup} consists of the following data:
 
-We have the following measure spaces:
+We have the following measurable spaces:
 
 \begin{itemize}
 	\item The \textit{observation space} $\cX$.
@@ -154,20 +154,26 @@ The action $\Theta_0$ is called the \textit{Null Hypothesis} while $\Theta_1$ is
 
 \end{eg}
 
+\begin{mydef} \label{def: nice} We say that a statistical setup is \textit{nice} if there exists a positive measure (not necessarily a probability measure) $\nu$ on $\Omega = \cX$ and a measurable function $f:\cX \times \Theta \to \bR_{\geq 0}$ such that $P_{\theta} \ll \nu$ and $$\frac{dP_{\theta}}{d\nu} (x) = f(x|\theta) := f(x, \theta)$$ for all $\theta \in \Theta$.
+
+\end{mydef}
+
+\textbf{Assumption going forward:} We always assume a statistical setup is nice without mentioning it. This is the case for the examples above (i.e., $\nu$ is either a Lebesgue measure or a counting measure).
+
 \section{Bayesian Setup}
 
-Suppose now that we have a probability measure $\tau$ on the parameter space $\Theta$ called the \textit{prior distribution} of $\Theta$. Suppose also that we have a positive measure (not necessarily a probability measure) $\nu$ on $\Omega = \cX$ and a measurable function $f:\cX \times \Theta \to \bR_{\geq 0}$ such that $P_{\theta} \ll \nu$ and $$\frac{dP_{\theta}}{d\nu} (x) = f(x|\theta) := f(x, \theta)$$ for all $\theta \in \Theta$.
+\begin{mydef} A \textit{prior distribution} is a probability measure $\mu_{\Theta}$ on the parameter space $\Theta$. \end{mydef}
 
-We thus have a probability measure $P$ on $\cX \times \Theta$ given by $$\frac{dP}{d(\nu \times \tau)}(x,\theta) = f(x|\theta).$$ In other words for integrable $\psi:\cX \times \Theta \to \bR$ we have 
+Recalling that we assume the nice condition of Definition~\ref{def: nice}, we thus have a probability measure $P$ on $\cX \times \Theta$ given by $$\frac{dP}{d(\nu \times \mu_{\Theta})}(x,\theta) = f(x|\theta).$$ In other words for integrable $\psi:\cX \times \Theta \to \bR$ we have 
 
-\begin{align*} \int_{\cX \times \Theta} \psi(x,\theta) dP(x,\theta) &= \int_{\cX \times \Omega } \psi(x,\theta) f(x|\theta) d(\nu \times \tau) (x,\theta) \\ &= \int_{\Theta} \left( \int_{\cX} \psi(x,\theta) f(x|\theta) d\nu(x) \right) d\tau(\theta) \\
-&=  \int_{\Theta} \int_{\cX} \psi(x,\theta) dP_{\theta}(x) d\tau(\theta)   \end{align*}
+\begin{align*} \int_{\cX \times \Theta} \psi(x,\theta) dP(x,\theta) &= \int_{\cX \times \Omega } \psi(x,\theta) f(x|\theta) d(\nu \times \mu_{\Theta}) (x,\theta) \\ &= \int_{\Theta} \left( \int_{\cX} \psi(x,\theta) f(x|\theta) d\nu(x) \right) d\mu_{\Theta}(\theta) \\
+&=  \int_{\Theta} \int_{\cX} \psi(x,\theta) dP_{\theta}(x) d\mu_{\Theta}(\theta)   \end{align*}
 
+From now on, we let $X:\cX \times \Theta \to \cX$ and $\Theta:\cX \times \Theta \to \Theta$ denote the push-forward measure (note: by abuse of notation $\Theta$ is now either a space or a projection map, but it should cause no confusion in any context).
 
+Let $P_X=X^*P$ denote the push-forward measure of $P$ onto $\cX$, that is, $P_X(A) = P(A \times \Theta)$ for $A \subset \cX$. We let $$g(x) := \int_{\Theta} f(x,\theta) d\mu_{\Theta}(\theta).$$
 
-Let $P_X$ denote the push-forward measure of $P$ onto $\cX$, that is, $P_X(A) = P(A \times \Theta)$ for $A \subset \cX$. We let $$g(x) := \int_{\Theta} f(x,\theta) d\tau(\theta).$$
-
-Observe that for $A \subset \cX$ we have that $$P_X(A) = \int_{A \times \Theta} f(x|\theta) d\tau(\theta) d\nu(x) = \int_{A} g(x) d\nu(x)$$ and thus $P_X$ has a density with respect to $\nu$ given by $g$.
+Observe that for $A \subset \cX$ we have that $$P_X(A) = \int_{A \times \Theta} f(x|\theta) d\mu_{\Theta}(\theta) d\nu(x) = \int_{A} g(x) d\nu(x)$$ and thus $P_X$ has a density with respect to $\nu$ given by $g$.
 \begin{lemma} For $P_X$-almost all $x \in \cX $ we have that $$g(x)  > 0.$$
 
 \end{lemma}
@@ -176,19 +182,111 @@ Observe that for $A \subset \cX$ we have that $$P_X(A) = \int_{A \times \Theta} 
 
 \end{proof}
 
-Given this lemma, we can now define for $P_X$-almost all $x \in \cX$ a probability measure on $\Theta$ given by $$P_{\Theta|X=x}(B) = \frac{1}{g(x)} \int_{B} f(x|\theta) d\tau(\theta)$$ for $B \subset \Theta$. This is known as the \textit{posterior distribution of $\Theta$ given $X = x$}.
+Given this lemma, we can now define for $P_X$-almost all $x \in \cX$ a probability measure on $\Theta$ given by $$P_{\Theta|X=x}(B) = \frac{1}{g(x)} \int_{B} f(x|\theta) d\mu_{\Theta}(\theta)$$ for $B \subset \Theta$. This is known as the \textit{posterior distribution of $\Theta$ given $X = x$}.
 
-\begin{lemma} The measures $\delta_x \times P_{\Theta |X=x}$ are conditional distributions of $P$ given $X=x$ where $X:\cX \times \Theta \to \cX$ is the projection. The conditional expectation of an integrable $\psi:\cX \times \Theta \to \bR$ given $X=x$ is given by $$E(\psi | X=x) = \frac{1}{g(x)}\int_{\Theta} \psi(x,\theta) f(x|\theta) d\tau(\theta).$$ 
+\begin{lemma} The measures $\delta_x \times P_{\Theta |X=x}$ are conditional distributions of $P$ given $X=x$ where $X:\cX \times \Theta \to \cX$ is the projection. The conditional expectation of an integrable $\psi:\cX \times \Theta \to \bR$ given $X=x$ is given by $$E(\psi | X=x) = \frac{1}{g(x)}\int_{\Theta} \psi(x,\theta) f(x|\theta) d\mu_{\Theta}(\theta).$$ 
 
 \end{lemma}
 
-\begin{proof} Note that the conditional expectation is characterized by the property that for all $A \subset X$ we have that $$\int_{A} E(\psi |X=x) dP_X(x) = \int_{A \times \Theta} \psi(x,\theta) dP(x, \theta).$$
+\begin{proof} Let $E'(\psi |X=x)$ denote the right hand side. We first show that it is well defined for almost all $x \in X$. This follows since by assumption we have that $|\psi(x,\theta)|$ is integrable with respect to $P$ and thus $$\int |\psi(x,\theta)| f(x|\theta) d\nu(x) d\mu_{\Theta} (\theta) < \infty.$$ It follows from Fubini-Tonelli that for $\nu$ almost all $x \in X$ we have that $$\int_{\cX} |\psi(x,\theta)| f(x|\theta) d\mu_{\Theta}(\theta) < \infty$$ and thus $E'(\psi | X=x)$ is a well defined measurable function on $X$. We have to show that $(x, \theta) \mapsto E'(\psi |X=x)$ is measurable with respect to the $\sigma$-algebra induced by $X: \cX \times \Theta \to \cX$ and that for all $A \subset X$ we have that $$\int_{A \times \Theta} E'(\psi |X=x) dP(x, \theta) = \int_{A \times \Theta} \psi(x,\theta) dP(x, \theta).$$
 
-\end{proof}
+The measurability is obvious as there is no dependence on $\Theta$. For the second claim, note that since (as shown above) $g = dP_X/d\nu$, we have 
+
+\begin{align*} \int_{A \times \Theta} E'(\psi |X=x) dP(x, \theta) &= \int_{A} E'(\psi |X=x) dP_X(x) \\
+&=\int_{A} E'(\psi |X=x) g(x) d\nu(x) \\ 
+&= \int_{A} \int_{\Theta} \psi(x, \theta) f(x|\theta) d\mu_{\Theta} d\nu(x)\end{align*}
+
+which completes the proof of this property since $f(x|\theta) = \frac{dP}{d(\nu \times \mu_{\Theta})}(x,\theta) $. Finally, observe that $$\int _{\cX \times \Theta} \psi ~d(\delta_x \times P_{\Theta|X=x}) = \int_{\Theta} \psi(x,\theta) dP_{\Theta |X=x}(\theta) = \frac{1}{g(x)} \int_{\Theta} f(x|\theta) \psi(x,\theta) d\mu_{\Theta}(\theta) = E(\psi ~|~ X=x) $$ so indeed $\delta_x \times P_{\Theta|X=x}$ is the conditional probability of $P$ given $X=x$. \end{proof}
+
+By symmetry, if we swap $\cX$ with $\Theta$ then we get 
+
+\begin{align*} P(A \times \Theta ~|~ \Theta = \theta) &= \left(\int_{\cX} f(x|\theta) d\nu(x) \right)^{-1} \left(\int_{A} f(x|\theta) d\nu(x) \right) \\
+&= P_{\Theta}(X)^{-1} P_{\theta}(A) \\
+&= P_{\theta}(A) \end{align*}
+
+\subsection{Notation} We use the standard notation from probability theory: if $F_i:\Omega \to \Omega_i$ are measurable and $P$ is a measure on $\Omega$, then $$P(F_1 \in A_1, \ldots, F_n \in A_n) := P(\{\omega \in \Omega ~|~  F_1(\omega) \in A_1, \ldots, F_n(\omega) \in A_n \})$$ and likewise for conditional measures.
+
+Thus if $P$ is the measure on $\cX \times \Omega$ as constructed above, then $$P(X \in A, \Theta \in B) = P(A \times B).$$ 
+
+\section{Sufficient statistics}
+
+\subsection{Basic definitions and examples}
+
+A statistic is a measurable function $T:\cX \to \cT$ to some measurable space $(\cT, \cB_{\cT})$.  
+
+\begin{mydef} We say that a statistic $T$ on $\cX$ is \textit{sufficient (in the Bayesian sense)} if for any prior $\mu_{\Theta}$ on $\Theta$ we have for any Borel $B \subset \Theta$ the equality $$P(\Theta \in B ~|~ X = x) = P(\Theta \in B ~|~ T \circ X = Tx) \quad \text{ for } \mu_X\text{-almost all } x \in \cX.$$
+
+\end{mydef}
+
+
+\begin{eg} \label{eg: bernoulli bayes setup} Consider the case where $\cX = \{0,1\}^n$ and $\Theta = [0,1]$. Suppose that $P_{\theta}$ is the Binomial probability distribution on $\{0,1\}^n$ where $(X_1, \ldots, X_N) \in \cX$ is drawn i.i.d with $P(X_i = 1) = \theta.$ Let us for now assume the Prior distribution $\mu_{\Theta}$ is unknown. We know that $$P_{\theta}(X = x) =   \theta^{T(x)}(1-\theta)^{n - T(x)} $$ where $T(x) = \sum_{i=1}^n x_i$ is the number of successes. The posterior distribution is thus given by $$P(\Theta \in B ~|~ X=x) = \frac{P(\Theta \in B, X=x)}{P(X=x)} = \frac{ \int_B \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}{\int_{\Omega} \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}$$ for all $x \in \cX$ that occur with positive probability (this is all of $\cX$ except for possibly $x = (0,\ldots, 0)$ or $x = (1, \ldots, 1)$ in case $\theta$ is concentrated on $1$ or $0$ respectively).
+
+
+We claim that $ T:\cX \to \bZ_{\geq 0}$ given by $T(x) = \sum_{i=1}^n x_i$ is a sufficient statistic. Indeed if we fix $x_0 \in \cX = \{0,1\}^n$ and we let $m=Tx_0$, we get that  
+
+\begin{align*} P( \Theta \in B ~|~ T \circ X = m) &= \frac{P( \Theta \in B, T\circ X = m)}{P(T\circ X = m)} 
+\\ &= \frac{\sum_{Tx = m} P(\Theta \in B, X = x) }{\sum_{Tx = m}P(X = x)} 
+\\ &= \frac{ \sum_{Tx = m} \int_B \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}{ \sum_{Tx = m} \int_{\Omega} \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}
+\\ &= \frac{ \binom{n}{m} \int_B \theta^{m}(1-\theta)^{n - m} d \mu_{\Theta}(\theta)}{ \binom{n}{m} \int_{\Omega} \theta^{m}(1-\theta)^{n - m} d \mu_{\Theta}(\theta)} \end{align*}
+
+And so we see that this fraction cancels out to the expression for $P(\Theta \in B ~|~ X=x_0)$ that we already obtained.
+
+In fact, the same argument shows that $T$ is still a sufficient statistic if instead of assuming that $P_{\theta}$ is binomial we assume that $P_{\theta}$ is \textit{exchangable}, meaning a distribution on $\cX = \{0,1\}^n$ that is invariant under permutations of the co-ordinates, in this case the same calculation will instead yield $$P( \Theta \in B ~|~ TX = m) = \frac{\sum_{Tx = m} \int_B P_{\theta}(x) d\mu_{\Theta} }{\sum_{Tx = m}  \int_{\Omega} P_{\theta}(x) d\mu_{\Theta} }$$ but since we assume that $P_{\Theta}(x) = P_{\Theta}(x')$ whenever $x$ and $x'$ are permutations of each other, we must have that all the summands are the same and hence we get the same cancellation.
+\end{eg}
+
+\begin{remark} Intuitively, sufficiency of a statistic essentially means that if we want to estimate the Posterior distribution of $\theta$ given an observable statistic, we only need to look at the statistic of $T \circ X$ rather than $X$, which may be simpler. In other words, somebody who wishes to estimate $\theta$ (e.g., find a confidence interval) need not know the sample $x$ but just needs to know $Tx$. In this example, the person wishing to estimate $\theta$ needs only to be told a single integer $Tx$, rather than a potentially very long sequence $x \in \{0,1\}^n$ (data compression). 
+\end{remark}
+
+The classical definition of sufficiency does not make reference to a prior distribution and is thus not Bayesian.
+
+\begin{mydef} We say that a statistic $T:\cX \to \cT$ is \textit{sufficient in the classical sense} if we have a function $r:\cB \times \cT \to [0,1]$ such that for all $\theta \in \Theta$ and $B \in \cB$ (recall $\cB$ is the Borel $\sigma$-algebra on $\cX$) we have that $$P_{\theta}(B | T=t) = r(B,t) \quad \text{for } T^*P_{\theta}-\text{almost all } t \in \cT.$$
+
+\end{mydef}
+
+\begin{eg} Let us continue from the binomial distribution in Example~\ref{eg: bernoulli bayes setup}. As $\cX = \{0,1\}^n$ is a finite set, we only have to consider the case where $B \subset \cX$ is a singleton $B=\{x_0\}$ for some $x_0 \in \cX$. Now $P_{\theta}(B | T=t) = 0$ if $Tx_0 \neq t$. If $Tx_0 = t$ then we have that $$P_{\theta}(B | T=t) = \frac{P_{\Theta}\{x_0\}}{P_{\theta}\{x \in \cX ~|~ Tx = x_0\}} = \frac{1}{\binom{n}{t}}$$ where the last equality follows from the fact that all $x \in \cX$ with $Tx=t$ have the same probability in a binomial distribution. In fact, the same argument applies to the case where the $P_{\theta}$ are all exchangable. 
+
+Thus we may take $$r(\{x_0\},t) = \mathds{1}(Tx_0 = t) \binom{n}{t}^{-1}$$ and extend $r$ to $\cB \times \bZ$ by additivity. Thus this parametric family is indeed sufficient in the classical sense. 
+
+\end{eg}
+
+\subsection{Equivalence of definitions}
+
+\begin{lemma} A statistic $T:\cX \to \cT$ is sufficient in the Bayesian sense if and only if for all prior distributions $\mu_{\Theta}$ on $\Theta$ and measurable $B \subset \cX$ we have that $$x \mapsto P(\Theta \in B ~|~ x \in X)$$ is almost surely measurely $T^{-1}\cB_T$-measurable (i.e., almost surely equal to a function of $T$).
+
+\end{lemma}
+
+\begin{proof} We prove the non-obvious direction only: Thus suppose that for each measurable $B \subset X$ we have that $x\mapsto P(\Theta \in B ~|~ x \in X) = h_B(Tx)$ where $h_B: \cT \to \bR$ is Borel. Using the law of total probability, for $A \subset \cT$ Borel we have that
+
+\begin{align*} P(\Theta \in B, TX \in A) &= P(\theta \in B, X \in T^{-1}A) \\
+&= \end{align*} \end{proof}
+
+\subsection{Fisher-Neyman factorization}
 
 \appendix
 
 \section{Review of Probability}
+
+\section{Borel spaces}
+
+\begin{lemma} Let $X$ be a second-countable metric space. Then there exists an embedding $\iota:X \hookrightarrow Y$ where $Y$ is compact and $\iota$ is a homeomorphism onto its image $\iota(X)$.
+
+\end{lemma}
+
+\begin{proof} Let $u_1,u_2,\ldots $ be a countable dense subset of $X$. Suppose that $d(x,x')\leq 1$ for all $x,x'$. Define $$\iota:X \to [0,1]^{\bN}$$ to be $$\iota(x) = (d(x,u_i))_{i=1}^{\infty}$$ where $Y=[0,1]^{\bN}$ has the product topology, thus is a countable metric space. Continuity and injectivity of $\iota$ is clear. Now suppose that $x_1,x_2,\ldots \in X$ and $x\in X$ are such that $\iota(x_i) \to \iota(x)$ as $i \to \infty$. Fix $\epsilon>0$ and choose $u_j$ so that $d(x,u_j)<\epsilon$. Now for all sufficiently large $i$ we have that $|d(x_i, u_j) - d(x,u_j)| < \epsilon$. This implies that $d(x_i,u_j) < 2\epsilon$. Now $$d(x,x_i) \leq d(x,u_j) + d(u_j,x_i) \leq \epsilon + 2\epsilon  = 3\epsilon.$$ Thus $\iota^{-1}$ is continuous on $\iota(X)$. \end{proof}
+
+\begin{lemma} Let $X$ be a complete metric space, with metric $d_X$, and suppose that $Y \subset X$ is a subset of $X$ such that the subspace topology on $Y$ is induced by a complete metric $d_Y$ on $X$. Then $Y$ is a countable intersection of open subsets of $X$, and is thus a borel subet of $Y$.
+
+\end{lemma}
+
+\begin{proof} We first show that for each $\epsilon>0$ and $y \in Y$ there exists an open set $V_{y,\epsilon}$ of $X$ such that $y \in V$ and $\operatorname{diam}_{d_X}(V_{y,\epsilon}) < \epsilon$ and $\operatorname{diam}_{d_Y}(V_{y,\epsilon} \cap Y) < \epsilon$. To see this, observe since $d_X$ and $d_Y$ induce the same topology on $Y$, there is an open set $\tilde{V}$ of $X$ such that $\tilde{V} \cap Y$ is the ball of radius $\epsilon/2$ around $y$ in the $d_Y$ metric. Hence we can take $$V_{y, \epsilon} = \tilde{V} \cap B_{d_X}(y, \epsilon/2).$$ Now let $U_n = \bigcup_{y \in Y} V_{y,1/n}$ (Remark: to avoid axiom of choice, just take the union of $y$ and all the different sets of the form $\tilde{V}$). Observe now that $Y \subset U_n$ for all $n$. We claim that $$Y = \bigcap_{n = 1}^{\infty} U_n.$$ Thus suppose that $x \in U_n$ for all $n \geq 1$. We will show that there exists a sequence of open subsets $W_1 \supset W_2 \supset \ldots$ of $X$ such that $\operatorname{diam}_{d_X}(W_n) < \frac{1}{n}, \operatorname{diam}_{d_Y}(W_n \cup Y) < \frac{1}{n}$, $x \in W_n$ and $Y \cap W_n$ is non-empty. We can take $W_1 = V_{y_1,1}$ for some $y_1 \in Y$ since $x \in U_1$. Now suppose $W_n$ has been constructed. Thus there exists $\epsilon>0$ so that $B_{d_X}(x, \epsilon) \subset W_n$ as $W_n$ is open and $x \in W_n$. Now take $N>n$ such that $1/N< \epsilon$. Now since $x \in U_N$ there exists $y_{n+1} \in Y$ and $W_{n+1} \subset X$ open so that $y_n, x \in W_{n+1}$ and $\operatorname{diam}_{W_X}(W_{n+1}) < 1/N$, $\operatorname{diam}_{d_Y}(W_{n+1} \cap Y) < 1/N$. Now observe that $W_{n+1} \subset B_{d_X}(x, \epsilon) \subset W_n$ since if $x' \in W_{n+1}$ then $$d(x',x') \leq \operatorname{diam}_{d_Y}(W_{n+1} \cap Y) < 1/N < \epsilon.$$ Thus in summary $y_{n+1} \in W_{n+1}$ is non-empty as desired and $W_{n+1} \subset W_n$ and $$\operatorname{diam}_{d_Y}(W_{n+1} \cap Y) < \frac{1}{N} \leq \frac{1}{n+1}.$$ It now follows that $y_n \to x$ in $d_X$ metric and that $y_1,y_2, \ldots$ is a Cauchy sequence in $Y$. Thus by completeness, we have that $y_n \to y \in Y$ for some $y \in Y$. However $$d_X(x,y) \leq d_X(x,y_n) + d_X(y_n,y) \to 0$$ as $n \to \infty$ since $d_Y(y,y_n) \to 0$ and $d_X$ and $d_Y$ induce the same topology. Thus $x=y \in Y$ as required.\end{proof}
+
+\begin{corol}\label{corol: embedding Polish into compact} Let $X$ be a second countable complete metric space. Then $X$ is homeomorphic to a Borel subset of a compact metric space. In fact, we can take this Borel subset to be a countable intersection of open subsets.
+
+\end{corol}
+
+\begin{mydef} A \textit{standard Borel space} is a measurable space $(X,\cB)$ where $X$ is a second-countable complete metric space and $\cB$ is the Borel $\sigma$-algebra.
+
+\end{mydef}
 
 \subsection{Conditional expectation}
 
@@ -224,11 +322,13 @@ This proposition motivates us to define conditional expectation with respect to 
 
 Note that $E(f|T=y)$ can be characterized by the property that $$\int_A E(f|T=y) d\mu_Y(y) = \int_{T^{-1}A} f(x) d\mu_X(x) \quad \text{for all } A \in \cB_Y.$$ 
 
+\subsection{Conditional Probability}
+
 \begin{thm}[Conditional probability] Let $X$ be a second-countable complete metric space with Borel $\sigma$-algebra $\cB$ and suppose $\cA \subset \cB$ is a sub $\sigma$-algebra. Let $\mu$ be a probability measure on $(X,\cB)$. Then there exists $X' \in \cA$ with $\mu(X')=1$ and a family of probability measures $\mu_x^{\cA}$ for $x \in X'$ such that the following holds.
 
 \begin{itemize}
-	\item For $\cB$-measurable functions $f:X \to \bC$ with $\|f\|_1 < \infty$ the mapping $X' \to \bC$ given by $$x \mapsto \int_X f(u) d\mu_x^{\cA} (u)$$ is $\cA$-measurable.
-	\item For almost all $x \in X$ we have that $$E(f|\cA)(x) = \int_X f(u) d\mu_x^{\cA} (u).$$
+	\item For $\cB$-measurable functions $f:X \to \bC$ such that $\|f\|_{\infty} < \infty$, we have that the mapping $X' \to \bC$ given by $$x \mapsto \int_X f(u) d\mu_x^{\cA} (u)$$ is $\cA$-measurable. The same is true if we replace $\|f\|_{\infty} < \infty$ with $f(x) \in \bR_{\geq 0}$ for all $x \in X$.
+	\item For $f: X \to \bC$ with $\|f\|_1 < \infty$ we have that\footnote{The right hand side may be undefined on a null set of $x$.}  $$E(f|\cA)(x) = \int_X f(u) d\mu_x^{\cA} (u) \quad \text{ for almost all } x \in X.$$
 
 \end{itemize}
 
@@ -246,23 +346,46 @@ This means that \begin{align}\label{eqn: measurable integrand} x \mapsto \int_{X
 
 Now let $$\cR = \{ \cup_{i=1}^n U_i \cap C_i ~|~ U_1, \ldots, U_n \text{ are open and } C_1, \ldots, C_n \text{ are closed.} \}$$ be the set of all finite unions of sets that can be written as an intersection of an open set and a closed set. We claim that any element in $\cR$ can be written as a finite disjoint union of an intersection of an open set with a closed set. Indeed, any such finite union belongs to a finite $\sigma$-algebra generated by such sets but any atom of this $\sigma$-algebra must take this form. It now follows that  (\ref{eqn: measurable integrand}) and (\ref{eqn: cond probability on f}) holds for $f = \mathds{1}_R$ for all $R \in \cR$. By the monotone convergence theorem, these also hold on the monotone class generated by $\cR$. Thus by the monotone class lemma, it holds on all Borel sets since $\cR$ is an algebra. Any measurable $f:X \to \bR_{\geq 0}$ is a monotonic limit of simple functions and so it holds for such $f$ too, which completes the proof for such $f$. The theorem now follows for general $f:X \to \bC$ with $\|f\|_1$ as desired by linearity. \end{proof}
 
-\section{Borel spaces}
+We now show that the conditional probabilities are almost surely unique and provide some characterizations that are practial to use. In the following proposition, we fix $X,\cA, \mu$ as as in Theorem~\ref{thm: cond prop existence}.
 
-\begin{lemma} Let $X$ be a second-countable metric space. Then there exists an embedding $\iota:X \hookrightarrow Y$ where $Y$ is compact and $\iota$ is a homeomorphism onto its image $\iota(X)$.
+\begin{prop} If $\mu_x^{\cA}$ and $\nu_x^{\cA}$ are two conditional probabilities, for some $x \in X' \in \cA$ of full measure, then $\mu_x^{\cA} = \nu_x^{\cA}$ for $\mu$-almost all $x \in X$.
 
-\end{lemma}
+\end{prop}
 
-\begin{proof} Let $u_1,u_2,\ldots $ be a countable dense subset of $X$. Suppose that $d(x,x')\leq 1$ for all $x,x'$. Define $$\iota:X \to [0,1]^{\bN}$$ to be $$\iota(x) = (d(x,u_i))_{i=1}^{\infty}$$ where $Y=[0,1]^{\bN}$ has the product topology, thus is a countable metric space. Continuity and injectivity of $\iota$ is clear. Now suppose that $x_1,x_2,\ldots \in X$ and $x\in X$ are such that $\iota(x_i) \to \iota(x)$ as $i \to \infty$. Fix $\epsilon>0$ and choose $u_j$ so that $d(x,u_j)<\epsilon$. Now for all sufficiently large $i$ we have that $|d(x_i, u_j) - d(x,u_j)| < \epsilon$. This implies that $d(x_i,u_j) < 2\epsilon$. Now $$d(x,x_i) \leq d(x,u_j) + d(u_j,x_i) \leq \epsilon + 2\epsilon  = 3\epsilon.$$ Thus $\iota^{-1}$ is continuous on $\iota(X)$. \end{proof}
+\begin{proof} We for each $f \in C(X)$ we have that $$\int_X f(u) d\mu_x^{\cA} (u) = E(f|\cA)(x) = \int_X f(u) d\nu_x^{\cA} (u)$$ holds for all $x \in X_f \in \cA$ with $\mu(X_f) = 1$. Applying this to a countable dense set of $f \in C(X)$ we can find a single set $X' \in \cA$ with $\mu(X'')=1$ so that this identity holds for all continuous functions $f \in C(X)$. It follows by uniqueness in Riesz-representation theorem that $\mu_x^{\cA} = \nu_x^{\cA}$ for all $x \in X''$. 
 
-\begin{lemma} Let $X$ be a complete metric space, with metric $d_X$, and suppose that $Y \subset X$ is a subset of $X$ such that the subspace topology on $Y$ is induced by a complete metric $d_Y$ on $X$. Then $Y$ is a countable intersection of open subsets of $X$, and is thus a borel subet of $Y$.
+\end{proof}
 
-\end{lemma}
+\subsection{Conditional probability with respect to a random variable}
 
-\begin{proof} We first show that for each $\epsilon>0$ and $y \in Y$ there exists an open set $V_{y,\epsilon}$ of $X$ such that $y \in V$ and $\operatorname{diam}_{d_X}(V_{y,\epsilon}) < \epsilon$ and $\operatorname{diam}_{d_Y}(V_{y,\epsilon} \cap Y) < \epsilon$. To see this, observe since $d_X$ and $d_Y$ induce the same topology on $Y$, there is an open set $\tilde{V}$ of $X$ such that $\tilde{V} \cap Y$ is the ball of radius $\epsilon/2$ around $y$ in the $d_Y$ metric. Hence we can take $$V_{y, \epsilon} = \tilde{V} \cap B_{d_X}(y, \epsilon/2).$$ Now let $U_n = \bigcup_{y \in Y} V_{y,1/n}$ (Remark: to avoid axiom of choice, just take the union of $y$ and all the different sets of the form $\tilde{V}$). Observe now that $Y \subset U_n$ for all $n$. We claim that $$Y = \bigcap_{n = 1}^{\infty} U_n.$$ Thus suppose that $x \in U_n$ for all $n \geq 1$. We will show that there exists a sequence of open subsets $W_1 \supset W_2 \supset \ldots$ of $X$ such that $\operatorname{diam}_{d_X}(W_n) < \frac{1}{n}, \operatorname{diam}_{d_Y}(W_n \cup Y) < \frac{1}{n}$, $x \in W_n$ and $Y \cap W_n$ is non-empty. We can take $W_1 = V_{y_1,1}$ for some $y_1 \in Y$ since $x \in U_1$. Now suppose $W_n$ has been constructed. Thus there exists $\epsilon>0$ so that $B_{d_X}(x, \epsilon) \subset W_n$ as $W_n$ is open and $x \in W_n$. Now take $N>n$ such that $1/N< \epsilon$. Now since $x \in U_N$ there exists $y_{n+1} \in Y$ and $W_{n+1} \subset X$ open so that $y_n, x \in W_{n+1}$ and $\operatorname{diam}_{W_X}(W_{n+1}) < 1/N$, $\operatorname{diam}_{d_Y}(W_{n+1} \cap Y) < 1/N$. Now observe that $W_{n+1} \subset B_{d_X}(x, \epsilon) \subset W_n$ since if $x' \in W_{n+1}$ then $$d(x',x') \leq \operatorname{diam}_{d_Y}(W_{n+1} \cap Y) < 1/N < \epsilon.$$ Thus in summary $y_{n+1} \in W_{n+1}$ is non-empty as desired and $W_{n+1} \subset W_n$ and $$\operatorname{diam}_{d_Y}(W_{n+1} \cap Y) < \frac{1}{N} \leq \frac{1}{n+1}.$$ It now follows that $y_n \to x$ in $d_X$ metric and that $y_1,y_2, \ldots$ is a Cauchy sequence in $Y$. Thus by completeness, we have that $y_n \to y \in Y$ for some $y \in Y$. However $$d_X(x,y) \leq d_X(x,y_n) + d_X(y_n,y) \to 0$$ as $n \to \infty$ since $d_Y(y,y_n) \to 0$ and $d_X$ and $d_Y$ induce the same topology. Thus $x=y \in Y$ as required.\end{proof}
+In this subsection, let $\cA$ is a countable generated $\sigma$-algebra of $\cB$ where $(X,\cB)$ is standard Borel. So $\cA= \sigma(\{A_1,A_2,\ldots, \})$ where $A_1,A_2,\ldots \in \cA$. For each $x \in X$ we can define the atom $$[x]_{\cA} = \bigcap_{i, x \in A_i} A_i \cap \bigcap_{j, x \notin A_j} (X \setminus A_j)$$ containing $x$.
 
-\begin{corol}\label{corol: embedding Polish into compact} Let $X$ be a second countable complete metric space. Then $X$ is homeomorphic to a Borel subset of a compact metric space. In fact, we can take this Borel subset to be a countable intersection of open subsets.
+\begin{prop} For $x \in X$ we have that $[x]$ is the smallest subset of $\cA$ containing $x$.
 
-\end{corol}
+\end{prop}
 
+\begin{proof} We must show that for each $A \in \cA$ we have either $[x] \subset \cA$ or $[x] \cap \cA = \emptyset$. This is true for each $A_i$ and so one must show that the sets in $\cA$ satisfying this property forms a $\sigma$-algebra. \end{proof}
+
+\begin{prop} There is a set $X'' \subset X$ with $X'' \in \cA$ and $\mu(X'')=1$ such that for any $x_1,x_2 \in X''$ we have that $\mu_{x_1}^{\cA} = \mu_{x_2}^{\cA}$ if and only if $[x_1] = [x_2]$. Moreover, $\mu_x^{\cA}([x]) = 1$ for $x \in X''$.
+
+\end{prop}
+
+\begin{proof} Let $\mu_x = \mu_x^{\cA}$ for $x \in X'$ be a set of conditional probabilities, where $X' \in \cA$ and $\mu(X')=1$. For almost all $x \in X'$ we have that $$\mu_x(A_i) = \int \mathds{1}_{A_i} d\mu_x = E(\mathds{1}_{A_i}|\cA)(x) = \mathds{1}_{A_i}(x).$$ Say this occurs on $X'' \subset X'$ with $\mu(X'')=1$. Note that since all terms are $\cA$-measurable, we have $X'' \in \cA$. Now let $x_1,x_2 \in X''$. If $\mu_{x_1} = \mu_{x_2}$ then $\mathds{1}_{A_i}(x_1) = \mathds{1}_{A_i}(x_2)$ for all $i$ and thus $[x_1] = [x_2]$. Conversely, suppose that $[x_1]=[x_2]$. Thus any $\cA$-measurable function must have equal values on $x_1$ and $x_2$. But for any $f \in C(X)$ we have that $$x \mapsto \int f d\mu_x$$ is $\cA$-measurable. Thus $$\int f d\mu_{x_1} = \int f d \mu_{x_2}$$ holds for all $f \in C(X)$ and thus $\mu_{x_1} = \mu_{x_2}$. \end{proof}
+
+\begin{thm}[Law of total probability] Suppose that $T:X\to Y$ is a measurable map between standard Borel spaces and let $\cB_T := T^{-1}\cB_Y$ be the induced $\sigma$-algebra. There exists Borel $Y' \subset Y$ and probability measures $\mu_y$ on $X$, for each $y \in Y'$, such that the following hold.
+
+\begin{itemize}
+	\item $\mu(T^{-1}Y') = 1$
+	\item For all $y \in Y'$, the measure $\mu_y$ is supported on $T^{-1}(\{y \})$.
+	\item For all $x \in T^{-1}(Y')$ we have that $\mu_{Tx} = \mu_{x}^{\cB_T}$. That is the family $\mu_{Tx}$ for $x \in T^{-1}(Y')$ is a family of conditional probability measures for the $\sigma$-algebra $\cB_T$.
+\end{itemize}
+
+Moreover, for bounded Borel $f: X \to \bC$ and $B \subset Y$ Borel we have that $$\int_{T^{-1}B} f(x) d\mu(x) = \int_{B} \left( \int_X f(u) d\mu_y(u) \right) d(T^*\mu)(y).$$
+
+\end{thm}
+
+\begin{proof} The induced $\sigma$-algebra $\cB_T := T^{-1}\cB_Y$ is countably generated and its atoms are precisely the fibers $$T^{-1}(\{y\}) \quad \text{for } y \in Y.$$ In other words, $$[x]_{\cB_T} = T^{-1}(\{ Tx \}) \quad \text{for } x \in X.$$ We thus have by the above proposition that the conditional measure $\mu_{x}^{\cB_T}$ is supported on the fiber $T^{-1}(\{Tx\})$ and only depends on the fiber. More precisely, we have a family of measures $\mu_y$ on $X$, $y \in Y'$ for some Borel $Y' \subset Y$ such that $\mu_y$ is supported on $T^{-1}(\{y \})$ and such that for bounded Borel $f:X \to \bC$ we have that $$x \mapsto \int_X f(u) d\mu_{Tx}(u)$$ is $\cB_T$ measurable and $$\int_A f(x) d\mu(x) = \int_A \int f(u) d\mu_{Tx}(u) d\mu(x) \quad \text{ for } A \in \cB_T.$$ Now for $B \subset Y'$ we have that $A= T^{-1}B \in \cB_T$ and $$\int_A g(Tx) d\mu(x) = \int_B g(y) d (T^*\mu)(y)$$ for $g:X \to \bC$ Borel and bounded. \end{proof}
+
+It is customary to define $$\mu(B ~|~ T = y) := \mu_y(B)$$ and $$E(f | T=y) := E(f|\cB_T)(x)$$ for $y = Tx$. The law of total probability then says $$\mu(A \cap T^{-1}B) = \int_B \mu(A | T=y) d\mu_Y(y)  $$ for any Borel $A \subset X, B \subset Y$ where $\mu_Y = T^*\mu$.
 
 \end{document}
