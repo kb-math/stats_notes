@@ -255,10 +255,18 @@ Thus we may take $$r(\{x_0\},t) = \mathds{1}(Tx_0 = t) \binom{n}{t}^{-1}$$ and e
 
 \end{lemma}
 
-\begin{proof} We prove the non-obvious direction only: Thus suppose that for each measurable $B \subset X$ we have that $x\mapsto P(\Theta \in B ~|~ x \in X) = h_B(Tx)$ where $h_B: \cT \to \bR$ is Borel. Using the law of total probability, for $A \subset \cT$ Borel we have that
+\begin{proof} We prove the non-obvious direction only: Thus suppose that for each measurable $B \subset X$ we have that $x\mapsto P(\Theta \in B ~|~ x \in X) = h_B(Tx)$ where $h_B: \cT \to \bR$ is Borel. We first use apply the law of total probability to the map $T\circ X:\cX \times \Theta \to \cT$ as follows. For $A \subset \cT$ Borel we have that
 
-\begin{align*} P(\Theta \in B, TX \in A) &= P(\theta \in B, X \in T^{-1}A) \\
-&= \end{align*} \end{proof}
+\begin{align*} P(\Theta \in B, T\circ X \in A) &= \int_{A} P(\Theta \in B| T\circ X = t) dP_{\cT}(t).\end{align*} 
+
+Now we apply the law of total probability to the map $X:\cX \times \Theta \to \cX$ to obtain that 
+
+\begin{align*} P(\Theta \in B, T\circ X \in A) &= P(\Theta \in B , X \in T^{-1}A) \\
+&= \int_{T^{-1}A} P(\Theta \in B | X = x)dP_X(x) \\ 
+&= \int_{T^{-1}A} h_B(Tx) dP_X(x) \\
+&= \int_A h_B(t) dP_{\cT}(t).\end{align*} 
+
+Thus we must have that $P(\Theta \in B | T \circ X = t) = h_B(t)$ holds for almost all $t$. Thus $$P(\Theta \in B ~|~ T \circ X = Tx) = h_B(Tx) = P(\Theta \in B ~|~ X = x)$$ holds for almost all $x \in X$. \end{proof}
 
 \subsection{Fisher-Neyman factorization}
 
