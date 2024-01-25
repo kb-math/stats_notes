@@ -396,4 +396,19 @@ Moreover, for bounded Borel $f: X \to \bC$ and $B \subset Y$ Borel we have that 
 
 It is customary to define $$\mu(B ~|~ T = y) := \mu_y(B)$$ and $$E(f | T=y) := E(f|\cB_T)(x)$$ for $y = Tx$. The law of total probability then says $$\mu(A \cap T^{-1}B) = \int_B \mu(A | T=y) d\mu_Y(y)  $$ for any Borel $A \subset X, B \subset Y$ where $\mu_Y = T^*\mu$.
 
+\section{Useful results}
+
+\begin{lemma} Suppose that $\nu$ is a $\sigma$-finite positive measure on $X$. Then there exists a probability measure $\nu'$ such that $\nu \ll \nu'$ and $\nu' \ll \nu$ (i.e., $\nu(A) = 0$ if and only if $\nu'(A) = 0$).
+
+\end{lemma}
+
+\begin{proof} We only need to consider the case $\nu(X) = \infty$. There exists a countable partition $X_1, \ldots$ of $X$ such that $0< \nu(X_i) = d_i < \infty$. Now define $$\nu'(A) = \sum_{i=1}^{\infty} 2^{-i}d_i^{-1} \nu(A \cap X_i).$$
+
+\end{proof}
+
+\begin{lemma} \label{lemma: countable sum dominates} Let $\nu$ be a $\sigma$-finite positive measure on $X$ and ;et $\cP$ be a family of probability measures on $X$ such that $P \ll \nu$ for all $P \in \cP$. Then there exists $a_1,a_2,\ldots \in [0,1]$ with $\sum_{i} a_i = 1$ and $P_1,P_2, \ldots \in \cP$ such that $$P \ll \sum_{i=1}^{\infty} a_i P_i \quad \text{for all } P \in \cP.$$
+
+\end{lemma}
+
+\begin{proof} By the previous Lemma, we only need to focus on the case that $\nu(X)=1$.  Let $$\cQ = \{ \sum_{i=1}^{\infty} a_i P_i ~|~ \sum_{i} a_i = 1, a_i \geq 0, P_i \in \cP \}$$ be the set of countable convex combinations of measures in $\cP$. Observe that $Q \ll \nu$ for all $Q \in \cQ$. For $Q \in \cQ$ let $f_Q = dQ/d\nu$ be the density of $Q$ and let $$S_Q = \{ x \in X ~|~ f_Q(x)>0 \}.$$ We remark that $f_Q$ and $S_Q$ are almost surely well defined. Now let $c = \sup_{Q \in \cQ} \nu(S_Q) \leq 1$. Let $Q_1,Q_2,\ldots \in \cQ$ be such that $\nu(S_Q) \to c$. Now there exists $Q_0$ such that $$S_{Q_0} = \cup_{i=1}^{\infty} S_{Q_i}$$ and thus $\nu(S_{Q_0}) = c$. We claim that $P \ll Q_0$ for all $P \in \cP$, thus completing the proof. Suppose it were not the case. Then there exists $A \subset X$ such that $P(A) >0$ but $Q_0(A)=0$. Now let $$Q' = \frac{1}{2}\left( Q_0 + P \right).$$ We have that $Q_0 \ll Q'$ and so $S_{Q_0} \subset S_{Q'}$. Since $Q_0(A)=0$ we have that $\nu(A \cap S_{Q_0}) = 0$. On the other hand $$0<P(A) = \int_{A} f_P d\nu \leq 2\int_A f_{Q'} d\nu$$ and so this means that there is $A' \subset A$ with $\nu(A')>0$ and $f_{Q'}(x) >0$ for $x \in A'$. Thus $$S_{Q_0} \cup A' \subset S_{Q'}$$ and so $$\nu(S_{Q'}) \geq \nu(S_{Q_0}) + \nu(A') > c,$$ which is a contradiction. \end{proof}
 \end{document}
