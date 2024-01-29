@@ -396,6 +396,44 @@ Moreover, for bounded Borel $f: X \to \bC$ and $B \subset Y$ Borel we have that 
 
 It is customary to define $$\mu(B ~|~ T = y) := \mu_y(B)$$ and $$E(f | T=y) := E(f|\cB_T)(x)$$ for $y = Tx$. The law of total probability then says $$\mu(A \cap T^{-1}B) = \int_B \mu(A | T=y) d\mu_Y(y)  $$ for any Borel $A \subset X, B \subset Y$ where $\mu_Y = T^*\mu$.
 
+\section{Conditional Independence}
+
+In this section, fix a standard Borel probability space $(\Omega,\mu)$ and suppose we have maps $X:\Omega \to \cX$, $Y:\Omega \to \cY$ and $T:\Omega \to \cT$ to some standard Borel spaces. We also let $\cA_X, \cA_Y, \cA_Z$ be the $\sigma$-algebras induced by these masp, respectively.
+
+\begin{mydef} We say that $X$ and $Y$ are conditionally independent given $T$ if for all $A  \subset Y, B  \subset Y$ we have that $$\mu(X^{-1}A \cap Y^{-1}B |T=t) = \mu(X^{-1}A|T=t)\mu(Y^{-1}B|T=t) \quad\text{for $\cT^*\mu$-almost all } t \in T.$$ In particular, if $T$ is constant then we say that $X$ and $Y$ are independent.
+
+\end{mydef}
+
+\begin{eg} Suppose $\Omega = [0,1/2] \times [0,1/2] \cup [1/2,1] \times [1/2,1]$ is the disjoint union of two squares and $\mu$ is the uniform probability measure on $\Omega$. Let $X,Y$ denote the projections $X(x,y)=x, Y(x,y)=y$ and let $T:\Omega \to \{0,1\}$ be the map $T(x,y) = \mathds{1}_{[1/2,1]} (x).$ Then $X,Y$ are conditionally independent given $T$ but are not independent.
+
+\end{eg}
+
+\begin{eg}[Independent but not conditionally] Let $\Omega = [0,1]^2$ and suppose $\mu$ is the uniform measure on $\Omega$. Let $X,Y:\Omega \to [0,1]$ be the projections. Then $X$ and $Y$ are independent. Let $T:\Omega \to [-1,1]$ by $T(x,y) = x+y$. Then in fact $X$ and $Y$ are not conditionally independent given $T$. For example, let $A=B=[0,1/2]$. Then for $1< t < \frac{3}{2}$  we have that $(A \times B) \cap T^{-1}(t) = \emptyset$ and so $P(A \times B | T=t) = 0$. However $P(A|T=t)>0$ and $P(B|T=t)>0$.
+
+Observe that we have a map $S:\Omega \to \cY \times \cT$ given by $S(\omega)=(Y(\omega), T(\omega))$. We let $$\mu(A|Y=y, T=t) = \mu(A|S=(y,t).$$
+
+\begin{lemma} We have that $X$ and $Y$ are conditionally independent given $T$ if and only if for all $A \subset \cX$ we have that $$\mu(X^{-1}A | Y=y, T=t) = \mu(X^{-1}|T=t).$$
+
+\end{lemma}
+
+\begin{proof} First assume $X$ and $Y$ are conditionally independent. Thus we must show that $$\int_{U}\mu(A|T=t) = \mu(A \cap S^{-1}U)$$ for all $U \subset \cX \times \cT$ and $A \in \cA_X$. By the monotone class lemma, it is enough to show it for $U = B \times C$. We have 
+
+\begin{align*} \int_{B \times C} \mu(A ~|~ T=t) dS^*(\mu)(y,t) &= \int_{Y^{-1}B \cap T^{-1}C} \mu(A ~|~ T=T\omega) d\mu(\omega) \\
+&= \int_{\Omega} \mathds{1}_{Y^{-1}B}(\omega) \mathds{1}_{T^{-1}C}(\omega) \mu(A~|~ T=T\omega) d\mu(\omega) \\
+&= \int_{\Omega} E(\mathds{1}_{Y^{-1}B}~|~T=T\omega) \mathds{1}_{T^{-1}C}(\omega) \mu(A ~|~ T=T\omega) d\mu(\omega) \\ 
+&=  \int_{T^{-1}C} \mu(Y^{-1}B|T=T\omega) \mu(A ~|~ T=T\omega) d\mu(\omega) \\
+&=  \int_{T^{-1}C} \mu(Y^{-1}B \cap A ~|~ T=T\omega)d\mu(\omega) \\
+&= \mu(Y^{-1}B \cap A \cap T^{-1}C) \\
+&= \mu(A \cap S^{-1}(B \times C)) \end{align*}
+
+as required. 
+
+Now we prove the converse. Thus we 
+
+\end{proof}
+
+\end{eg}
+
 \section{Useful results}
 
 \begin{lemma} Suppose that $\nu$ is a $\sigma$-finite positive measure on $X$. Then there exists a probability measure $\nu'$ such that $\nu \ll \nu'$ and $\nu' \ll \nu$ (i.e., $\nu(A) = 0$ if and only if $\nu'(A) = 0$).
