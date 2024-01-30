@@ -412,11 +412,11 @@ In this section, fix a standard Borel probability space $(\Omega,\mu)$ and suppo
 
 Observe that we have a map $S:\Omega \to \cY \times \cT$ given by $S(\omega)=(Y(\omega), T(\omega))$. We let $$\mu(A|Y=y, T=t) = \mu(A|S=(y,t).$$
 
-\begin{lemma} We have that $X$ and $Y$ are conditionally independent given $T$ if and only if for all $A \subset \cX$ we have that $$\mu(X^{-1}A | Y=y, T=t) = \mu(X^{-1}|T=t).$$
+\begin{lemma} We have that $X$ and $Y$ are conditionally independent given $T$ if and only if for all $A \subset \cX$ we have that $$\mu(X^{-1}A | Y=Y\omega, T=T\omega) = \mu(X^{-1}A|T=T\omega) \quad \text{ for $\mu$-almost all } \omega \in \Omega.$$
 
 \end{lemma}
 
-\begin{proof} First assume $X$ and $Y$ are conditionally independent. Thus we must show that $$\int_{U}\mu(A|T=t) = \mu(A \cap S^{-1}U)$$ for all $U \subset \cX \times \cT$ and $A \in \cA_X$. By the monotone class lemma, it is enough to show it for $U = B \times C$. We have 
+\begin{proof} First assume $X$ and $Y$ are conditionally independent. Thus we must show that $$\int_{U}\mu(A|T=t) = \mu(A \cap S^{-1}U)$$ for all $U \subset \cT \times \cT$ and $A \in \cA_X$. By the monotone class lemma, it is enough to show it for $U = B \times C$. We have 
 
 \begin{align*} \int_{B \times C} \mu(A ~|~ T=t) dS^*(\mu)(y,t) &= \int_{Y^{-1}B \cap T^{-1}C} \mu(A ~|~ T=T\omega) d\mu(\omega) \\
 &= \int_{\Omega} \mathds{1}_{Y^{-1}B}(\omega) \mathds{1}_{T^{-1}C}(\omega) \mu(A~|~ T=T\omega) d\mu(\omega) \\
@@ -428,7 +428,17 @@ Observe that we have a map $S:\Omega \to \cY \times \cT$ given by $S(\omega)=(Y(
 
 as required. 
 
-Now we prove the converse. Thus we 
+Now we prove the converse. Thus we must assume that for $A \subset \cX$ we have $$\mu(X^{-1}A | Y=y, T=t) = \mu(X^{-1}A|T=t) \quad \text{ for all $S^*\mu$-almost all $(y,t) \in \cY \times \cT$.}$$ and show that $$\int_{C} \mu(X^{-1}A | T=t)\mu(Y^{-1}B | T=t) dT^*\mu(t) = \int_{C} \mu(X^{-1}A \cap Y^{-1}B | T=t) dT^*\mu(t)$$ for all $C \subset \cT$. Using the law of total probability we have
+
+\begin{align*} \int_{C} \mu(X^{-1}A \cap Y^{-1}B | T=t) dT^*\mu(t) &= \mu(X^{-1}A \cap Y^{-1}B \cap T^{-1}C) \\ 
+&=\mu(X^{-1}A \cap S^{-1}(B \times C))  \\
+&= \int_{B \times C} \mu(X^{-1}A~|~ Y=y, T=t) d(S^*\mu)(y,t) \\ 
+&= \int_{B \times C} \mu(X^{-1}A~|~ T=t) d(S^*\mu)(y,t) \\ 
+&= \int_{Y^{-1}B \times T^{-1}C} \mu(X^{-1}A~|~ T=T\omega) d\mu(\omega) \\
+&= \int_{\Omega} \mathds{1}_{Y^{-1}B}(\omega) \mathds{1}_{T^{-1}C}(\omega) \mu(X^{-1}A~|~ T=T\omega) d\mu(\omega) \\
+&=\int_{\Omega} E(\mathds{1}_{Y^{-1}B}|T=T\omega) \mathds{1}_{T^{-1}C}(\omega) \mu(X^{-1}A~|~ T=T\omega) d\mu(\omega) \\ 
+&= \int_{\Omega} \mu(Y^{-1}B ~|~ T=T\omega) \mathds{1}_{T^{-1}C}(\omega) \mu(X^{-1}A~|~ T=T\omega) d\mu(\omega) \\ 
+&= \int_{C} \mu(Y^{-1}B~|~ T=t) \mu(X^{-1}A ~|~ T=t) dT^*\mu(t) \end{align*}
 
 \end{proof}
 
