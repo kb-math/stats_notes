@@ -251,6 +251,29 @@ Thus we may take $$r(\{x_0\},t) = \mathds{1}(Tx_0 = t) \binom{n}{t}^{-1}$$ and e
 
 \subsection{Equivalence of definitions}
 
+\begin{lemma} If $T:\cX \to \cT$ is a statistic and $\mu_{\Theta}$ is a prior on $\Theta$. Then for $A \subset \cX$ we have that $$P(X \in A ~|~ TX=Tx, \Theta = \theta) = P_{\theta}(A ~|~ T =Tx) \quad \text{for $P$-almost all $(x,\theta) \in \cX \times \Theta$}.$$
+
+\end{lemma}
+
+\begin{proof} We must show that for $B\subset \Theta, C \subset \cT$ we have that $$\int_{T^{-1}C \times B} P(A \times \Theta ~|~ Tx = t, \Theta = \theta) dP(x,\theta) = \int_{T^{-1}C \times B} P_{\theta}(A ~|~ T=Tx) dP(x,\theta). $$
+
+TODO: Show that the integrand on the Right hand side is measurable.
+
+The law of total probability tells us that the left hand side is equal to $$P((A \times \Theta) \cap  (T^{-1}C \times B) ) = P(X \in A\cap T^{-1}C, \Theta \in B).$$
+
+The right hand side is
+
+\begin{align*} \int_{T^{-1}C \times B} P_{\theta}(A | T=Tx) dP_{\theta}(x) d\mu_{\Theta}(\theta) &= \int_B P_{\theta}(A \cap T^{-1}C) d\mu_{\Theta}(\theta) \\
+&= \int_{B} \int_{\cX} \mathds{1}_{A \cap T^{-1}C}(x) dP_{\theta}(x) d\mu_{\Theta}(\theta) \\
+&= P(X \in A\cap T^{-1}C, \Theta \in B)\end{align*} \end{proof}
+
+\begin{thm} Suppose that $T:\cX \to \cT$ is sufficient in the classical sense. Then $T$ is also sufficient in the Bayesian sense (for any prior $\mu_{\Theta}$ on $\Theta$). Moreover for $A \subset \cX$ we have $$P(X \in A~|~ TX=Tx, \Theta = \theta) = P(X \in A~|~ TX=Tx)\quad \text{ for $P$-almost all $(x,\theta) \in \cX \times \Theta$}.$$ 
+
+\end{thm}
+
+\begin{proof} We first show the \textit{Moreover} claim. By the previous lemma we have that the left hand side is equal to $$P_{\theta}(A ~|~ T=Tx) = r(A,Tx)$$ for some measurable $t \mapsto r(A,t)$. So now it remains to show that $r(A,Tx) = P(X \in A ~|~ TX=Tx)$ for almost $P_X$-almost all $x$. Thus we must show that for $C \subset \cT$ we have that \begin{align}\label{eq: r(A,Tx) and P_X} \int_{T^{-1}C} r(A,Tx) dP_X(x) = P_X(A \cap T^{-1}C).\end{align} In the proof of the previous Lemma (take $B=\Theta$ there) we have shown that $$\int_{T^{-1}C \times \Theta} P_{\theta}(A | T=Tx) dP(x,\theta) = P_X(A \cap T^{-1}C). $$ This completes the proof of (\ref{eq: r(A,Tx) and P_X}) since $r(A,Tx) = P_{\theta}(T=Tx)$ holds for almost all $P$-almost all $(x,\theta)$. Now it remains to show that $T$ is sufficient in the Bayesian sense. By this just proved Moreover claim, it follows from Lemma~\ref{lemma: conditional independence iff drop conditional}  that $X$ and $\Theta$ are conditionally independent given $TX$. Using Lemma~\ref{lemma: conditional independence iff drop conditional} again we have that $$P(\Theta \in B ~|~ TX=Tx, X = x) = P(\Theta \in B ~|~ TX=Tx) \quad\text{ for $P_X$-almost all $x$}.$$ But the left hand side is clearly $P(\Theta \in B ~|~ X=x)$. Thus $T$ is indeed sufficient in the Bayesian sense. \end{proof}
+
+
 \begin{lemma} A statistic $T:\cX \to \cT$ is sufficient in the Bayesian sense if and only if for all prior distributions $\mu_{\Theta}$ on $\Theta$ and measurable $B \subset \cX$ we have that $$x \mapsto P(\Theta \in B ~|~ x \in X)$$ is almost surely measurely $T^{-1}\cB_T$-measurable (i.e., almost surely equal to a function of $T$).
 
 \end{lemma}
@@ -412,7 +435,7 @@ In this section, fix a standard Borel probability space $(\Omega,\mu)$ and suppo
 
 Observe that we have a map $S:\Omega \to \cY \times \cT$ given by $S(\omega)=(Y(\omega), T(\omega))$. We let $$\mu(A|Y=y, T=t) = \mu(A|S=(y,t).$$
 
-\begin{lemma} We have that $X$ and $Y$ are conditionally independent given $T$ if and only if for all $A \subset \cX$ we have that $$\mu(X^{-1}A | Y=Y\omega, T=T\omega) = \mu(X^{-1}A|T=T\omega) \quad \text{ for $\mu$-almost all } \omega \in \Omega.$$
+\begin{lemma}\label{lemma: conditional independence iff drop conditional} We have that $X$ and $Y$ are conditionally independent given $T$ if and only if for all $A \subset \cX$ we have that $$\mu(X^{-1}A | Y=Y\omega, T=T\omega) = \mu(X^{-1}A|T=T\omega) \quad \text{ for $\mu$-almost all } \omega \in \Omega.$$
 
 \end{lemma}
 
