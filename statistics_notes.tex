@@ -302,7 +302,7 @@ Observe that the pushfoward measure on $\cX$ is $P_X = \frac{1}{2}P_{\theta_0} +
 
 \end{proof}
 
-\begin{thm} Assume the nice condition of ??. If $T:\cX \to \cT$ is sufficient in the Bayesian sense, then it is also sufficient in the classical sense.
+\begin{thm} Assume the nice condition of Definition~\ref{def: nice} . If $T:\cX \to \cT$ is sufficient in the Bayesian sense, then it is also sufficient in the classical sense.
 
 \end{thm}
 
@@ -319,7 +319,7 @@ which completes the proof by the law of total probability.\end{proof}
 
 By observing the proofs so far, we see that to check sufficiency in the Bayesian sense it is enough to check only those prior distributions that are discrete (i.e., those $\mu_{\Theta}$ on $\Theta$ where $\mu(C) = 1$ for some at most countable subset $C \subset \Theta$).
 
-\begin{corol} Assuming the nice condition of ??. We have that $\cT:\cX \to \cT$ is sufficient (in either classical of Bayesian sense) if and only if the Bayesian sufficiency condition is satisfied for all discrete prior distributions $\mu_{\Theta}$ on $\Theta$.
+\begin{corol} \label{corol: sufficiency enough for discrete prior} Assuming the nice condition of Definition~\ref{def: nice} . We have that $\cT:\cX \to \cT$ is sufficient (in either classical of Bayesian sense) if and only if the Bayesian sufficiency condition is satisfied for all discrete prior distributions $\mu_{\Theta}$ on $\Theta$.
 
 \end{corol}
 
@@ -327,6 +327,22 @@ By observing the proofs so far, we see that to check sufficiency in the Bayesian
 
 
 \subsection{Fisher-Neyman factorization}
+
+There is a convenient characterization of sufficiency.
+
+\begin{thm} Assume the nice condition of Definition~\ref{def: nice}. Then a statistic $\cT:\cX \to \cT$ is sufficient if and only if the following holds: There is Borel $g:\cX \to \bR_{\geq 0}$ such that for all $\theta \in \Theta$ we have a Borel $h_{\theta}:\cT \to \cR_{\geq 0}$ such that $$f(x|\theta) = h_{\theta}(Tx) g(x) \quad\text{ for $P_{\theta}$ almost all $x \in X$} $$
+
+\end{thm}
+
+\begin{proof} First suppose this condition holds. Thus by Corollary~\ref{corol: sufficiency enough for discrete prior} we only need to check Bayesian sufficiency for any discrete prior $\mu$ on $\Theta$. Say $\mu$ is supported on $C = \{\theta_1, \theta_2,\ldots \} \subset \Theta$. For $C' \subset C$ we have by Bayes' formula that $$P(\Theta \in C ~|~ X=x) = \frac{\int_{C'} f(x|\theta) d\mu(\theta) }{\int_{\Theta} f(x|\theta) d\mu(\theta) }  = \frac{\sum_{\theta \in C'} h_{\theta}(Tx)g(x) \mu(\{\theta\})}{\sum_{\theta \in C} h_{\theta}(Tx)g(x) \mu(\{\theta\})} = \frac{\sum_{\theta \in C'} h_{\theta}(Tx) \mu(\{\theta\})}{\sum_{\theta \in C} h_{\theta}(Tx) \mu(\{\theta\})}. $$ Observe now that this is $\cT$-measurable since the sums are countable, thus Bayesian sufficiency is established. (\textbf{Remark:} this is the reason we restrict without loss of generality to $\mu$ discrete, as otherwise it seems one cannot show measurability in the integrand unless we also assume that $(\theta, t) \mapsto h_{\theta}(t)$ is Borel, which we do not want to as we have not been able to verify this in Lemma~\ref{lemma: construction nu*}).
+
+Conversely, suppose that $\cT$ is Bayesian. Thus by Lemma~\ref{lemma: construction nu*}) we have $$f(x|\theta) = \frac{dP_{\theta}}{d\nu}(x) = \frac{dP_{\theta}}{d\nu^*}(x) \frac{d\nu^*}{d\nu}(x) = h_{\theta}(Tx) g(x)$$
+
+for $\nu^*$-almost all $x \in X$. As $P_{\theta} \ll \nu^*$ we have it also holds for $P_{\theta}$-almost all $x \in X$. \end{proof}
+
+\begin{eg} In Example~\ref{eg: bernoulli bayes setup} we have that $$f(x|\theta) = P_{\theta}(X = x) =   \theta^{T(x)}(1-\theta)^{n - T(x)} $$ so can just take $$h_{\theta}(t) = \theta^t(1-\theta)^{n-t}$$ and $g(x)=1$. Here $\nu(\{x\})=1$ is the counting measure. If instead we had a different measure $\nu(\{x\})=q(x)>0$ then we would have $$f(x|\theta) =  P_{\theta}(X = x) q(x)^{-1} = h_{\theta}(Tx) q(x)^{-1} $$ so then $g(x) = q(x)^{-1}$. This shows that $g(x)$ is just a change of density.
+
+\end{eg}
 
 \appendix
 
