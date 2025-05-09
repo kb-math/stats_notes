@@ -531,13 +531,13 @@ Observe that we have a map $S:\Omega \to \cY \times \cT$ given by $S(\omega)=(Y(
 
 as required. 
 
-Now we prove the converse. Thus we must assume that for $A \subset \cX$ we have $$\mu(X^{-1}A | Y=y, T=t) = \mu(X^{-1}A|T=t) \quad \text{ for all $S^*\mu$-almost all $(y,t) \in \cY \times \cT$.}$$ and show that $$\int_{C} \mu(X^{-1}A | T=t)\mu(Y^{-1}B | T=t) dT^*\mu(t) = \int_{C} \mu(X^{-1}A \cap Y^{-1}B | T=t) dT^*\mu(t)$$ for all $C \subset \cT$. Using the law of total probability we have
+Now we prove the converse. Thus we must assume that for $A \subset \cX$ we have $$\mu(X^{-1}A | Y=Y\omega, T=T\omega) = \mu(X^{-1}A|T=T\omega) \quad \text{ for $\mu$-almost all $\omega \in \Omega$}$$ and show that $$\int_{C} \mu(X^{-1}A | T=t)\mu(Y^{-1}B | T=t) dT^*\mu(t) = \int_{C} \mu(X^{-1}A \cap Y^{-1}B | T=t) dT^*\mu(t)$$ for all $C \subset \cT$. Using the law of total probability we have
 
 \begin{align*} \int_{C} \mu(X^{-1}A \cap Y^{-1}B | T=t) dT^*\mu(t) &= \mu(X^{-1}A \cap Y^{-1}B \cap T^{-1}C) \\ 
 &=\mu(X^{-1}A \cap S^{-1}(B \times C))  \\
 &= \int_{B \times C} \mu(X^{-1}A~|~ Y=y, T=t) d(S^*\mu)(y,t) \\ 
-&= \int_{B \times C} \mu(X^{-1}A~|~ T=t) d(S^*\mu)(y,t) \\ 
-&= \int_{Y^{-1}B \times T^{-1}C} \mu(X^{-1}A~|~ T=T\omega) d\mu(\omega) \\
+&= \int_{Y^{-1}B \cap T^{-1}C} \mu(X^{-1}A~|~ Y=Y\omega, T=T\omega) d\mu(\omega) \\
+&= \int_{Y^{-1}B \cap T^{-1}C} \mu(X^{-1}A~|~ T=T\omega) d\mu(\omega) \\
 &= \int_{\Omega} \mathds{1}_{Y^{-1}B}(\omega) \mathds{1}_{T^{-1}C}(\omega) \mu(X^{-1}A~|~ T=T\omega) d\mu(\omega) \\
 &=\int_{\Omega} E(\mathds{1}_{Y^{-1}B}|T=T\omega) \mathds{1}_{T^{-1}C}(\omega) \mu(X^{-1}A~|~ T=T\omega) d\mu(\omega) \\ 
 &= \int_{\Omega} \mu(Y^{-1}B ~|~ T=T\omega) \mathds{1}_{T^{-1}C}(\omega) \mu(X^{-1}A~|~ T=T\omega) d\mu(\omega) \\ 
