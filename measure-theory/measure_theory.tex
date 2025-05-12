@@ -119,7 +119,7 @@ We say that $A \subset X$ is $\mu$-measurable if $$\mu(B) = \mu(B \cap A) + \mu(
 
 \end{mydef}
 
-\begin{thm} The set of all measurable subsets forms a $\sigma$-algebra on $X$. Moreover, $\mu$ is countably-additive (a measure) on $X$ for this $\sigma$-algebra.
+\begin{thm}\label{thm: mes sets sigma algebra} The set of all measurable subsets forms a $\sigma$-algebra on $X$. Moreover, $\mu$ is countably-additive (a measure) on $X$ for this $\sigma$-algebra.
 
 \end{thm}
 
@@ -196,6 +196,8 @@ Let $X,Y$ be measure spaces and let $$\cR(X,Y) = \{ U \times V ~|~ U \subset X \
 
 Thus if we let $$\cC_2 = \{ C \cap R_i ~|~ i=1,2,3 \text{ and } C \in \cC \}$$ and $$\cC_1 = \{ C \cap R ~|~ C \in \cC\}$$ then $$Area(\cC_1) + Area(\cC_2) = Area(\cC).$$ Observe that $\cC_1$ covers $B \cap R$ and $\cC_2$ covers $B \cap R^c$ and so $$(\mu \times \nu)(R \cap B) + (\mu \times \nu)(R^c \cap B) \leq Area(\cC_1) + Area(\cC_2) = Area(\cC) \leq (\mu \times \nu) (B) + \epsilon.$$ By letting $\epsilon \to 0$, the proof is complete. \end{proof}
 
+We let $\cB_{X \times Y}$ denote the smallest $\sigma$-algebra on $X \times Y$ containing $\cR$. Note that this Proposition and Theorem~\ref{thm: mes sets sigma algebra} says that $\mu \times \nu$ is a measure (countably sub-additive) on this $\sigma$-algebra.
+
 Another convenient definition of $\mu \times \nu$ is as follows. Let $\cC$ is a countable collection of rectangles, then define the positive function $$F_{\cC} :X\times Y \to [0,\infty]$$ to be $$F_{\cC}(a) = \sum_{C \in \cC} \mathds{1}_{C}(a).$$ Then notice that $\cC$ covers $A$ if and only if $\mathds{1}_{A} \leq F_{\cC}$. Now consider the function $X \to [0,\infty]$
 given by $$x \mapsto \int_{Y} F_{\cC}(x,y) d\nu(y).$$ Let us show that this function is well defined and measurable. If $F_{\cC} = \sum_{i=1}^{\infty} \mathds{1}_{U_i \times V_i}$ then $$\int_{Y} F_{\cC}(x,y) d\nu(y) = \int_{Y} \mathds{1}_{U_i}(x)\mathds{1}_{V_i}(y) d \nu(y) = \sum_{i=1}^{\infty}\mathds{1}_{U_i}(x) \nu(V_i)$$ by the monotone convergence theorem. Thus this function is indeed measurable (by being the countable sum of non-negative measurable functions). By applying the monotone convergence theorem again we have the useful Fubini-type equation $$\int_X \int_Y F_{\cC}(x,y) d\nu(y) d\mu(x) = \sum_{i=1}^{\infty} \mu(U_i)\nu(V_i) = Area(\cC).$$
 
@@ -205,6 +207,25 @@ given by $$x \mapsto \int_{Y} F_{\cC}(x,y) d\nu(y).$$ Let us show that this func
 
 \begin{proof} Suppose that $\cC$ covers $R$. Then we must have that $$F_{\{R\}} = \mathds{1}_{R} \leq F_{\cC}.$$ Thus we must have that $$Area(R) = \int_{X}\int_{Y}F_{\{R\}} (x,y) d\nu(y)d\mu(x) \leq \int_{X}\int_{Y} F_{\cC}(x,y) d\nu(y)d\mu(x) = Area(\cC).$$ As $\cC$ was arbitrary, this shows that $$(\mu \times \nu) (R) \geq Area(R).$$ The reverse inequality holds because $\{R\}$ covers $R$. \end{proof}
 
+\begin{thm}[Fubini-Tonelli theorem for indicator functions] Suppose that $\mu$ and $\nu$ are $\sigma$-finite (on $X$ and $Y$ respectively). Let $B \in \cB_{X \times Y}$. Then the mapping $$x \mapsto \int_{Y} \mathds{1}_B(x,y) d\nu(y)$$ is measurable and its integral over $X$ is $(\mu \times \nu)(B)$, that is, $$\int_{X} \int_{Y} \mathds{1}_B(x,y) d\nu(y) d\mu(x) = (\mu \times \nu)(B) = \int_{Y} \int_{X} \mathds{1}_B(x,y) d\mu(x) d\nu(y) .$$
 
+\end{thm}
+
+\begin{proof} By a partitioning argument and the monotone convergence theorem, we can reduce to the case where $\mu$ and $\nu$ are both finite.
+
+Let $\cM$ denote the set of all $B \in \cB_{X \times Y}$ for which this theorem is true. By the proposition above, $\cR \subset \cM$. Note that a finite union of rectangles may be written as a finite union of disjoint rectangles, thus the smallest algebra that contains $\cR$ is a subset of $\cM$. Thus, by the montone class lemma it will be enough to show that $\cM$ is a montone class. That $\cM$ is closed under countable nested unions follows from the monotone convergence theorem. To show that $\cM$ is closed under countable nested intersections, we can use the fact that $\cM$ is closed under complements, which uses the finiteness of $\mu$ and $\nu$ as follows. Indeed if $B \in \cM$, then $$\int_{X} \int_{Y} \mathds{1}_{B^c}(x,y) d\nu(y) d\mu(x) = \int_{X} \int_{Y} (1-\mathds{1}_B(x,y)) d\nu(y) d\mu(x) = (\mu \times \nu)(X \times Y) - (\mu \times \nu)(B) = (\mu \times \nu)(B^c)$$
+and so $B^c \in \cM$. \end{proof}
+
+\begin{eg} The $\sigma$-finiteness assumption is necessary. For instance, let $X,Y = \bR$ and let $\mu$ be the counting measure (not $\sigma$-finite) and let $\nu$ be the Lebesgue measure and let $B = \{(x,x) ~|~ x \in \bR\}$ be the diagonal. Then $$\int_{X} \int_{Y} \mathds{1}_B(x,y) d\nu(y) d\mu(x)  = \int_X 0 d\mu(x) = 0$$ and yet  $$\int_{Y} \int_{X} \mathds{1}_B(x,y) d\mu(x) d\nu(y) = \int_Y 1 d\nu(y) = \infty. $$
+
+\end{eg}
+
+By using the monotone convergence theorem, we get the Fubini-Tonelli theorem for positive measurable functions.
+
+\begin{thm}[Tonelli theorem]  Suppose that $\mu$ and $\nu$ are $\sigma$-finite (on $X$ and $Y$ respectively) and suppose that $f:X \times Y \to [0, \infty)$ is $\cB_{X \times Y}$-measurable. Then $$x \mapsto \int_{Y} f(x,y) d\nu(y)$$ is measurable and
+$$\int_{X} \int_{Y} f(x,y) d\nu(y) d\mu(x)  = \int_{X \times Y} f(x,y) d(\mu \times \nu)(x,y)  = \int_{Y} \int_{X} f(x,y) d\mu(x) d\nu(y). $$
+\end{thm}
+
+\begin{proof} Write $f = \sum_{i=1}^{\infty} c_i\mathds{1}_{B_i}$ for some $B_i \in \cB_{X \times Y}$ and $c_i \in [0,\infty)$. Now apply the previous theorem and the monotone convergence theorem. \end{proof}
 
 \end{document}
