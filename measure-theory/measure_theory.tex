@@ -222,10 +222,26 @@ and so $B^c \in \cM$. \end{proof}
 
 By using the monotone convergence theorem, we get the Fubini-Tonelli theorem for positive measurable functions.
 
-\begin{thm}[Tonelli theorem]  Suppose that $\mu$ and $\nu$ are $\sigma$-finite (on $X$ and $Y$ respectively) and suppose that $f:X \times Y \to [0, \infty)$ is $\cB_{X \times Y}$-measurable. Then $$x \mapsto \int_{Y} f(x,y) d\nu(y)$$ is measurable and
+\begin{thm}[Tonelli theorem]  Suppose that $\mu$ and $\nu$ are $\sigma$-finite (on $X$ and $Y$ respectively) and suppose that $f:X \times Y \to [0, \infty]$ is $\cB_{X \times Y}$-measurable. Then $$x \mapsto \int_{Y} f(x,y) d\nu(y)$$ is measurable and
 $$\int_{X} \int_{Y} f(x,y) d\nu(y) d\mu(x)  = \int_{X \times Y} f(x,y) d(\mu \times \nu)(x,y)  = \int_{Y} \int_{X} f(x,y) d\mu(x) d\nu(y). $$
 \end{thm}
 
 \begin{proof} Write $f = \sum_{i=1}^{\infty} c_i\mathds{1}_{B_i}$ for some $B_i \in \cB_{X \times Y}$ and $c_i \in [0,\infty)$. Now apply the previous theorem and the monotone convergence theorem. \end{proof}
 
+
+\begin{thm}  Suppose that $\mu$ and $\nu$ are $\sigma$-finite (on $X$ and $Y$ respectively) and suppose that $f:X \times Y \to [-\infty, \infty]$ is $\cB_{X \times Y}$-measurable. Suppose that\footnote{By Tonelli's theorem, we can replace this condition with an iterated integral for $|f|$.} $$\int_{X \times Y} |f(x,y)| d(\mu \times \nu)(x,y) < \infty.$$
+
+Then there exists a measurable set $X' \subset X$ that is $\mu$-conull and such that $$x \mapsto \int_{Y} |f(x,y)| d\nu(y) < \infty \quad\text{for all } x \in X'$$ and the map $X' \to X$ given by $$x \mapsto \int_{Y} f(x,y) d\nu(y) $$ is a well defined measurable map. Furthermore\footnote{The integrands are only almost everywhere well defined. For example the first integral is over $X'$ rather than $X$, but as $X'$ is co-null we can still sensibly integrate over $X$ by extending the domain to whichever function on $X$ we like.} $$\int_{X} \int_{Y} f(x,y) d\nu(y) d\mu(x)  = \int_{X \times Y} f(x,y) d(\mu \times \nu)(x,y)  = \int_{Y} \int_{X} f(x,y) d\mu(x) d\nu(y). $$
+
+\end{thm}
+
+\begin{proof} As $f$ is $L^1$ with respect to $\mu \times \nu$, we can write $f = f^+ - f^-$ where $f^+, f^-:X \times Y \to [0,\infty]$ and $f^+, f^-$ are both $L^1$. Thus by an application of Tonelli's theorem to both of these functions we have that $$\int_X \int_Y f^{\pm}(x,y) d\nu(y) d\mu(x) < \infty$$ and so there must be a co-null set $X' \subset X$ so that $$\int_Y f^{\pm}(x,y) d\nu(y) < \infty \quad \text{for all } x \in X'$$ and this quantity is a measurable function on $X'$.  Thus 
+\begin{align*}\int_{X'} \int_Y f (x,y) d\nu(y) d\mu(x) &= \int_{X'} \int_Y \left(f^+(x,y) - f^-(x,y)\right) d\nu(y) d\mu(x) \\
+&= \int_{X'}\left(\int_Y f^+(x,y) d\nu(y) - \int_Y f^-(x,y) d\nu(y) \right) d\mu(x) \\
+&=  \int_{X'}\int_Y f^+(x,y) d\nu(y)d\mu(x) - \int_{X'}\int_Y f^-(x,y) d\nu(y)d\mu(x) \\ 
+&=  \int_{X}\int_Y f^+(x,y) d\nu(y)d\mu(x) - \int_{X}\int_Y f^-(x,y) d\nu(y)d\mu(x) \\ 
+&=  \int_{X \times Y} f^+(x,y) d(\mu \times \nu)(x,y) - \int_{X \times Y} f^-(x,y) d(\mu \times \nu)(x,y) \\
+&= \int_{X \times Y} f(x,y) d(\mu \times \nu)(x,y)  \end{align*}
+ 
+\end{proof}
 \end{document}
