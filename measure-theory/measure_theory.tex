@@ -1,0 +1,210 @@
+\documentclass[twoside, a4paper, 10pt]{amsart}
+\title[ ]{Measure Theory}
+%\usepackage{amsaddr}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{verbatim}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usetikzlibrary{matrix, arrows}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{listings}
+\usepackage[all]{xy}
+\usepackage[pdftex,colorlinks,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[margin=3cm]{geometry}
+\usepackage{bigints}
+\usepackage{dsfont}
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\linespread{1.3}
+
+
+\setcounter{secnumdepth}{4}
+
+\begin{document}
+\maketitle
+\raggedbottom
+
+
+%% Mathcal large
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+%% Mathbb large
+\newcommand{\bA}{\mathbb{A}}
+\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}
+\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}
+\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}
+\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}
+\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}
+\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}
+\newcommand{\bZ}{\mathbb{Z}}
+
+
+\newcounter{dummy} \numberwithin{dummy}{section}
+
+\theoremstyle{definition}
+\newtheorem{mydef}[dummy]{Definition}
+\newtheorem{prop}[dummy]{Proposition}
+\newtheorem{corol}[dummy]{Corollary}
+\newtheorem{thm}[dummy]{Theorem}
+\newtheorem{lemma}[dummy]{Lemma}
+\newtheorem{eg}[dummy]{Example}
+\newtheorem{notation}[dummy]{Notation}
+\newtheorem{remark}[dummy]{Remark}
+\newtheorem{claim}[dummy]{Claim}
+\newtheorem{Exercise}[dummy]{Exercise}
+\newtheorem{question}[dummy]{Question}
+\newtheorem{conjecture}[dummy]{Conjecture}
+
+
+\section{Outer measures}
+
+\begin{mydef} An \textit{outer measure} on a set $X$ is a function $\mu:2^X \to [0,\infty]$ which satisfies the following conditions:
+
+\begin{enumerate}
+	\item Countably sub-additivity: if $A_1,A_2,\ldots \subset X$ then $$\mu(\bigcup_{i=1}^{\infty} A_i) \leq \sum_{i=1}^{\infty} \mu(A_i).$$
+	\item Monotonicity: If $A \subset B \subset X$ then $\mu(A) \leq \mu(B)$.
+	\item Empty set is null: $\mu(\emptyset) = 0$.
+\end{enumerate}
+
+We say that $A \subset X$ is $\mu$-measurable if $$\mu(B) = \mu(B \cap A) + \mu(B \cap A^c) \quad \text{for all } B \subset X.$$ Note that, by sub-additivity, this is equivalent to $$\mu(B) \geq \mu(B \cap A) + \mu(B \cap A^c) \quad \text{for all } B \subset X.$$
+
+\end{mydef}
+
+\begin{thm} The set of all measurable subsets forms a $\sigma$-algebra on $X$. Moreover, $\mu$ is countably-additive (a measure) on $X$ for this $\sigma$-algebra.
+
+\end{thm}
+
+\begin{proof} Observe that $\emptyset$ is measurable since for $B \subset X$ we have $$\mu(B) = 0 + \mu(B \cap X) = \mu(\emptyset) + \mu(B \cap X) = \mu(B \cap \emptyset) + \mu(B \cap \emptyset^c).$$ Also $A$ is measurable then $A^c$ also is by symmetry.
+
+We first show that the set of measurable sets is closed under finite intersection. Thus suppose that $A_1, A_2,\ldots \subset X$ are measurable and $B \subset X$.
+
+As $A_1$ is measurable, we obtain that $$\mu(B \cap A_2^c) = \mu(B \cap A_2^c \cap A_1) + \mu(B \cap A_2^c \cap A_1^c)$$ and $$\mu(B \cap A_2) = \mu(B \cap A_2 \cap A_1) + \mu(B \cap A_2 \cap A_1^c).$$ 
+
+Now we add these two equations and use the inequality (which follows from subaditivity and the identity $A_1 \cup A_2 = (A_1^c \cap A_2) \cup (A_1 \cap A_2^c) \cup (A_1 \cap A_2)$) $$\mu(B \cap A_2^c \cap A_1) + \mu(B \cap A_2 \cap A_1) + \mu(B \cap A_2 \cap A_1^c) \geq \mu(B \cap (A_1 \cup A_2))$$ to get that $$\mu(B \cap A_2^c) + \mu(B \cap A_2) \geq \mu(B \cap (A_1 \cap A_2)) + \mu(B \cap A_1^c \cap A_2^c).$$ Measurability of $A_2$ means that the left hand side is $\mu(B)$, thus $$\mu(B) \geq \mu(B \cap (A_1 \cap A_2)) + \mu(B \cap (A_1 \cup A_2)).$$ The reverse inequality holds from sub-additivity, thus $A_1 \cup A_2$ is measurable.
+
+Thus we have shown that the measurable sets form an algebra. To show that they form a $\sigma$-algebra, it thus remains to show that a \textit{disjoint} union of measurable sets is measurable. Thus suppose $A_1, A_2, \ldots$ are disjoint measurable sets and $B \subset X$. We claim that $$\mu\left(B \cap \left(\bigcup_{i=1}^n A_i\right)\right) = \mu(B \cap A_1) + \cdots + \mu(B \cap A_n).$$ We provie this by induction as follows. Suppose it holds for $n$. Then by measurability of $A_{n+1}$ we have that 
+\begin{align*}\mu\left(B \cap \left(\bigcup_{i=1}^{n+1} A_i\right)\right) &=  \mu\left(B \cap \left(\bigcup_{i=1}^{n+1} A_i\right) \cap A_{n+1}\right) + \mu\left(B \cap \left(\bigcup_{i=1}^{n+1} A_i\right) \cap A_{n+1}^c\right) 
+\\ &= \mu(B \cap A_{n+1}) + \mu\left(B \cap \left(\bigcup_{i=1}^n A_i\right)\right) \end{align*}
+
+which completes the induction step (the last equation uses disjointness of the $A_i$). Now by montonicity of $\mu$ we get $$\mu\left(B \cap \left(\bigcup_{i=1}^{\infty} A_i\right)\right) \geq \lim_{n \to \infty} \mu\left(B \cap \left(\bigcup_{i=1}^n A_i\right)\right) = \sum_{i=1}^{\infty} \mu(B \cap A_i).$$ The reverse inequality holds from sub-additivity, thus we have shown that $$\mu\left(B \cap \left(\bigcup_{i=1}^{\infty} A_i\right)\right) = \sum_{i=1}^{\infty} \mu(B \cap A_i).$$ In particular, for $B = X$ this shows that $\mu$ is countably-additive on the measurable sets. It remains to show that this countable union is measurable. Observe that since finite unions are measurable we have
+\begin{align*} \mu(B) &= \mu\left(B \cap \left(\bigcup_{i=1}^n A_i\right)\right) + \mu\left(B \cap \left(\bigcup_{i=1}^n A_i\right)^c\right) \\
+&\geq  \mu\left(B \cap \left(\bigcup_{i=1}^n A_i\right)\right) + \mu\left(B \cap \left(\bigcup_{i=1}^{\infty} A_i\right)^c\right). \end{align*} Now letting $n \to \infty$ and using countable sub-additivity, the proof is complete. \end{proof}
+
+
+\begin{eg}[Lebesgue outer measure] If $I \subset \bR$ is a non-empty bounded interval, we let $len(I) = \sup(I) - \inf(I)$ and $len(\emptyset) = 0$. Note $I$ could be open, closed or half open. If $\cI$ is a countable set of bounded intervals of $\bR$, then we denote $len(\cI) = \sum_{I \in \cI} len(I)$. We say that $\cI$ covers $B$ if $$ B \subset \bigcup_{I \in \cI} I.$$ Finally, denote the Lebesgue outer-measure of $B \subset \bR$ to be $$\lambda(B) = \inf_{\cI \text{ covers } B} len(\cI).$$
+
+Let us now show that any bounded interval $J$ is $\lambda$-measurable. To see this, let $B \subset \bR$ be any subset and suppose that $\cI$ covers $B$ such that $len(\cI) < \lambda(B) + \epsilon$. We can write $J^c = J_1 \cup J_2$ where $J_1$ and $J_2$ are disjoint (unbounded) intervals. Let $\cI_1 = \{I \cap J ~|~ I \in \cI\}$ and $$\cI_2 = \{I \cap J_m ~|~ I \in \cI, m \in \{1,2\}\}.$$ Then $\cI_1$ covers $B \cap J$ and $\cI_2$ covers $B \cap J^c$. Observe that $len(\cI_1) + len(\cI_2) = len(\cI)$ since $$len(I) = len(I \cap J_1) + len(I \cap J) + len(I \cap J_2).$$ Thus $$\lambda(B \cap J) + \lambda(B \cap J^c) \leq len(\cI_1) + len(\cI_2) =len(\cI) \leq \lambda(B) + \epsilon.$$ Letting $\epsilon \to 0$ shows that $J$ is $\lambda$-measurable.
+
+\end{eg}
+
+\section{Monotone classes}
+
+\begin{mydef} Let $X$ be a set. A monotone class on $X$ is a collection of subsets $\cA \subset 2^X$ which satisfies the following properties.
+
+\begin{enumerate}
+	\item $\emptyset, X \in \cA$.
+	\item If $A_1,A_2,\ldots \in \cA$ is such that $A_1 \subset A_2 \subset \ldots$ then $\bigcup_{i=1}^{\infty} A_i \in \cA$.
+	\item If $A_1,A_2,\ldots \in \cA$ is such that $A_1 \supset A_2 \supset \ldots$ then $\bigcap_{i=1}^{\infty} A_i \in \cA$.
+\end{enumerate}
+
+\end{mydef}
+ 
+Recall than an algebra on $X$ is a collection of subsets of $X$ that is closed under finite intersections, finite unions, complements and contains $\emptyset$ and $X$.
+
+\begin{thm}[Monotone Class Lemma] Let $X$ be a set and suppose that $\cA$ is an algebra of subsets of $X$. Then the $\sigma$-algebra generated by $\cA$ is the smallest monotone class that contains $\cA$.
+
+\end{thm}
+
+\begin{proof} Let $\cM$ denote the smallest monotone class that contains $\cA$. We must show that $\cM$ is a $\sigma$-algebra. It is enough to show that $\cM$ is closed under finite unions and complements. For $A \in \cA$, let $$\cB_A = \{B \in \cM ~|~ B \cup A \in \cM\}.$$ Note that $\cA \subset \cB_A$ by definition of algebra. 
+
+We claim that $\cB_A$ is a monotone class. To see this, suppose that $B_1 \subset B_2 \subset \ldots$ are all in $\cB_A$. Thus $B_i \cup A \in \cM$. But $B_i \cup A$ is a nested sequence of sets, and so $\bigcup_i B_i \cup A \in \cM$ and so $\bigcup_i B_i \in \cM$. Likewise suppose that $B_1 \supset B_2 \supset \ldots$ are all in $\cB_A$. Thus $B_i \cup A \in \cM$. As $B_i \cup A$ monotonically decreases to $A \cup \bigcap_i B_i$ we have that $A \cup \bigcap_i B_i \in \cM$ and so $\bigcap_i B_i \in \cB_A$.
+
+Thus $\cB_A$ is a monotone class containing $\cM$, but is a subset of $\cM$ by definition. Thus $\cM = \cB_A$. Now let $$\cM_0 = \{ M_0 \in \cM ~|~ M_0 \cup M \in \cM \text{ for all } M \in \cM \}.$$ We see that $\cA \subset \cM_0$ since $\cM = \cB_A$. Note also that $\cM_0$ is a monotone class. Thus $\cM_0 = \cM$. Thus we have shown that $\cM$ is closed under finite unions, and hence countable unions.
+
+Now let $\cM' = \{ M \in \cM ~|~ M^c \in \cM\}$. Note that $\cA \subset \cM'$ and $\cM'$ is a monotone class. Thus $\cM' = \cM$ and so $\cM$ is closed under complements. Thus $\cM$ is indeed a $\sigma$-algebra.
+
+\end{proof}
+
+\begin{eg} Let $\cA$ denote the set of all finite unions of half-open intervals $ \bigcup_{i=1}^n [a_i, b_i)$ for some $n \geq 0$. Then $\cA$ is an algebra, but not a $\sigma$-algebra. The monotone class lemma says that the smallest monotone class containing $\cA$ is the Borel $\sigma$-algebra.
+
+Now let $\cU$ be the smallest set containing $\cA$ that is closed under countable nested unions. We claim that each element in $\cU$ is either empty or has positive Lebesgue measure. Let $\cU'$ denote all $U \in \cU$ with this property ($U$ is either empty or positive measure). Clearly $\cA \subset \cU'$. Now let $U_1,U_2,\ldots \in \cU'$ and $U = \bigcup_{i}U_i$. If $U$ has zero measure, then each $U_i$ has zero measure and so each $U_i$ empty and so $U$ is empty. Thus $U \in \cU'$. Thus $\cU = \cU'$. This means that $\cU$ is not the Borel $\sigma$-algebra. This shows that in the definition of monotone class, we really do need closure under countable intersections as well otherwise the monotone class lemma is not true.
+
+\end{eg}
+
+\section{Product measures and Fubini-Tonelli theorem}
+
+Let $X,Y$ be measure spaces and let $$\cR(X,Y) = \{ U \times V ~|~ U \subset X \text{ measurable}, V \subset Y \text{measureable}\}$$ Denote the set of all rectangles with in $X \times Y$ with measurable projections onto the axes. Let $\mu$ and $\nu$ be two positive measures on $X$ and $Y$ respectively. Then we define the area $$Area(U \times V) = \mu(U)\nu(V).$$ If $\cC \subset \cR$ is a countable collections of rectangles define the $$Area(\cC) = \sum_{C \in \cC} Area(C).$$ We say that $\cC$ covers $A \subset X \times Y$ if $$A \subset \bigcup_{C \in \cC} C.$$ Define the product outer-measure $$( \mu \times \nu) (A) = \inf_{\cC \text{ covers } A} Area(\cC).$$ 
+\begin{prop} Each element of $\cR$ is $\mu \times \nu$-measurable.
+
+\end{prop}
+
+\begin{proof} Let $R \in \cR$ and let $B \subset X \times Y$. Let $\cC$ be a countable collection of rectangles that covers $B$ such that $$Area(\cC) \leq (\mu \times \nu) (B) + \epsilon.$$ Observe that the complement $R^c$ can be written as a disjoint union of finitely many rectangles. More precisely, if $R = U \times V$ then $$R^c = U^c \times V^c \cup U^c \times V \cup U \times V^c.$$ Call these three rectangles $R_1,R_2,R_3$. Observe that any rectangle $C = C_1 \times C_2 \in \cC$ we have that
+\begin{align*}&~~ Area(C \cap R) + Area(C \cap R_1) + Area(C \cap R_2) + Area(C \cap R_3) \\
+&= \mu(C_1 \cap U) \nu(C_2 \cap V) + \mu(C_1 \cap U^c)\nu(C_2 \cap V^c) + \mu(C_1 \cap U^c)\nu(C_2 \cap V) + \mu(C_1 \cap U)\nu(C_2 \cap V^c) \\
+&= (\mu(C_1 \cap U) + \mu(C_1 \cap U^c))(\nu(C_2 \cap V) + \nu(C_2 \cap V^c)) \\
+&= \mu(C_1)\nu(C_1) \\
+&= Area(C). \end{align*} 
+
+Thus if we let $$\cC_2 = \{ C \cap R_i ~|~ i=1,2,3 \text{ and } C \in \cC \}$$ and $$\cC_1 = \{ C \cap R ~|~ C \in \cC\}$$ then $$Area(\cC_1) + Area(\cC_2) = Area(\cC).$$ Observe that $\cC_1$ covers $B \cap R$ and $\cC_2$ covers $B \cap R^c$ and so $$(\mu \times \nu)(R \cap B) + (\mu \times \nu)(R^c \cap B) \leq Area(\cC_1) + Area(\cC_2) = Area(\cC) \leq (\mu \times \nu) (B) + \epsilon.$$ By letting $\epsilon \to 0$, the proof is complete. \end{proof}
+
+Another convenient definition of $\mu \times \nu$ is as follows. Let $\cC$ is a countable collection of rectangles, then define the positive function $$F_{\cC} :X\times Y \to [0,\infty]$$ to be $$F_{\cC}(a) = \sum_{C \in \cC} \mathds{1}_{C}(a).$$ Then notice that $\cC$ covers $A$ if and only if $\mathds{1}_{A} \leq F_{\cC}$. Now consider the function $X \to [0,\infty]$
+given by $$x \mapsto \int_{Y} F_{\cC}(x,y) d\nu(y).$$ Let us show that this function is well defined and measurable. If $F_{\cC} = \sum_{i=1}^{\infty} \mathds{1}_{U_i \times V_i}$ then $$\int_{Y} F_{\cC}(x,y) d\nu(y) = \int_{Y} \mathds{1}_{U_i}(x)\mathds{1}_{V_i}(y) d \nu(y) = \sum_{i=1}^{\infty}\mathds{1}_{U_i}(x) \nu(V_i)$$ by the monotone convergence theorem. Thus this function is indeed measurable (by being the countable sum of non-negative measurable functions). By applying the monotone convergence theorem again we have the useful Fubini-type equation $$\int_X \int_Y F_{\cC}(x,y) d\nu(y) d\mu(x) = \sum_{i=1}^{\infty} \mu(U_i)\nu(V_i) = Area(\cC).$$
+
+\begin{prop} If $R \in \cR$ is a rectangle, then $(\mu \times \nu)(R) = Area(R)$.
+
+\end{prop}
+
+\begin{proof} Suppose that $\cC$ covers $R$. Then we must have that $$F_{\{R\}} = \mathds{1}_{R} \leq F_{\cC}.$$ Thus we must have that $$Area(R) = \int_{X}\int_{Y}F_{\{R\}} (x,y) d\nu(y)d\mu(x) \leq \int_{X}\int_{Y} F_{\cC}(x,y) d\nu(y)d\mu(x) = Area(\cC).$$ As $\cC$ was arbitrary, this shows that $$(\mu \times \nu) (R) \geq Area(R).$$ The reverse inequality holds because $\{R\}$ covers $R$. \end{proof}
+
+
+
+\end{document}

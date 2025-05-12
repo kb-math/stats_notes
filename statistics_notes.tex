@@ -146,7 +146,7 @@ We can use this language to define hypothesis testing:
 
 \begin{mydef} Suppose now that we have a partition $\Theta = \Theta_0 \sqcup \Theta_1$ of the parameter space and our action space is $\cA = \{ \Theta_0, \Theta_1\}$. We have a $0-1$ loss function given by $$L(\theta, \Theta_i) = 1 - \mathds{1}_{\Theta_i}(\theta).$$ Thus $L(\theta, a)$ measures whether we chose the right partition $a \in \cA$ that $\theta$ landed in. We see that the risk $$R(\theta, d) = P_{\theta} (\left\{ \omega \in \Omega ~|~ \theta \notin d(X(\omega)) \right\} )$$ is the probability that our decision algorithm chooses the wrong partition.
 
-The action $\Theta_0$ is called the \textit{Null Hypothesis} while $\Theta_1$ is called the \textit{Alternative hypothesis}. A \textit{Type I} error is an action that chooses the alternative hypotehesis ($\Theta_1$) when the null hypotheiss is true ($\theta \in \Theta_0$). A \textit{Type II error} is an action that chooses the null hypothesis when the alternative is true.
+The action $\Theta_0$ is called the \textit{Null Hypothesis} while $\Theta_1$ is called the \textit{Alternative hypothesis}. A \textit{Type I} error is an action that chooses the alternative hypothesis ($\Theta_1$) when the null hypotheiss is true ($\theta \in \Theta_0$). A \textit{Type II error} is an action that chooses the null hypothesis when the alternative is true.
 
 \end{mydef}
 
@@ -169,7 +169,7 @@ Recalling that we assume the nice condition of Definition~\ref{def: nice}, we th
 \begin{align*} \int_{\cX \times \Theta} \psi(x,\theta) dP(x,\theta) &= \int_{\cX \times \Omega } \psi(x,\theta) f(x|\theta) d(\nu \times \mu_{\Theta}) (x,\theta) \\ &= \int_{\Theta} \left( \int_{\cX} \psi(x,\theta) f(x|\theta) d\nu(x) \right) d\mu_{\Theta}(\theta) \\
 &=  \int_{\Theta} \int_{\cX} \psi(x,\theta) dP_{\theta}(x) d\mu_{\Theta}(\theta)   \end{align*}
 
-From now on, we let $X:\cX \times \Theta \to \cX$ and $\Theta:\cX \times \Theta \to \Theta$ denote the push-forward measure (note: by abuse of notation $\Theta$ is now either a space or a projection map, but it should cause no confusion in any context).
+From now on, we let $X:\cX \times \Theta \to \cX$ and $\Theta:\cX \times \Theta \to \Theta$ denote the projections (note: by abuse of notation $\Theta$ is now either a space or a projection map, but it should cause no confusion in any context).
 
 Let $P_X=X^*P$ denote the push-forward measure of $P$ onto $\cX$, that is, $P_X(A) = P(A \times \Theta)$ for $A \subset \cX$. We let $$g(x) := \int_{\Theta} f(x,\theta) d\mu_{\Theta}(\theta).$$
 
