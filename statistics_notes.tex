@@ -166,7 +166,7 @@ The action $\Theta_0$ is called the \textit{Null Hypothesis} while $\Theta_1$ is
 
 Recalling that we assume the nice condition of Definition~\ref{def: nice}, we thus have a probability measure $P$ on $\cX \times \Theta$ given by $$\frac{dP}{d(\nu \times \mu_{\Theta})}(x,\theta) = f(x|\theta).$$ In other words for integrable $\psi:\cX \times \Theta \to \bR$ we have 
 
-\begin{align*} \int_{\cX \times \Theta} \psi(x,\theta) dP(x,\theta) &= \int_{\cX \times \Omega } \psi(x,\theta) f(x|\theta) d(\nu \times \mu_{\Theta}) (x,\theta) \\ &= \int_{\Theta} \left( \int_{\cX} \psi(x,\theta) f(x|\theta) d\nu(x) \right) d\mu_{\Theta}(\theta) \\
+\begin{align*} \int_{\cX \times \Theta} \psi(x,\theta) dP(x,\theta) &= \int_{\cX \times \Theta } \psi(x,\theta) f(x|\theta) d(\nu \times \mu_{\Theta}) (x,\theta) \\ &= \int_{\Theta} \left( \int_{\cX} \psi(x,\theta) f(x|\theta) d\nu(x) \right) d\mu_{\Theta}(\theta) \\
 &=  \int_{\Theta} \int_{\cX} \psi(x,\theta) dP_{\theta}(x) d\mu_{\Theta}(\theta)   \end{align*}
 
 From now on, we let $X:\cX \times \Theta \to \cX$ and $\Theta:\cX \times \Theta \to \Theta$ denote the projections (note: by abuse of notation $\Theta$ is now either a space or a projection map, but it should cause no confusion in any context).
@@ -184,25 +184,27 @@ Observe that for $A \subset \cX$ we have that $$P_X(A) = \int_{A \times \Theta} 
 
 Given this lemma, we can now define for $P_X$-almost all $x \in \cX$ a probability measure on $\Theta$ given by $$P_{\Theta|X=x}(B) = \frac{1}{g(x)} \int_{B} f(x|\theta) d\mu_{\Theta}(\theta)$$ for $B \subset \Theta$. This is known as the \textit{posterior distribution of $\Theta$ given $X = x$}.
 
-\begin{lemma} The measures $\delta_x \times P_{\Theta |X=x}$ are conditional distributions of $P$ given $X=x$ where $X:\cX \times \Theta \to \cX$ is the projection. The conditional expectation of an integrable $\psi:\cX \times \Theta \to \bR$ given $X=x$ is given by $$E(\psi | X=x) = \frac{1}{g(x)}\int_{\Theta} \psi(x,\theta) f(x|\theta) d\mu_{\Theta}(\theta).$$ 
+\begin{prop} The measures $\delta_x \times P_{\Theta |X=x}$ are conditional distributions of $P$ given $X=x$ where $X:\cX \times \Theta \to \cX$ is the projection. The conditional expectation of an integrable $\psi:\cX \times \Theta \to \bR$ given $X=x$ is given by $$E(\psi | X=x) = \frac{1}{g(x)}\int_{\Theta} \psi(x,\theta) f(x|\theta) d\mu_{\Theta}(\theta).$$ 
 
-\end{lemma}
+\end{prop}
 
 \begin{proof} Let $E'(\psi |X=x)$ denote the right hand side. We first show that it is well defined for almost all $x \in X$. This follows since by assumption we have that $|\psi(x,\theta)|$ is integrable with respect to $P$ and thus $$\int |\psi(x,\theta)| f(x|\theta) d\nu(x) d\mu_{\Theta} (\theta) < \infty.$$ It follows from Fubini-Tonelli that for $\nu$ almost all $x \in X$ we have that $$\int_{\cX} |\psi(x,\theta)| f(x|\theta) d\mu_{\Theta}(\theta) < \infty$$ and thus $E'(\psi | X=x)$ is a well defined measurable function on $X$. We have to show that $(x, \theta) \mapsto E'(\psi |X=x)$ is measurable with respect to the $\sigma$-algebra induced by $X: \cX \times \Theta \to \cX$ and that for all $A \subset X$ we have that $$\int_{A \times \Theta} E'(\psi |X=x) dP(x, \theta) = \int_{A \times \Theta} \psi(x,\theta) dP(x, \theta).$$
 
 The measurability is obvious as there is no dependence on $\Theta$. For the second claim, note that since (as shown above) $g = dP_X/d\nu$, we have 
-
 \begin{align*} \int_{A \times \Theta} E'(\psi |X=x) dP(x, \theta) &= \int_{A} E'(\psi |X=x) dP_X(x) \\
 &=\int_{A} E'(\psi |X=x) g(x) d\nu(x) \\ 
 &= \int_{A} \int_{\Theta} \psi(x, \theta) f(x|\theta) d\mu_{\Theta} d\nu(x)\end{align*}
 
 which completes the proof of this property since $f(x|\theta) = \frac{dP}{d(\nu \times \mu_{\Theta})}(x,\theta) $. Finally, observe that $$\int _{\cX \times \Theta} \psi ~d(\delta_x \times P_{\Theta|X=x}) = \int_{\Theta} \psi(x,\theta) dP_{\Theta |X=x}(\theta) = \frac{1}{g(x)} \int_{\Theta} f(x|\theta) \psi(x,\theta) d\mu_{\Theta}(\theta) = E(\psi ~|~ X=x) $$ so indeed $\delta_x \times P_{\Theta|X=x}$ is the conditional probability of $P$ given $X=x$. \end{proof}
 
-By symmetry, if we swap $\cX$ with $\Theta$ then we get 
+\begin{prop} For $A \subset \cX$ we have that $$P(A \times \Theta ~|~ \Theta = \theta) = P_{\theta}(A).$$
 
+\end{prop}
+\begin{proof}
+By symmetry, if we swap the roles of $\cX$ with $\Theta$ and apply the proposition above, then we get 
 \begin{align*} P(A \times \Theta ~|~ \Theta = \theta) &= \left(\int_{\cX} f(x|\theta) d\nu(x) \right)^{-1} \left(\int_{A} f(x|\theta) d\nu(x) \right) \\
-&= P_{\Theta}(X)^{-1} P_{\theta}(A) \\
-&= P_{\theta}(A) \end{align*}
+&= P_{\theta}(X)^{-1} P_{\theta}(A) \\
+&= P_{\theta}(A). \end{align*} \end{proof}
 
 \subsection{Notation} We use the standard notation from probability theory: if $F_i:\Omega \to \Omega_i$ are measurable and $P$ is a measure on $\Omega$, then $$P(F_1 \in A_1, \ldots, F_n \in A_n) := P(\{\omega \in \Omega ~|~  F_1(\omega) \in A_1, \ldots, F_n(\omega) \in A_n \})$$ and likewise for conditional measures.
 
