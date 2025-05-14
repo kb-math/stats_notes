@@ -154,9 +154,11 @@ The action $\Theta_0$ is called the \textit{Null Hypothesis} while $\Theta_1$ is
 
 \end{eg}
 
-\begin{mydef} \label{def: nice} We say that a statistical setup is \textit{nice} if there exists a positive measure (not necessarily a probability measure) $\nu$ on $\Omega = \cX$ and a measurable function $f:\cX \times \Theta \to \bR_{\geq 0}$ such that $P_{\theta} \ll \nu$ and $$\frac{dP_{\theta}}{d\nu} (x) = f(x|\theta) := f(x, \theta)$$ for all $\theta \in \Theta$.
+\begin{mydef} \label{def: nice} We say that a statistical setup is \textit{nice} if there exists a $\sigma$-finite positive measure (not necessarily a probability measure) $\nu$ on $\Omega = \cX$ and a measurable function $f:\cX \times \Theta \to \bR_{\geq 0}$ such that $P_{\theta} \ll \nu$ and $$\frac{dP_{\theta}}{d\nu} (x) = f(x|\theta) := f(x, \theta)$$ for all $\theta \in \Theta$.
 
 \end{mydef}
+
+For example, if $\cX$ is countable and thus each $P_{\theta}$ is discrete, then $\nu$ can be the counting measure.
 
 \textbf{Assumption going forward:} We always assume a statistical setup is nice without mentioning it. This is the case for the examples above (i.e., $\nu$ is either a Lebesgue measure or a counting measure).
 
@@ -216,16 +218,15 @@ Thus if $P$ is the measure on $\cX \times \Omega$ as constructed above, then $$P
 
 A statistic is a measurable function $T:\cX \to \cT$ to some measurable space $(\cT, \cB_{\cT})$.  
 
-\begin{mydef} We say that a statistic $T$ on $\cX$ is \textit{sufficient (in the Bayesian sense)} if for any prior $\mu_{\Theta}$ on $\Theta$ we have for any Borel $B \subset \Theta$ the equality $$P(\Theta \in B ~|~ X = x) = P(\Theta \in B ~|~ T \circ X = Tx) \quad \text{ for } \mu_X\text{-almost all } x \in \cX.$$
+\begin{mydef} We say that a statistic $T$ on $\cX$ is \textit{sufficient (in the Bayesian sense)} if for any prior $\mu_{\Theta}$ on $\Theta$ we have for any Borel $B \subset \Theta$ we have the equality $$P(\Theta \in B ~|~ X = x) = P(\Theta \in B ~|~ T \circ X = Tx) \quad \text{ for } \mu_X\text{-almost all } x \in \cX.$$
 
 \end{mydef}
 
 
-\begin{eg} \label{eg: bernoulli bayes setup} Consider the case where $\cX = \{0,1\}^n$ and $\Theta = [0,1]$. Suppose that $P_{\theta}$ is the Binomial probability distribution on $\{0,1\}^n$ where $(X_1, \ldots, X_N) \in \cX$ is drawn i.i.d with $P(X_i = 1) = \theta.$ Let us for now assume the Prior distribution $\mu_{\Theta}$ is unknown. We know that $$P_{\theta}(X = x) =   \theta^{T(x)}(1-\theta)^{n - T(x)} $$ where $T(x) = \sum_{i=1}^n x_i$ is the number of successes. The posterior distribution is thus given by $$P(\Theta \in B ~|~ X=x) = \frac{P(\Theta \in B, X=x)}{P(X=x)} = \frac{ \int_B \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}{\int_{\Omega} \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}$$ for all $x \in \cX$ that occur with positive probability (this is all of $\cX$ except for possibly $x = (0,\ldots, 0)$ or $x = (1, \ldots, 1)$ in case $\theta$ is concentrated on $1$ or $0$ respectively).
+\begin{eg} \label{eg: bernoulli bayes setup} Consider the case where $\cX = \{0,1\}^n$ and $\Theta = [0,1]$. Suppose that $P_{\theta}$ is the Binomial probability distribution on $\{0,1\}^n$ where $(X_1, \ldots, X_N) \in \cX$ is drawn i.i.d with $P(X_i = 1) = \theta.$ Let us for now assume the Prior distribution $\mu_{\Theta}$ is unknown. We know that $$P_{\theta}(X = x) =   \theta^{T(x)}(1-\theta)^{n - T(x)} $$ where $T(x) = \sum_{i=1}^n x_i$ is the number of successes. The posterior distribution is thus given by $$P(\Theta \in B ~|~ X=x) = \frac{P(\Theta \in B, X=x)}{P(X=x)} = \frac{ \int_B \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}{\int_{\Theta} \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}$$ for all $x \in \cX$ that occur with positive probability (this is all of $\cX$ except for possibly $x = (0,\ldots, 0)$ or $x = (1, \ldots, 1)$ in case $\theta$ is concentrated on $1$ or $0$ respectively).
 
 
 We claim that $ T:\cX \to \bZ_{\geq 0}$ given by $T(x) = \sum_{i=1}^n x_i$ is a sufficient statistic. Indeed if we fix $x_0 \in \cX = \{0,1\}^n$ and we let $m=Tx_0$, we get that  
-
 \begin{align*} P( \Theta \in B ~|~ T \circ X = m) &= \frac{P( \Theta \in B, T\circ X = m)}{P(T\circ X = m)} 
 \\ &= \frac{\sum_{Tx = m} P(\Theta \in B, X = x) }{\sum_{Tx = m}P(X = x)} 
 \\ &= \frac{ \sum_{Tx = m} \int_B \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}{ \sum_{Tx = m} \int_{\Omega} \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}
@@ -241,23 +242,28 @@ In fact, the same argument shows that $T$ is still a sufficient statistic if ins
 
 The classical definition of sufficiency does not make reference to a prior distribution and is thus not Bayesian.
 
-\begin{mydef} We say that a statistic $T:\cX \to \cT$ is \textit{sufficient in the classical sense} if we have a function $r:\cB \times \cT \to [0,1]$ such that for all $\theta \in \Theta$ and $B \in \cB$ (recall $\cB$ is the Borel $\sigma$-algebra on $\cX$) we have that $$P_{\theta}(B | T=t) = r(B,t) \quad \text{for } T^*P_{\theta}-\text{almost all } t \in \cT.$$
+\begin{mydef} We say that a statistic $T:\cX \to \cT$ is \textit{sufficient in the classical sense} if we have a function $r:\cB \times \cT \to [0,1]$ such that for all $\theta \in \Theta$ and $B \in \cB$ (recall $\cB$ is the Borel $\sigma$-algebra on $\cX$) we have that $$P_{\theta}(B | T=t) = r(B,t) \quad \text{for } T^*P_{\theta}-\text{almost all } t \in \cT$$
+and $t \mapsto r(B,t)$ is Borel on $\cT$.
 
 \end{mydef}
 
-\begin{eg} Let us continue from the binomial distribution in Example~\ref{eg: bernoulli bayes setup}. As $\cX = \{0,1\}^n$ is a finite set, we only have to consider the case where $B \subset \cX$ is a singleton $B=\{x_0\}$ for some $x_0 \in \cX$. Now $P_{\theta}(B | T=t) = 0$ if $Tx_0 \neq t$. If $Tx_0 = t$ then we have that $$P_{\theta}(B | T=t) = \frac{P_{\Theta}\{x_0\}}{P_{\theta}\{x \in \cX ~|~ Tx = x_0\}} = \frac{1}{\binom{n}{t}}$$ where the last equality follows from the fact that all $x \in \cX$ with $Tx=t$ have the same probability in a binomial distribution. In fact, the same argument applies to the case where the $P_{\theta}$ are all exchangable. 
+This is a technical way of saying that $T$ is sufficient if and only if $P_{\theta}(B|T=t)$ does not depend on $\theta$. We stated the definition formally in order to deal with the issue that conditional probability is only almost everywhere unique and well defined.
 
-Thus we may take $$r(\{x_0\},t) = \mathds{1}(Tx_0 = t) \binom{n}{t}^{-1}$$ and extend $r$ to $\cB \times \bZ$ by additivity. Thus this parametric family is indeed sufficient in the classical sense. 
+\begin{eg} Let us continue from the binomial distribution in Example~\ref{eg: bernoulli bayes setup}. As $\cX = \{0,1\}^n$ is a finite set, we only have to consider the case where $B \subset \cX$ is a singleton $B=\{x_0\}$ for some $x_0 \in \cX$. Now $P_{\theta}(B | T=t) = 0$ if $Tx_0 \neq t$. If $Tx_0 = t$ then we have that $$P_{\theta}(B | T=t) = \frac{P_{\theta}\{x_0\}}{P_{\theta}\{x \in \cX ~|~ Tx = x_0\}} = \frac{1}{\binom{n}{t}}$$ where the last equality follows from the fact that all $x \in \cX$ with $Tx=t$ have the same probability in a binomial distribution. In fact, the same argument applies to the case where the $P_{\theta}$ are all exchangable. 
+
+Thus we may take $$r(\{x_0\},t) = \mathds{1}(Tx_0 = t) \binom{n}{t}^{-1}$$ and extend $r$ to $\cB \times \bZ$ by additivity. Thus this $T$ is indeed sufficient in the classical sense. 
 
 \end{eg}
 
 \subsection{Equivalence of definitions}
 
-\begin{lemma} Suppose $T:\cX \to \cT$ is a statistic and $\mu_{\Theta}$ is a prior on $\Theta$. Suppose also that $(\theta,t) \mapsto P_{\theta}(A~|~T=t)$ is Borel (i.e., there is a version of conditional probabilities so that it is Borel). Then for $A \subset \cX$ we have that $$P(X \in A ~|~ TX=Tx, \Theta = \theta) = P_{\theta}(A ~|~ T =Tx) \quad \text{for $P$-almost all $(x,\theta) \in \cX \times \Theta$}.$$
+In this section we prove equivalence of the classical and Bayesian definition of a sufficient statistics under the nice assumptions of Definition~\ref{def: nice} (which we always assume).
+
+\begin{lemma} Suppose $T:\cX \to \cT$ is a statistic and $\mu_{\Theta}$ is a prior on $\Theta$. Suppose also that there is a Borel map $s:\cT \times \Theta \to [0,1]$ so that $$s(t,\theta) = P_{\theta}(A~|~T=t) \quad\text{for $T^*P_{\theta}$-almost all $t \in \cT$}.$$ We have that $$P(X \in A ~|~ TX=Tx, \Theta = \theta) = s(Tx, \theta) \quad \text{for $P$-almost all $(x,\theta) \in \cX \times \Theta$}.$$
 
 \end{lemma}
 
-\begin{proof} We must show that for $B\subset \Theta, C \subset \cT$ we have that $$\int_{T^{-1}C \times B} P(A \times \Theta ~|~ Tx = t, \Theta = \theta) dP(x,\theta) = \int_{T^{-1}C \times B} P_{\theta}(A ~|~ T=Tx) dP(x,\theta). $$
+\begin{proof} We must show that for $B\subset \Theta, C \subset \cT$ we have that $$\int_{T^{-1}C \times B} P(A \times \Theta ~|~ Tx = t, \Theta = \theta) dP(x,\theta) = \int_{T^{-1}C \times B} s(Tx,\theta) dP(x,\theta). $$
 
 The law of total probability tells us that the left hand side is equal to $$P((A \times \Theta) \cap  (T^{-1}C \times B) ) = P(X \in A\cap T^{-1}C, \Theta \in B).$$
 
@@ -267,14 +273,21 @@ The right hand side is
 &= \int_{B} \int_{\cX} \mathds{1}_{A \cap T^{-1}C}(x) dP_{\theta}(x) d\mu_{\Theta}(\theta) \\
 &= P(X \in A\cap T^{-1}C, \Theta \in B)\end{align*} \end{proof}
 
-\begin{thm} Suppose that $T:\cX \to \cT$ is sufficient in the classical sense. Then $T$ is also sufficient in the Bayesian sense (for any prior $\mu_{\Theta}$ on $\Theta$). Moreover for $A \subset \cX$ we have $$P(X \in A~|~ TX=Tx, \Theta = \theta) = P(X \in A~|~ TX=Tx)\quad \text{ for $P$-almost all $(x,\theta) \in \cX \times \Theta$}.$$ 
+\begin{thm} Suppose that $T:\cX \to \cT$ is sufficient in the classical sense. Then $T$ is also sufficient in the Bayesian sense (for any prior $\mu_{\Theta}$ on $\Theta$). Moreover for $A \subset \cX$ we have \begin{align}\label{P given T and theta is P_theta given T} P(X \in A~|~ TX=Tx, \Theta = \theta) = P(X \in A~|~ TX=Tx)\quad \text{ for $P$-almost all $(x,\theta) \in \cX \times \Theta$}.\end{align}
 
 \end{thm}
 
-\begin{proof} We first show the \textit{Moreover} claim. By the previous lemma we have that the left hand side is equal to $$P_{\theta}(A ~|~ T=Tx) = r(A,Tx)$$ for some measurable $t \mapsto r(A,t)$. So now it remains to show that $r(A,Tx) = P(X \in A ~|~ TX=Tx)$ for almost $P_X$-almost all $x$. Thus we must show that for $C \subset \cT$ we have that \begin{align}\label{eq: r(A,Tx) and P_X} \int_{T^{-1}C} r(A,Tx) dP_X(x) = P_X(A \cap T^{-1}C).\end{align} In the proof of the previous Lemma (take $B=\Theta$ there) we have shown that $$\int_{T^{-1}C \times \Theta} P_{\theta}(A | T=Tx) dP(x,\theta) = P_X(A \cap T^{-1}C). $$ This completes the proof of (\ref{eq: r(A,Tx) and P_X}) since $r(A,Tx) = P_{\theta}(T=Tx)$ holds for almost all $P$-almost all $(x,\theta)$. Now it remains to show that $T$ is sufficient in the Bayesian sense. By this just proved Moreover claim, it follows from Lemma~\ref{lemma: conditional independence iff drop conditional}  that $X$ and $\Theta$ are conditionally independent given $TX$. Using Lemma~\ref{lemma: conditional independence iff drop conditional} again we have that $$P(\Theta \in B ~|~ TX=Tx, X = x) = P(\Theta \in B ~|~ TX=Tx) \quad\text{ for $P_X$-almost all $x$}.$$ But the left hand side is clearly $P(\Theta \in B ~|~ X=x)$. Thus $T$ is indeed sufficient in the Bayesian sense. \end{proof}
+\begin{proof} We first show the \textit{Moreover} claim. By the definition of sufficiency we have that $$P_{\theta}(A ~|~ T=t) = r(A,t)$$ for some measurable $t \mapsto r(A,t)$ and so indeed the Borel condition of the previous Lemma is satisfied. By the previous Lemma the left hand side of (\ref{P given T and theta is P_theta given T}) is equal to $r(A,Tx)$.  So now it remains to show that $r(A,Tx) = P(A \times \Theta ~|~ TX=Tx)$ for $P$-almost all $(x,\theta)$. Thus we must show that for $C \subset \cT$ we have that 
+\begin{align}\label{eq: r(A,Tx) and P_X} \int_{T^{-1}C \times \Theta} r(A,Tx) dP(x,\theta) = \int_{T^{-1}C \times \Theta}  P(A \times \Theta ~|~ TX=Tx) dP(x,\theta).\end{align}
+By definition of conditional probabiltity w.r.t $TX:\cX \times \Theta \to \cT$, the right hand side is equal to $$P(A \times \Theta \cap T^{-1}C \times \Theta) = P(X \in A \cap T^{-1}C).$$ 
+Repeating the calculation of the previous Lemma we have that the left hand side of (\ref{eq: r(A,Tx) and P_X}) is
+\begin{align*} \int_{\Theta} \left(\int_{T^{-1}C} P_{\theta}(A | T=Tx) dP_{\theta}(x) \right) d\mu_{\Theta}(\theta) &= \int_{\Theta} P_{\theta}(A \cap T^{-1}C) d\mu_{\Theta}(\theta) \\
+&= \int_{\Theta} \int_{\cX} \mathds{1}_{A \cap T^{-1}C}(x) dP_{\theta}(x) d\mu_{\Theta}(\theta) \\
+&= P(X \in A\cap T^{-1}C).\end{align*} 
+This completes the proof of (\ref{eq: r(A,Tx) and P_X}). Now it remains to show that $T$ is sufficient in the Bayesian sense. By this just proved Moreover claim, it follows from Lemma~\ref{lemma: conditional independence iff drop conditional}  that $X$ and $\Theta$ are conditionally independent given $TX$. Using Lemma~\ref{lemma: conditional independence iff drop conditional} again we have that $$P(\Theta \in B ~|~ TX=Tx, X = x) = P(\Theta \in B ~|~ TX=Tx) \quad\text{ for $P$-almost all $(x,\theta)$}$$ and thus for $P_X$-almost all $x \in \cX$. But the left hand side is clearly $P(\Theta \in B ~|~ X=x)$. Thus $T$ is indeed sufficient in the Bayesian sense. \end{proof}
 
 
-\begin{lemma} A statistic $T:\cX \to \cT$ is sufficient in the Bayesian sense if and only if for all prior distributions $\mu_{\Theta}$ on $\Theta$ and measurable $B \subset \cX$ we have that $$x \mapsto P(\Theta \in B ~|~ x \in X)$$ is almost surely measurely $T^{-1}\cB_T$-measurable (i.e., almost surely equal to a function of $T$).
+\begin{lemma} A statistic $T:\cX \to \cT$ is sufficient in the Bayesian sense if and only if for all prior distributions $\mu_{\Theta}$ on $\Theta$ and measurable $B \subset \cX$ we have that $$x \mapsto P(\Theta \in B ~|~ x \in X)$$ is almost surely $T^{-1}\cB_T$-measurable (i.e., almost surely equal to a function of $T$).
 
 \end{lemma}
 
