@@ -242,14 +242,13 @@ Then there exists a measurable set $X' \subset X$ that is $\mu$-conull and such 
 &=  \int_{X}\int_Y f^+(x,y) d\nu(y)d\mu(x) - \int_{X}\int_Y f^-(x,y) d\nu(y)d\mu(x) \\ 
 &=  \int_{X \times Y} f^+(x,y) d(\mu \times \nu)(x,y) - \int_{X \times Y} f^-(x,y) d(\mu \times \nu)(x,y) \\
 &= \int_{X \times Y} f(x,y) d(\mu \times \nu)(x,y)  \end{align*}
+\end{proof}
 
 \section{Jensen's Inequality}
 
 \begin{mydef} We say $U \subset \bR^d$ is convex if $$tu + (1-t)v \in U$$ whenever $u,v \in U$ and $t \in [0,1]$. We say that $\varphi:U \to \bR$ is convex if $$\varphi(tu + (1-t)v) \leq t \varphi(u) + (1-t)\varphi(v)$$ for all $u,v \in U$ and $t \in [0,1]$. Note that this is equivalent to saying that the region $$\{(u,y) \in U \times \bR ~|~ y \geq \varphi(u) \}$$ is convex.
 
 \end{mydef}
- 
-\end{proof}
 
 \begin{prop} Let $U \subset \bR^d$ be an open convex set and suppose that $\varphi:U \to \bR$ is convex. Then $\varphi$ is continuous.
 
@@ -259,7 +258,7 @@ Then there exists a measurable set $X' \subset X$ that is $\mu$-conull and such 
 
 \end{remark}
 
-\begin{proof} We prove this by induction on $d$. The base case $d=0$ is trivial (where $U = \{0 \} = \bR^{0}$ is a zero-dimensional vector space). Now fix $x_0 \in U$. Let $U' \subset U$ be a cube contained in $U$ such that $x_0$ is the center of $U'$. Let $B$ be the boundary of this cube $U$. Observe that by the induction hypothesis, $\varphi$ is continuous on $B$ (as $B$ is made up of finitely many $d-1$-dimensional faces) and thus is bounded on $B$, say $|\varphi(b)| \leq M$ for all $b \in B$. Observe also that any $u \in U'$ may be written as $u = tx_0 + (1-t)b$ for some $b \in B$ (to see this, note that any ray starting at $x_0$ that goes through $u$ must intersect $B$ as some point $b$). 
+\begin{proof} We prove this by induction on $d$. The base case $d=0$ is trivial (where $U = \{0 \} = \bR^{0}$ is a zero-dimensional vector space). Now fix $x_0 \in U$. Let $U' \subset U$ be a cube contained in $U$ such that $x_0$ is the center of $U'$. Let $B$ be the boundary of this cube $U$. Observe that by the induction hypothesis, $\varphi$ is continuous on $B$ (as $B$ is made up of finitely many $d-1$-dimensional faces) and thus is bounded on $B$, say $|\varphi(b)| \leq M$ for all $b \in B$. Observe also that any $u \in U'$ may be written as $u = tx_0 + (1-t)b$ for some $b \in B$ (to see this, note that any ray starting at $x_0$ that goes through $u$ must intersect $B$ at some point $b$). 
 Now observe that $$\|u - x_0\| = \|(t-1)x_0 + (1-t)b\| = (1-t)\|b - x_0\| \geq (1-t)R$$ where $R>0$ is half the side-length of the box $U'$. 
 Now by convexity we have that 
 \begin{align*} \varphi(u) &= \varphi(tx_0 + (1-t)b) \leq t\varphi(x_0) + (1-t)\varphi(b) \\
@@ -267,16 +266,19 @@ Now by convexity we have that
 &\leq t\varphi(x_0) + MR^{-1}\|u - x_0\| \\
 &= \varphi(x_0) + (t-1)\varphi(x_0) + MR^{-1} \|u - x_0\| \\
 &\leq \varphi(x_0) + R^{-1}(|\varphi(x_0)| + M)\|u-x_0\|. \end{align*}
- Thus $$\limsup_{u \to x_0} \varphi(u) \leq \varphi(x_0).$$ Now suppose for contradiction, that there is some $u_1,u_2, \ldots \in U$ such that $u_i \to x_0$ but $\varphi(u_i) < \varphi(x_0) - \epsilon$ for some fixed $\epsilon > 0$. Now observe that $$x_0 = t_iu_i + (1-t_i)b_i$$ for some $t_i \in [0,1]$ and $b_i \in B$ as we can see by considering a ray that starts at $u_i$ and passes through $x_0$ and then letting $b_i \in B$ be a point on this ray. We now have that $$\varphi(x_0) \leq t_i \varphi(u_i) + (1-t_i)\varphi(b_i) \leq t_i (\varphi(x_0) - \epsilon) + (1-t_i)M.$$ Now observe that $t_i \to 1$ as $u_i \to x_0$ since $$\|x_0 - u_i\| = \|(t_i-1)u_i + (1-t_i)b_i \| = (1-t_i)\|b_i - u_i\|.$$ Thus this upper bound converges to $\varphi(x_0) - \epsilon$, which is a contradiction. \end{proof}
+ Thus $$\limsup_{u \to x_0} \varphi(u) \leq \varphi(x_0).$$ Now suppose for contradiction, that there is some $u_1,u_2, \ldots \in U$ such that $u_i \to x_0$ but $\varphi(u_i) < \varphi(x_0) - \epsilon$ for some fixed $\epsilon > 0$.
+ Now observe that $$x_0 = t_iu_i + (1-t_i)b_i$$ for some $t_i \in [0,1]$ and $b_i \in B$ as we can see by considering a ray that starts at $u_i$ and passes through $x_0$ and then letting $b_i \in B$ be a point on this ray.
+We see that $t_i \to 1$ since $$\|x_0 - u_i\| = \|(t_i-1)u_i + (1-t_i)b_i \| = (1-t_i)\|b_i - u_i\|$$ and the left hand side converges to zero while $\|b_i - u_i \| \to \|b_i - x_0\| > 0$.
+ Now observe that $$\varphi(x_0) \leq t_i \varphi(u_i) + (1-t_i)\varphi(b_i) \leq t_i (\varphi(x_0) - \epsilon) + (1-t_i)M.$$ Since $t_i \to 1$, this upper bound converges to $\varphi(x_0) - \epsilon$ which is a contradiction. \end{proof}
 
 \begin{prop} Let $U \subset \bR^d$ be a convex set. Let $t_1, \ldots, t_n \in [0,1]$ such that $t_1 + \cdots + t_n = 1$. We have $$\sum_{i=1}^n t_i u_i \in U$$ for all $u_1, \ldots, u_n \in U$. Moreover, if $\varphi:U \to \bR$ is convex then $$\varphi \left(\sum_{i=1}^n t_i u_i \right) \leq \sum_{i=1}^n t_i \varphi(u_i). $$
 
 \end{prop}
 
-\begin{proof} The $n=2$ case is the definition of convexity. We proceed by induction on $n$. Write $t = t_1 + \ldots + t_{n-1}$. The result is clearly true if $t = 0$, as in that case $t_n = 1$, so we assume $t>0$. Observe that $$\sum_{i=1}^nt_iu_i = t\sum_{i=1}^{n-1}t^{-1}t_i u_i + (1-t)u_n$$ is indeed in $U$ since by the inductive hypothesis, $$\sum_{i=1}^{n-1}t^{-1}t_i u_i \in U$$ as $\sum_{i=1}^n t^{-1}t_i = 1$. Likewise by the induction hypothesis we have
+\begin{proof} The $n=2$ case is the definition of convexity. We proceed by induction on $n$. Write $t = t_1 + \ldots + t_{n-1}$. The result is clearly true if $t = 0$, as in that case $t_n = 1$, so we assume $t>0$. Observe that $$\sum_{i=1}^nt_iu_i = t\sum_{i=1}^{n-1}t^{-1}t_i u_i + (1-t)u_n$$ is indeed in $U$ since by the inductive hypothesis, $$\sum_{i=1}^{n-1}t^{-1}t_i u_i \in U$$ as $\sum_{i=1}^{n-1} t^{-1}t_i = 1$. Likewise by the induction hypothesis we have
 \begin{align*} \varphi \left(\sum_{i=1}^n t_i u_i \right) &= \varphi \left( t\sum_{i=1}^{n-1}t^{-1}t_i u_i + (1-t)u_n \right) \\
 &\leq t \varphi\left(\sum_{i=1}^{n-1}t^{-1}t_i u_i \right) + (1-t) \varphi(u_n) \\
-&\leq t\sum_{i=1}^{n-1}t^{-1}t_i \varphi(u_i) + t_n \varphi(u_n) \\
+&\leq t\sum_{i=1}^{n-1}t^{-1}t_i \varphi(u_i) + (1-t) \varphi(u_n) \\
 &= \sum_{i=1}^n t_i \varphi(u_i).
 \end{align*}
 
@@ -288,24 +290,27 @@ Note that if $v:X \to \bR^d$ is a vector valued function on a probability space 
 
 \end{prop}
 
-\begin{proof} Note that if $\mu$ is supported on a finite set $\{u_1, \ldots, u_n\}$ with $\mu(\{u_i\}) = p_i$, then by the inequality above we have that $$ \varphi\left(\int_K x d\mu(x)\right)  = \varphi\left( \sum_{i=1}^n p_i u_i \right) \leq \sum_{i=1}^n p_i\varphi(u_i) = \int_K \varphi(x) d\mu(x) .$$ Thus the result holds for finite measures. For arbitrary probability measures on $K$, we use the proposition below and the continuity of $\phi$ and $x \mapsto x$.
+\begin{proof} Note that if $\mu$ is supported on a finite set $\{u_1, \ldots, u_n\}$ with $\mu(\{u_i\}) = p_i$, then by the inequality above we have that $$ \varphi\left(\int_K x d\mu(x)\right)  = \varphi\left( \sum_{i=1}^n p_i u_i \right) \leq \sum_{i=1}^n p_i\varphi(u_i) = \int_K \varphi(x) d\mu(x) .$$ Thus the result holds for finite measures. For arbitrary probability measures on $K$, we use the proposition below and the continuity of $\phi$ and $x \mapsto x$. \end{proof}
 
-\end{proof}
-
-\begin{prop} Let $\mu$ be a measure on a compact set $[-R,R]^d \subset \bR^d$. For each positive integer $n$, let $\cC_n$ be a partition of $[-R,R]^d$ into finitely many cubes, i.e., $$[-R,R]^d = \bigcup_{C \in \cC_n} C$$ such that each $C \in \cC^n$ has diameter at most $1/n$. Let $C_n \subset [-R,R]^d$ be a collection of points consisting of exactly one element from $\cC_n$, thus we have a bijection $\iota:C_n \to \cC_n$ where $c \in \iota(c)$. Now define a probability measure on $C_n$ given by $\mu_n(\{c\}) = \mu(\iota(c))$ for $c \in C_n$. Then $$\int_{\bR^d} f d\mu_n \to \int_{\bR^d} f d\mu$$ for all continuous function $f:[-R,R]^d \to \bR.$
+\begin{prop} Let $\mu$ be a probability measure on a compact set $[-R,R]^d \subset \bR^d$. For each positive integer $n$, let $\cC_n$ be a partition of $[-R,R]^d$ into finitely many cubes, i.e., $$[-R,R]^d = \bigcup_{C \in \cC_n} C$$ such that each $C \in \cC_n$ has diameter at most $1/n$. Let $C_n \subset [-R,R]^d$ be a collection of points consisting of exactly one element from $\cC_n$, thus we have a bijection $\iota:C_n \to \cC_n$ where $c \in \iota(c)$. Now define a probability measure on $C_n$ given by $\mu_n(\{c\}) = \mu(\iota(c))$ for $c \in C_n$. Then $$\int_{\bR^d} f d\mu_n \to \int_{\bR^d} f d\mu$$ for all continuous functions $f:[-R,R]^d \to \bR.$
 
 \end{prop}
 
-We now obtain immediately Jensen's inequality for integrable random variables.
+We now obtain immediately Jensen's inequality for integrable random variables. In this section, we fix compact sets $K_1 \subset K_2 \subset \cdots$ such that $$\bigcup_{n}K_n = \bR^d. $$
 
-\begin{thm}[Jensen's inequality] Let $\mu$ be a probability measure  on $\bR^d$ such that $$\int_{\bR^d} \|x \| d\mu(x) < \infty$$ and suppose $\varphi:\bR^d \to \bR$ is convex. Then $$\varphi\left(\int_{\bR^d} x d\mu(x)\right) \leq \liminf_{R \to \infty} \int_{[-R,R]^d} \varphi(x) d\mu(x). $$
+\begin{thm}[Jensen's inequality] Let $\mu$ be a probability measure  on $\bR^d$ such that $$\int_{\bR^d} \|x \| d\mu(x) < \infty$$ and suppose $\varphi:\bR^d \to \bR$ is convex. Then $$\varphi\left(\int_{\bR^d} x d\mu(x)\right) \leq \liminf_{n \to \infty} \int_{K_n} \varphi(x) d\mu(x). $$
 
 \end{thm}
+
+\begin{proof} For large enough $n$, we have $\mu(K_n) > 0$. By applying the Compact Jensen's inequality to the probability measure $\mu_n = \mu|_{K_n}$, which is defined by $\mu_n(A) = \mu(K_n)^{-1}\mu(A \cap K_n)$, we have 
+
+$$\varphi\left(\mu(K_n)^{-1}\int_{K_n} x d\mu(x)\right) \leq \mu(K_n)^{-1}\int_{K_n} \varphi(x) d\mu(x). $$ Now as $n \to \infty$ we have $\mu(K_n) \to 1$ and so the continuity of $\varphi$ completes the proof. \end{proof}
 
 Another way of stating this is as follows.
 
 \begin{thm} Let $\nu$ be a probability measure on a space $\Omega$. Suppose that $f:\Omega \to \bR^d$ is $L^1$, i.e., $$\int_{\bR^d} \|f(\omega)\| d\nu(\omega) < \infty.$$ Suppose that $\varphi:\bR^d \to \bR$ is convex. Then 
-$$\varphi \left(\int_{\Omega} f(\omega) d\nu(\omega) \right) \leq \liminf_{R \to \infty} \int_{f^{-1}([-R,R]^d)} \varphi(f(\omega)) d\nu(\omega).$$ 
-
+$$\varphi \left(\int_{\Omega} f(\omega) d\nu(\omega) \right) \leq \liminf_{N \to \infty} \int_{f^{-1}(K_n)} \varphi(f(\omega)) d\nu(\omega).$$ 
+In particular, if $\varphi \geq 0$ or $\varphi \circ f \in L^1(\Omega)$ then 
+$$\varphi \left(\int_{\Omega} f(\omega) d\nu(\omega) \right) \leq \int_{\Omega} \varphi(f(\omega)) d\nu(\omega).$$ 
 \end{thm}
 \end{document}
