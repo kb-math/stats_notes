@@ -321,8 +321,7 @@ Observe that the pushfoward measure on $\cX$ is $P_X = \frac{1}{2}P_{\theta_0} +
 
 \end{thm}
 
-\begin{proof} Let $\nu^*$ be the measure from the previous Lemma and recall that $$\frac{dP_{\theta}}{d\nu^*}(x) = h_{\theta}(Tx).$$ We will now show that for all $\theta \in \Theta$ and $A \subset X$ we have that $$P_{\theta}(A~|~T=t) = \nu^*(A~|~T=t),$$ which will complete the proof. Observe that for $C \subset \cT$ we have that
-
+\begin{proof} Let $\nu^*$ be the measure from the previous Lemma and recall that $$\frac{dP_{\theta}}{d\nu^*}(x) = h_{\theta}(Tx).$$ We will now show that for all $\theta \in \Theta$ and $A \subset X$ we have that $$P_{\theta}(A~|~T=t) = \nu^*(A~|~T=t),$$ which will complete the proof. First, notice that $\nu^*(A~|~T=Tx)$ is defined on a $\cT$-measurable subset $\cX' \subset \cX$ with $\nu^*(\cX') = 1$. But as $P_{\theta} \ll \nu^*$ we have that that $P_{\theta}(\cX')=1$, which is a requirement for conditional probability. Now observe that for $C \subset \cT$ we have that
 \begin{align*} \int_{C} \nu^*(A ~|~ T=t)d(T^*P_{\theta})(t) &= \int_{T^{-1}C} \nu^*(A~|~T=Tx)dP_{\theta}(x) \\
 &= \int_{T^{-1}C} \nu^* (A~|~T=Tx) h_{\theta}(Tx) d\nu^*(x) \\
 &= \int_{\cX} \bE(\mathds{1}_A ~|~ T=Tx) \mathds{1}_{T^{-1}C}(x)h_{\theta}(Tx) d\nu^*(x) \\
@@ -351,7 +350,7 @@ There is a convenient characterization of sufficiency.
 
 \begin{proof} First suppose this condition holds. Thus by Corollary~\ref{corol: sufficiency enough for discrete prior} we only need to check Bayesian sufficiency for any discrete prior $\mu$ on $\Theta$. Say $\mu$ is supported on $C = \{\theta_1, \theta_2,\ldots \} \subset \Theta$. For $C' \subset C$ we have by Bayes' formula that $$P(\Theta \in C ~|~ X=x) = \frac{\int_{C'} f(x|\theta) d\mu(\theta) }{\int_{\Theta} f(x|\theta) d\mu(\theta) }  = \frac{\sum_{\theta \in C'} h_{\theta}(Tx)g(x) \mu(\{\theta\})}{\sum_{\theta \in C} h_{\theta}(Tx)g(x) \mu(\{\theta\})} = \frac{\sum_{\theta \in C'} h_{\theta}(Tx) \mu(\{\theta\})}{\sum_{\theta \in C} h_{\theta}(Tx) \mu(\{\theta\})}. $$ Observe now that this is $\cT$-measurable since the sums are countable, thus Bayesian sufficiency is established. (\textbf{Remark:} this is the reason we restrict without loss of generality to $\mu$ discrete, as otherwise it seems one cannot show measurability in the integrand unless we also assume that $(\theta, t) \mapsto h_{\theta}(t)$ is Borel, which we do not want to as we have not been able to verify this in Lemma~\ref{lemma: construction nu*}).
 
-Conversely, suppose that $\cT$ is Bayesian. Thus by Lemma~\ref{lemma: construction nu*}) we have $$f(x|\theta) = \frac{dP_{\theta}}{d\nu}(x) = \frac{dP_{\theta}}{d\nu^*}(x) \frac{d\nu^*}{d\nu}(x) = h_{\theta}(Tx) g(x)$$
+Conversely, suppose that $\cT$ is sufficient. Thus by Lemma~\ref{lemma: construction nu*} we have $$f(x|\theta) = \frac{dP_{\theta}}{d\nu}(x) = \frac{dP_{\theta}}{d\nu^*}(x) \frac{d\nu^*}{d\nu}(x) = h_{\theta}(Tx) g(x)$$
 
 for $\nu^*$-almost all $x \in X$. As $P_{\theta} \ll \nu^*$ we have it also holds for $P_{\theta}$-almost all $x \in X$. \end{proof}
 
@@ -371,6 +370,27 @@ $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n)  = \frac{1}{\sqrt{2\pi\sigma^2}} \e
 
 \end{eg}
 
+\subsection{Applications to estimation}
+
+Recall that $d:\cX \to \cA$ is the decision function and $L:\Theta \times \cA \to [0,\infty)$ denotes the loss function. The risk is then $$R(\theta, d) = \int_{\cX} L(\theta, d(x)) dP_{\theta}(x).$$ Recall (see ???) that if $T:\cX \to \cT$ is a sufficient statistic then there are families of measures $\nu^*_t$, for $t \in \cT$, such that $$P_{\theta}(B~|~T=t) = \nu^*_t(B) \quad \text{for all } B \subset \cX.$$
+
+\begin{thm}[Rao-Blackwell theorem] Suppose that $\cA = \bR^d$ and that for each fixed $\theta$, the map $a \mapsto L(\theta, a)$ is convex. Suppose also that $x \mapsto d(x)$ is an $L^1$ function for each $P_{\theta}$, in other words $$\int_{\cX} \|d(x) \| dP_{\theta} < \infty.$$ Suppose that $T:\cX \to \cT$ is a sufficient statistic for the family of $P_{\theta}$. Then there is a well-defined decision rule given by $$\hat{d}(x) = E_{\theta}(d |T=Tx) = \int_{\cX} d(x') d\nu^*_{Tx}(x')$$ which satisfies that $$R(\theta, \hat{d}) \leq R(\theta, d).$$
+ 
+\end{thm}
+
+\begin{proof} Note that as $d$ is $L^1$ with respect to $P_{\theta}$, we must have that it is $L^1$ with respect to $P_{\theta}( \cdot ~|~ T=Tx) = \nu^*_t(\cdot)$ for $P_{\theta}$-almost all $x$. Thus the expression for $\hat{d}(x)$ is well defined. By Jensen's theorem, we have that 
+$$L(\theta, \hat{d}(x)) = L\left(\theta, \int_{\cX} d(x') d\nu^*_{Tx}(x') \right) \leq \int_{\cX} L(\theta, d(x')) d\nu^*_{Tx}(x')  $$
+
+Now we integrate both sides with respect to $P_{\theta}$ to get that 
+\begin{align*}R(\theta, \hat{d}) &\leq \int_{\cX} \int_{\cX} L(\theta, d(x')) d\nu^*_{Tx}(x')  dP_{\theta}(x)\\
+&= \int_{\cX} L(\theta, d(x)) dP_{\theta}(x) \\
+&= R(\theta, \hat{d})   \end{align*}
+
+where we used the law of total probability applied to $P_{\theta}(\cdot ~|~T=Tx) = \nu^*_{Tx}$. \end{proof}
+
+Thus the Rao-Blackwell theorem allows us to construct more efficient estimators that are a function of the sufficient statistic $T$.
+
+Examples of such convex loss functions include the square loss $$L(\theta, a) = |\theta - a|^2.$$
 \appendix
 
 \section{Review of Probability}
