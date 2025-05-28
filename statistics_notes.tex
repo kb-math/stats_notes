@@ -317,19 +317,20 @@ Observe that the pushfoward measure on $\cX$ is $P_X = \frac{1}{2}P_{\theta_0} +
 
 \end{proof}
 
-\begin{thm} Assume the nice condition of Definition~\ref{def: nice} . If $T:\cX \to \cT$ is sufficient in the Bayesian sense, then it is also sufficient in the classical sense.
+\begin{thm}\label{thm: bayesian implies classical sufficient} Assume the nice condition of Definition~\ref{def: nice} . If $T:\cX \to \cT$ is sufficient in the Bayesian sense, then it is also sufficient in the classical sense. Letting $\nu^*$ be the measure from the previous Lemma, we have the more precise formulation of classical sufficiency: 
+There is a $\cT$-measurable set $\cX' \subset \cX$ such that for all $\theta \in \Theta$ we have $\nu^*(\cX') = 1 = P_{\theta}(\cX')$ and for $A \subset X$ we have that $$P_{\theta}(A~|~T=Tx) = \nu^*(A~|~T=Tx) \quad\text{for all } x \in \cX'.$$
 
 \end{thm}
 
-\begin{proof} Let $\nu^*$ be the measure from the previous Lemma and recall that $$\frac{dP_{\theta}}{d\nu^*}(x) = h_{\theta}(Tx).$$ We will now show that for all $\theta \in \Theta$ and $A \subset X$ we have that $$P_{\theta}(A~|~T=t) = \nu^*(A~|~T=t),$$ which will complete the proof. First, notice that $\nu^*(A~|~T=Tx)$ is defined on a $\cT$-measurable subset $\cX' \subset \cX$ with $\nu^*(\cX') = 1$. But as $P_{\theta} \ll \nu^*$ we have that that $P_{\theta}(\cX')=1$, which is a requirement for conditional probability. Now observe that for $C \subset \cT$ we have that
-\begin{align*} \int_{C} \nu^*(A ~|~ T=t)d(T^*P_{\theta})(t) &= \int_{T^{-1}C} \nu^*(A~|~T=Tx)dP_{\theta}(x) \\
-&= \int_{T^{-1}C} \nu^* (A~|~T=Tx) h_{\theta}(Tx) d\nu^*(x) \\
-&= \int_{\cX} \bE(\mathds{1}_A ~|~ T=Tx) \mathds{1}_{T^{-1}C}(x)h_{\theta}(Tx) d\nu^*(x) \\
-&= \int_{\cX} \mathds{1}_A (x) \mathds{1}_{T^{-1}C}(x)h_{\theta}(Tx) d\nu^*(x)  \\
-&= \int_{\cX}  \mathds{1}_A (x) \mathds{1}_{T^{-1}C}(x) dP_{\theta}(x)  \\
-&= P_{\theta}(A \cap T^{-1}C)\end{align*}
+\begin{proof} Let $\nu^*$ be the measure from the previous Lemma and recall that $$\frac{dP_{\theta}}{d\nu^*}(x) = h_{\theta}(Tx).$$ We will now show that for all $\theta \in \Theta$ and $A \subset X$ we have that $$P_{\theta}(A~|~T=t) = \nu^*(A~|~T=t),$$ which will complete the proof. First, notice that $\nu^*(A~|~T=Tx)$ is defined on a $\cT$-measurable subset $\cX' \subset \cX$ with $\nu^*(\cX') = 1$. But as $P_{\theta} \ll \nu^*$ we have that that $P_{\theta}(\cX')=1$, which is a requirement for conditional probability. Now observe that for $\cT$-measurable $C \subset \cX'$ we have that
+\begin{align*} \int_{C} \nu^*(A~|~T=Tx)dP_{\theta}(x) 
+&= \int_{C} \nu^* (A~|~T=Tx) h_{\theta}(Tx) d\nu^*(x) \\
+&= \int_{\cX} \bE(\mathds{1}_A ~|~ T=Tx) \mathds{1}_{C}(x)h_{\theta}(Tx) d\nu^*(x) \\
+&= \int_{\cX} \mathds{1}_A (x) \mathds{1}_{C}(x)h_{\theta}(Tx) d\nu^*(x)  \\
+&= \int_{\cX}  \mathds{1}_A (x) \mathds{1}_{C}(x) dP_{\theta}(x)  \\
+&= P_{\theta}(A \cap C)\end{align*}
 
-which completes the proof by the law of total probability.\end{proof}
+which completes the proof by Proposition~\ref{prop: cond prob intersection}. \end{proof}
 
 By observing the proofs so far, we see that to check sufficiency in the Bayesian sense it is enough to check only those prior distributions that are discrete (i.e., those $\mu_{\Theta}$ on $\Theta$ where $\mu(C) = 1$ for some at most countable subset $C \subset \Theta$).
 
@@ -372,7 +373,7 @@ $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n)  = \frac{1}{\sqrt{2\pi\sigma^2}} \e
 
 \subsection{Applications to estimation}
 
-Recall that $d:\cX \to \cA$ is the decision function and $L:\Theta \times \cA \to [0,\infty)$ denotes the loss function. The risk is then $$R(\theta, d) = \int_{\cX} L(\theta, d(x)) dP_{\theta}(x).$$ Recall (see ???) that if $T:\cX \to \cT$ is a sufficient statistic then there are families of measures $\nu^*_t$, for $t \in \cT$, such that $$P_{\theta}(B~|~T=t) = \nu^*_t(B) \quad \text{for all } B \subset \cX.$$
+Recall that $d:\cX \to \cA$ is the decision function and $L:\Theta \times \cA \to [0,\infty)$ denotes the loss function. The risk is then $$R(\theta, d) = \int_{\cX} L(\theta, d(x)) dP_{\theta}(x).$$ Recall (see Theorem~\ref{thm: bayesian implies classical sufficient}) that if $T:\cX \to \cT$ is a sufficient statistic then there are families of measures $\nu^*_t$, for $t \in \cT$, such that $$P_{\theta}(B~|~T=t) = \nu^*_t(B) \quad \text{for all } B \subset \cX.$$
 
 \begin{thm}[Rao-Blackwell theorem] Suppose that $\cA = \bR^d$ and that for each fixed $\theta$, the map $a \mapsto L(\theta, a)$ is convex. Suppose also that $x \mapsto d(x)$ is an $L^1$ function for each $P_{\theta}$, in other words $$\int_{\cX} \|d(x) \| dP_{\theta} < \infty.$$ Suppose that $T:\cX \to \cT$ is a sufficient statistic for the family of $P_{\theta}$. Then there is a well-defined decision rule given by $$\hat{d}(x) = E_{\theta}(d |T=Tx) = \int_{\cX} d(x') d\nu^*_{Tx}(x')$$ which satisfies that $$R(\theta, \hat{d}) \leq R(\theta, d).$$
  
@@ -501,6 +502,13 @@ We now show that the conditional probabilities are almost surely unique and prov
 
 \end{proof}
 
+\begin{prop}\label{prop: cond prob intersection} Suppose there is a set $X' \in \cA$ of full measure and a family of probability measures $\mu_{x}$ for $x \in X'$. Then $\mu_x$ form conditional probabilities of $\mu$ with respect to $\cA$ if and only if the following holds: 
+
+For all Borel $B \subset X$ we have $$x \mapsto \int_{X} \mu_x(B) d\mu_x(u)$$ is $\cA$ measurable on $X'$ and for all $A \in \cA$ we have that $$\int_{A} \mu_x(B) d\mu(x) = \mu(A \cap B).$$
+
+\end{prop}
+
+\begin{proof} This equation may be written as $$\int_A \int_X f(u) d\mu_x(u) d\mu(x) = \int_A f(x) d\mu(x)$$ where $f = \mathds{1}_B$. Thus the $\mu_x$ are conditional probabilities if and only if this holds for all continuous $f$ and thus if and only if it holds for all positive functions $f$. But by the monotone convergence theorem, we have that if it holds for all indicator functions it holds for all positive functions. \end{proof}
 \subsection{Conditional probability with respect to a random variable}
 
 In this subsection, $\cA$ is a countable generated $\sigma$-algebra of $\cB$ where $(X,\cB)$ is standard Borel. So $\cA= \sigma(\{A_1,A_2,\ldots, \})$ where $A_1,A_2,\ldots \in \cA$. For each $x \in X$ we can define the atom $$[x]_{\cA} = \bigcap_{i, x \in A_i} A_i \cap \bigcap_{j, x \notin A_j} (X \setminus A_j)$$ containing $x$.
