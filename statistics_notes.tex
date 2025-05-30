@@ -416,7 +416,7 @@ Now observe that $W_{n+1} \subset B_{d_X}(x, \epsilon) \subset W_n$ since if $x'
 Thus in summary $y_{n+1} \in W_{n+1}$ is non-empty as desired and $W_{n+1} \subset W_n$ and $$\operatorname{diam}_{d_Y}(W_{n+1} \cap Y) \leq \frac{1}{N} \leq \frac{1}{n+1}.$$ 
 It now follows that $y_n \to x$ in $d_X$ metric and that $y_1,y_2, \ldots$ is a Cauchy sequence in $Y$. Thus by completeness, we have that $y_n \to y \in Y$ for some $y \in Y$. However $$d_X(x,y) \leq d_X(x,y_n) + d_X(y_n,y) \to 0$$ as $n \to \infty$ since $d_Y(y,y_n) \to 0$ and $d_X$ and $d_Y$ induce the same topology. Thus $x=y \in Y$ as required.\end{proof}
 
-\begin{corol}\label{corol: embedding Polish into compact} Let $X$ be a second countable complete metric space. Then $X$ is homeomorphic to a Borel subset of a compact metric space. In fact, we can take this Borel subset to be a countable intersection of open subsets.
+\begin{corol}\label{corol: embedding Polish into compact} Let $X$ be a second countable complete metric space. Then $X$ is homeomorphic to a Borel subset of the compact metric space $[0,1]^{\bN}$. In fact, we can take this Borel subset to be a countable intersection of open subsets.
 
 \end{corol}
 
@@ -617,4 +617,27 @@ Now we prove the converse. Thus we must assume that for $A \subset \cX$ we have 
 \end{lemma}
 
 \begin{proof} By the previous Lemma, we only need to focus on the case that $\nu(X)=1$.  Let $$\cQ = \{ \sum_{i=1}^{\infty} a_i P_i ~|~ \sum_{i} a_i = 1, a_i \geq 0, P_i \in \cP \}$$ be the set of countable convex combinations of measures in $\cP$. Observe that $Q \ll \nu$ for all $Q \in \cQ$. For $Q \in \cQ$ let $f_Q = dQ/d\nu$ be the density of $Q$ and let $$S_Q = \{ x \in X ~|~ f_Q(x)>0 \}.$$ We remark that $f_Q$ and $S_Q$ are almost surely well defined. Now let $c = \sup_{Q \in \cQ} \nu(S_Q) \leq 1$. Let $Q_1,Q_2,\ldots \in \cQ$ be such that $\nu(S_Q) \to c$. Now there exists $Q_0$ such that $$S_{Q_0} = \cup_{i=1}^{\infty} S_{Q_i}$$ and thus $\nu(S_{Q_0}) = c$. We claim that $P \ll Q_0$ for all $P \in \cP$, thus completing the proof. Suppose it were not the case. Then there exists $A \subset X$ such that $P(A) >0$ but $Q_0(A)=0$. Now let $$Q' = \frac{1}{2}\left( Q_0 + P \right).$$ We have that $Q_0 \ll Q'$ and so $S_{Q_0} \subset S_{Q'}$. Since $Q_0(A)=0$ we have that $\nu(A \cap S_{Q_0}) = 0$. On the other hand $$0<P(A) = \int_{A} f_P d\nu \leq 2\int_A f_{Q'} d\nu$$ and so this means that there is $A' \subset A$ with $\nu(A')>0$ and $f_{Q'}(x) >0$ for $x \in A'$. Thus $$S_{Q_0} \cup A' \subset S_{Q'}$$ and so $$\nu(S_{Q'}) \geq \nu(S_{Q_0}) + \nu(A') > c,$$ which is a contradiction. \end{proof}
+
+\section{Functions between Standard Borel Spaces}
+
+We start with a generalization of Proposition~\ref{prop: measurable implies factorable} to maps into arbitrary standard Borel spaces rather than just $\bR$. Recall that a standard Borel space is a measurable space $(X,\cB_X)$ where $X$ is a complete secound countable metric space and $\cB_X$ is the Borel $\sigma$-algebra on $X$.
+
+ \begin{prop} \label{prop: borel measurable implies factorable} Suppose that $(X,\cB_X)$ and $(Y,\cB_Y)$ are measurable space and let $(Z,\cB_Z)$ be a standard Borel space. Let $S:X \to Y$ be measurable and let $\cB_S = \{ S^{-1}B ~|~ B \in \cB_Y\}$ be the sub-$\sigma$-algebra of $\cB_Y$ induced by $S$. 
+Suppose $T:X \to Z$ is $(\cB_S, \cB_Z)$ measurable. Then there exists a measurable $\psi:Y \to Z$ such that $T = \psi \circ S$. 
+\end{prop}
+
+\begin{proof} We know  from Corollary~\ref{corol: embedding Polish into compact} that there exists a homeomorphism $\iota:Z \to \widetilde{Z}$ where $\widetilde{Z}$ is a Borel subset of $[0,1]^{\bN}$. This means that we will now assume that $Z \subset [0,1]^{\bN}$. Let $\pi_i:[0,1]^{\bN} \to [0,1]$ be the projection map and let $f_i = \pi_i \circ T: X \to [0,1]$. Thus $$T(x) = (f_1(x), f_2(x), \ldots ).$$
+
+Now we can apply  Proposition~\ref{prop: measurable implies factorable} to $f_i:X \to [0,1]$, which is $\cB_S$ measurable as required, to get a measurable $\phi_i:Y \to [0,1]$ such that $f_i = \phi_i \circ S$. Now let $\phi:Y \to [0,1]^{\bN}$ be given by $$\phi(y) = (\phi_1(y), \phi_2(y),\ldots ).$$ Now let $\psi:Y\to Z$ be defined by 
+$$\psi(y) =  \begin{cases}\phi(y), & \text{ if } y \in \phi^{-1}(Z) \\
+z_0, & \text{otherwise} \end{cases}$$ where $z_0 \in Z$ is fixed and arbitrary. Note that $\psi$ is indeed measurable as $\phi^{-1}(Z)$ is measurable. Let us show that $\psi$ now satisfies the desired property. If $x \in X$ then $$\phi(S(x)) = (\phi_1(Sx), \ldots) = (f_1(Sx), \ldots) = T(x) \in Z$$ and thus $S(x) \in \phi^{-1}(Z)$. This means that $\psi(S(x)) = \phi(S(x)) = T(x)$, as desired. \end{proof}
+
+\begin{prop} Let $(X,\cB_X), (Y,\cB_Y), (Z,\cB_Z)$ be standard Borel spaces and suppose that $\mu$ is a probability measure on $(X, \cB_X)$. Suppose that $S:X \to Y$ and $T:X \to Z$ are Borel measurable and let $\cB_S$ and $\cB_T$ denote the sub-$\sigma$-algebras induced by these maps. Suppose that whenever $T(x) = T(x')$ we have that $S(x) = S(x')$. Then there $T$ is $\mu$-almost equal to a map that is $\cB_S$-measurable. \end{prop}
+
+\begin{proof} We only have to prove that if $f = \mathds{1}_A$ for some $A \in \cB_T$ then $f$ is $\mu$-almost surely equal to some map that is $\cB_S$-measurable. So fix such $A$. By assumption, we have that $A$ is a union of atoms of $\cB_S$, i.e., if we let $[x] = S^{-1}(Sx)$ denote the smallest element of $\cB_S$ that contains $x$ (see ???) then $$A = \bigcup_{x \in A} [x].$$
+
+Now we have (by ???) that there exists $X' \in \cB_S$ with $\mu(X')=1$ such that if $\mu_x = \mu_x^{\cB_S}$ denotes the conditional probability then $\mu_x^{\cB_S}([x])=1$ for each $x \in X'$. We have (by WHAT??) that the map $\tilde{f}:X' \to \bR$ given by $$ \tilde{f}(x) = \int_X \mathds{1}_A(u) d\mu_x(u)$$ is $\cB_S$-measurable.
+Now observe that for $x \in X'$ we have that if $x \in A $ then $[x] \subset \cA$ and so this integral is $1$. Otherwise, if $x \in X'$ and $x \notin A$ then $[x] \cap \cA = \emptyset$ and so this integral is $0$. Thus we have shown that for $x \in X'$ we have that $f(x) = \tilde{f}(x)$ and $\tilde{f}$ is $\cB_S$ measurable on $X' \in \cB_S$, which completes the proof. \end{proof}
+
+
 \end{document}
