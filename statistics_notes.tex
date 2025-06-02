@@ -498,13 +498,11 @@ We now show that the conditional probabilities are almost surely unique and prov
 
 \end{prop}
 
-\begin{proof} We for each $f \in C(X)$ we have that $$\int_X f(u) d\mu_x^{\cA} (u) = E(f|\cA)(x) = \int_X f(u) d\nu_x^{\cA} (u)$$ holds for all $x \in X_f \in \cA$ with $\mu(X_f) = 1$. Applying this to a countable dense set of $f \in C(X)$ we can find a single set $X' \in \cA$ with $\mu(X'')=1$ so that this identity holds for all continuous functions $f \in C(X)$. It follows by uniqueness in Riesz-representation theorem that $\mu_x^{\cA} = \nu_x^{\cA}$ for all $x \in X''$. 
-
-\end{proof}
+\begin{proof} We for each $f \in C(X)$ we have that $$\int_X f(u) d\mu_x^{\cA} (u) = E(f|\cA)(x) = \int_X f(u) d\nu_x^{\cA} (u)$$ holds for all $x \in X_f \in \cA$ with $\mu(X_f) = 1$. Applying this to a countable dense set of $f \in C(X)$ we can find a single set $X' \in \cA$ with $\mu(X'')=1$ so that this identity holds for all continuous functions $f \in C(X)$. It follows by uniqueness in Riesz-representation theorem that $\mu_x^{\cA} = \nu_x^{\cA}$ for all $x \in X''$.  \end{proof}
 
 \begin{prop}\label{prop: cond prob intersection} Suppose there is a set $X' \in \cA$ of full measure and a family of probability measures $\mu_{x}$ for $x \in X'$. Then $\mu_x$ form conditional probabilities of $\mu$ with respect to $\cA$ if and only if the following holds: 
 
-For all Borel $B \subset X$ we have $$x \mapsto \int_{X} \mu_x(B) d\mu_x(u)$$ is $\cA$ measurable on $X'$ and for all $A \in \cA$ we have that $$\int_{A} \mu_x(B) d\mu(x) = \mu(A \cap B).$$
+For all Borel $B \subset X$ we have $$x \mapsto \mu_x(B)$$ is $\cA$ measurable on $X'$ and for all $A \in \cA$ we have that $$\int_{A} \mu_x(B) d\mu(x) = \mu(A \cap B).$$
 
 \end{prop}
 
@@ -517,13 +515,14 @@ In this subsection, $\cA$ is a countable generated $\sigma$-algebra of $\cB$ whe
 
 \end{prop}
 
-\begin{proof} We must show that for each $A \in \cA$ we have either $[x] \subset \cA$ or $[x] \cap \cA = \emptyset$. This is true for each $A_i$ and so one must show that the sets in $\cA$ satisfying this property forms a $\sigma$-algebra. \end{proof}
+\begin{proof} \label{prop: construct atom}  We must show that for each $A \in \cA$ we have either $[x] \subset \cA$ or $[x] \cap \cA = \emptyset$. This is true for each $A_i$ and so one must show that the sets in $\cA$ satisfying this property forms a $\sigma$-algebra. \end{proof}
 
-\begin{prop} There is a set $X'' \subset X$ with $X'' \in \cA$ and $\mu(X'')=1$ such that for any $x_1,x_2 \in X''$ we have that $\mu_{x_1}^{\cA} = \mu_{x_2}^{\cA}$ if and only if $[x_1] = [x_2]$. Moreover, $\mu_x^{\cA}([x]) = 1$ for $x \in X''$.
+\begin{prop} \label{prop: cond prob supported on atom} There is a set $X'' \subset X$ with $X'' \in \cA$ and $\mu(X'')=1$ such that for any $x_1,x_2 \in X''$ we have that $\mu_{x_1}^{\cA} = \mu_{x_2}^{\cA}$ if and only if $[x_1] = [x_2]$. Moreover, $\mu_x^{\cA}([x]) = 1$ for $x \in X''$ and if $x' \in X'' \setminus [x]$ then $\mu_x^{\cA}([x']) = 0$.
 
 \end{prop}
 
-\begin{proof} Let $\mu_x = \mu_x^{\cA}$ for $x \in X'$ be a set of conditional probabilities, where $X' \in \cA$ and $\mu(X')=1$. For almost all $x \in X'$ we have that $$\mu_x(A_i) = \int \mathds{1}_{A_i} d\mu_x = E(\mathds{1}_{A_i}|\cA)(x) = \mathds{1}_{A_i}(x).$$ Say this occurs on $X'' \subset X'$ with $\mu(X'')=1$. Note that since all terms are $\cA$-measurable, we have $X'' \in \cA$. Now let $x_1,x_2 \in X''$. If $\mu_{x_1} = \mu_{x_2}$ then $\mathds{1}_{A_i}(x_1) = \mathds{1}_{A_i}(x_2)$ for all $i$ and thus $[x_1] = [x_2]$. Conversely, suppose that $[x_1]=[x_2]$. Thus any $\cA$-measurable function must have equal values on $x_1$ and $x_2$. But for any $f \in C(X)$ we have that $$x \mapsto \int f d\mu_x$$ is $\cA$-measurable. Thus $$\int f d\mu_{x_1} = \int f d \mu_{x_2}$$ holds for all $f \in C(X)$ and thus $\mu_{x_1} = \mu_{x_2}$. \end{proof}
+\begin{proof} Let $\mu_x = \mu_x^{\cA}$ for $x \in X'$ be a set of conditional probabilities, where $X' \in \cA$ and $\mu(X')=1$. For almost all $x \in X'$ we have that $$\mu_x(A_i) = \int \mathds{1}_{A_i} d\mu_x = E(\mathds{1}_{A_i}|\cA)(x) = \mathds{1}_{A_i}(x).$$ Say this occurs on $X'' \subset X'$ with $\mu(X'')=1$. Note that since all terms are $\cA$-measurable, we have $X'' \in \cA$. Now let $x_1,x_2 \in X''$. If $\mu_{x_1} = \mu_{x_2}$ then $\mathds{1}_{A_i}(x_1) = \mathds{1}_{A_i}(x_2)$ for all $i$ and thus $[x_1] = [x_2]$. Conversely, suppose that $[x_1]=[x_2]$. Thus any $\cA$-measurable function must have equal values on $x_1$ and $x_2$. But for any $f \in C(X)$ we have that $$x \mapsto \int f d\mu_x$$ is $\cA$-measurable. Thus $$\int f d\mu_{x_1} = \int f d \mu_{x_2}$$ holds for all $f \in C(X)$ and thus $\mu_{x_1} = \mu_{x_2}$.
+Now we show the remaining claim. Write $$ [x] = \bigcap_{i \in I} A_i \cap \bigcap_{j \in J} A_j^c.$$ Now observe that for $i \in I$ we have $$\mu_x(A_i) = \mathds{1}_{A_i}(x) = 1$$ while for $j \in J$ we have $$\mu_x(A_j^{c}) = 1 - \mu_x(A_j) = 1 - \mathds{1}_{A_j}(x) = 1$$ and so $[x]$ is the intersection of $\mu_x$-co-null sets and this $\mu_x([x]) = 1$. As the atoms form a partition of $X''$, we have that $\mu_x([x'])=0$ for $[x'] \neq [x]$. \end{proof}
 
 \begin{thm}[Law of total probability] Suppose that $T:X\to Y$ is a measurable map between standard Borel spaces and let $\cB_T := T^{-1}\cB_Y$ be the induced $\sigma$-algebra. There exists Borel $Y' \subset Y$ and probability measures $\mu_y$ on $X$, for each $y \in Y'$, such that the following hold.
 
@@ -563,7 +562,7 @@ In this section, fix a standard Borel probability space $(\Omega,\mu)$ and suppo
 
 and a similar calculation holds for conditioning on $T=1$, which shows conditional independence.
 
-Independence does not since if we take $A = [0,1], B = [1,2]$ then $$\mu(X^{-1}A \times Y^{-1}B) = \mu([0,1]^2 \cap [1,2]^2) = 0$$ but $$\mu(X^{-1}A) = \mu([0,1]^2) = \frac{1}{2}$$ and $$\mu(Y^{-1}B) = \mu([1,2]^2) = \frac{1}{2}.$$
+Independence does not hold since if we take $A = [0,1], B = [1,2]$ then $$\mu(X^{-1}A \cap Y^{-1}B) = \mu([0,1]^2 \cap [1,2]^2) = 0$$ but $$\mu(X^{-1}A) = \mu([0,1]^2) = \frac{1}{2}$$ and $$\mu(Y^{-1}B) = \mu([1,2]^2) = \frac{1}{2}.$$
 
 \end{eg}
 
@@ -632,11 +631,11 @@ Now we can apply  Proposition~\ref{prop: measurable implies factorable} to $f_i:
 $$\psi(y) =  \begin{cases}\phi(y), & \text{ if } y \in \phi^{-1}(Z) \\
 z_0, & \text{otherwise} \end{cases}$$ where $z_0 \in Z$ is fixed and arbitrary. Note that $\psi$ is indeed measurable as $\phi^{-1}(Z)$ is measurable. Let us show that $\psi$ now satisfies the desired property. If $x \in X$ then $$\phi(S(x)) = (\phi_1(Sx), \ldots) = (f_1(Sx), \ldots) = T(x) \in Z$$ and thus $S(x) \in \phi^{-1}(Z)$. This means that $\psi(S(x)) = \phi(S(x)) = T(x)$, as desired. \end{proof}
 
-\begin{prop} Let $(X,\cB_X), (Y,\cB_Y), (Z,\cB_Z)$ be standard Borel spaces and suppose that $\mu$ is a probability measure on $(X, \cB_X)$. Suppose that $S:X \to Y$ and $T:X \to Z$ are Borel measurable and let $\cB_S$ and $\cB_T$ denote the sub-$\sigma$-algebras induced by these maps. Suppose that whenever $T(x) = T(x')$ we have that $S(x) = S(x')$. Then there $T$ is $\mu$-almost equal to a map that is $\cB_S$-measurable. \end{prop}
+\begin{prop} Let $(X,\cB_X), (Y,\cB_Y), (Z,\cB_Z)$ be standard Borel spaces and suppose that $\mu$ is a probability measure on $(X, \cB_X)$. Suppose that $S:X \to Y$ and $T:X \to Z$ are Borel measurable and let $\cB_S$ and $\cB_T$ denote the sub-$\sigma$-algebras induced by these maps. Suppose that whenever $T(x) = T(x')$ we have that $S(x) = S(x')$. Then $T$ is $\mu$-almost equal to a map that is $\cB_S$-measurable. \end{prop}
 
-\begin{proof} We only have to prove that if $f = \mathds{1}_A$ for some $A \in \cB_T$ then $f$ is $\mu$-almost surely equal to some map that is $\cB_S$-measurable. So fix such $A$. By assumption, we have that $A$ is a union of atoms of $\cB_S$, i.e., if we let $[x] = S^{-1}(Sx)$ denote the smallest element of $\cB_S$ that contains $x$ (see ???) then $$A = \bigcup_{x \in A} [x].$$
+\begin{proof} We only have to prove that if $f = \mathds{1}_A$ for some $A \in \cB_T$ then $f$ is $\mu$-almost surely equal to some map that is $\cB_S$-measurable. So fix such $A$. By assumption, we have that $A$ is a union of atoms of $\cB_S$, i.e., if we let $[x] = S^{-1}(Sx)$ denote the smallest element of $\cB_S$ that contains $x$ (see Propostion~\ref{prop: construct atom}) then $$A = \bigcup_{x \in A} [x].$$
 
-Now we have (by ???) that there exists $X' \in \cB_S$ with $\mu(X')=1$ such that if $\mu_x = \mu_x^{\cB_S}$ denotes the conditional probability then $\mu_x^{\cB_S}([x])=1$ for each $x \in X'$. We have (by WHAT??) that the map $\tilde{f}:X' \to \bR$ given by $$ \tilde{f}(x) = \int_X \mathds{1}_A(u) d\mu_x(u)$$ is $\cB_S$-measurable.
+Now we have (by Proposition~\ref{prop: cond prob supported on atom}) that there exists $X' \in \cB_S$ with $\mu(X')=1$ such that if $\mu_x = \mu_x^{\cB_S}$ denotes the conditional probability then $\mu_x^{\cB_S}([x])=1$ for each $x \in X'$. We have (by definition of conditional probability) that the map $\tilde{f}:X' \to \bR$ given by $$ \tilde{f}(x) = \int_X \mathds{1}_A(u) d\mu_x(u)$$ is $\cB_S$-measurable.
 Now observe that for $x \in X'$ we have that if $x \in A $ then $[x] \subset \cA$ and so this integral is $1$. Otherwise, if $x \in X'$ and $x \notin A$ then $[x] \cap \cA = \emptyset$ and so this integral is $0$. Thus we have shown that for $x \in X'$ we have that $f(x) = \tilde{f}(x)$ and $\tilde{f}$ is $\cB_S$ measurable on $X' \in \cB_S$, which completes the proof. \end{proof}
 
 
