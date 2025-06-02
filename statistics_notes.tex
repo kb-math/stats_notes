@@ -105,6 +105,8 @@
 \newtheorem{question}[dummy]{Question}
 \newtheorem{conjecture}[dummy]{Conjecture}
 
+\tableofcontents
+
 \section{Basic Setup}
 
 
@@ -375,7 +377,7 @@ $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n)  = \frac{1}{\sqrt{2\pi\sigma^2}} \e
 
 Recall that $d:\cX \to \cA$ is the decision function and $L:\Theta \times \cA \to [0,\infty)$ denotes the loss function. The risk is then $$R(\theta, d) = \int_{\cX} L(\theta, d(x)) dP_{\theta}(x).$$ Recall (see Theorem~\ref{thm: bayesian implies classical sufficient}) that if $T:\cX \to \cT$ is a sufficient statistic then there are families of measures $\nu^*_t$, for $t \in \cT$, such that $$P_{\theta}(B~|~T=t) = \nu^*_t(B) \quad \text{for all } B \subset \cX.$$
 
-\begin{thm}[Rao-Blackwell theorem] Suppose that $\cA = \bR^d$ and that for each fixed $\theta$, the map $a \mapsto L(\theta, a)$ is convex. Suppose also that $x \mapsto d(x)$ is an $L^1$ function for each $P_{\theta}$, in other words $$\int_{\cX} \|d(x) \| dP_{\theta} < \infty.$$ Suppose that $T:\cX \to \cT$ is a sufficient statistic for the family of $P_{\theta}$. Then there is a well-defined decision rule given by $$\hat{d}(x) = E_{\theta}(d |T=Tx) = \int_{\cX} d(x') d\nu^*_{Tx}(x')$$ which satisfies that $$R(\theta, \hat{d}) \leq R(\theta, d).$$
+\begin{thm}[Rao-Blackwell theorem] Suppose that $\cA = \bR^d$ and that for each fixed $\theta$, the map $a \mapsto L(\theta, a)$ is convex. Suppose also that $x \mapsto d(x)$ is an $L^1$ function for each $P_{\theta}$, in other words $$\int_{\cX} \|d(x) \| dP_{\theta} < \infty.$$ Suppose that $T:\cX \to \cT$ is a sufficient statistic for the family of $P_{\theta}$. Then there is a well-defined decision rule given by \begin{align}\label{eqn: Rao-Blackwell estimator} \hat{d}(x) = E_{\theta}(d |T=Tx) = \int_{\cX} d(x') d\nu^*_{Tx}(x')\end{align} which satisfies that $$R(\theta, \hat{d}) \leq R(\theta, d).$$
  
 \end{thm}
 
@@ -391,7 +393,42 @@ where we used the law of total probability applied to $P_{\theta}(\cdot ~|~T=Tx)
 
 Thus the Rao-Blackwell theorem allows us to construct more efficient estimators that are a function of the sufficient statistic $T$.
 
-Examples of such convex loss functions include the square loss $$L(\theta, a) = |\theta - a|^2.$$
+Examples of such convex loss functions include the square loss $$L(\theta, a) = |\theta - a|^2.$$ Assume now for the rest of this section that the action space is $\cA = \bR$.
+
+\begin{mydef} Let $c:\Theta \to \bR$. An \textit{unbiased estimator of $c$} is a decision rule $d:X \to \bR$ such that $$E_{\theta}(d(X)) = c(\theta) \quad\text{for all } \theta \in \Theta.$$ In the case that $E_{\theta}|d(X)|^2 < \infty$ for all $\theta \in \Theta$, we say that $d$ is a UMVU (uniformly minimum variance unbiased) estimator of $c$ if for any other decision rule $d_2:X \to \bR$ with $E_{\theta}|d_2(X)|^2 < \infty$ for all $\theta \in \Theta$ we have that  $$E_{\theta}|d(X) - c(\theta)|^2 \leq E_{\theta}|d_2(X) - c(\theta)|^2 \quad \text{for all } \theta \in \Theta.$$
+
+\end{mydef}
+
+Note that if $d$ is an unbiased estimator of $c$ that is $L^1$ w.r.t each $P_{\theta}$ and $T$ is sufficient, then the estimator $\hat{d}$ in the Rao-Blackwell theorem (given by {eqn: Rao-Blackwell estimator}) is also unbiased since $$E_{\theta}(\hat{d}(X)) =  \int_{\cX} E_{\theta}(d|T=Tx) dP_{\theta}(x) = \int_{\cX} d(x) dP_{\theta}(x) = c(\theta).$$ 
+The Rao-Blackwell theorem applied to the square loss shows that if $d$ is UMVU then so is $\hat{d}$.
+
+We let $\cB_T$ denote the $\sigma$-algebra on $\cX$ induced by the statistic $T:\cX \to \cT$.
+\begin{prop} Suppose that $d:\cX \to \bR$ is a UMVU esimator of $c:\Theta \to \bR$. Then if $T$ is a sufficient statistic, then $d \in L^2(\cX, \cB_T, P_{\theta})$ for all $\theta \in \Theta$. In other words, $d$ is $\cB_T$ almost measurable and so $d(x) = \hat{d}(x)$ for $P_{\theta}$-almost all $x \in \cX$. \end{prop}
+
+\begin{proof} Fix $\theta \in \Theta$. Note that $\hat{d} = E_{\theta}(d|T)$ is the orthogonal projection of $d$ onto the subspace $L^2(\cX, \cB_T, P_{\theta})$, thus $d - \hat{d}$ is orthogonal to every element on this subspace. Note that $c(\theta)$, being a constant function on $\cX$, is also in this subspace. Thus $d - \hat{d}$ and $\hat{d} - c(\theta)$ are orthogonal and so the Pythagoras theorem gives 
+\begin{align}\label{eqn: Pythagoras estimator d_hat} E_{\theta}(d - c(\theta))^2 = E_{\theta}(d - \hat{d})^2 + E_{\theta}(\hat{d} - c(\theta))^2  . \end{align}
+
+However, as $d$ is UMVU, so must be $\hat{d}$ and they must achieve the same error from $c(\theta)$. Thus by (\ref{eqn: Pythagoras estimator d_hat}) we have that $$E_{\theta}(d - \hat{d})^2 = 0$$ and so $d = \hat{d}$ holds $P_{\theta}$-almost surely. \end{proof}
+
+We now want some conditions that imply that $\hat{d}$ is an actual UMVU. It turns out the concept of a complete sufficient statistic gives us this.
+
+\begin{mydef}[Complete sufficient statistic] We say that $T:\cX \to \cT$ is a \texit{complete sufficient statistic} if $T$ is complete and whenever a measurable $g:\cT \to \bR$ satisfies that $$E_{\theta}|g \circ T| < \infty \text{ and } E_{\theta}(g \circ T) = 0 \quad\text{for all } \theta \in \Theta$$ then we must have that $$g(Tx) = 0 \quad\text{for  $P_{\theta}$-almost all } x \in \cX.$$
+
+\end{mydef}
+
+Here is a geometric way of viewing completeness (at least for square measurable $g$): It says that if $g \circ T \in L^2(\cX, \cB_T, P_{\theta})$ is orthogonal to the space of constant functions then $g \circ T$ must be the zero vector in $L^2(\cX, \cB_T, P_{\theta})$.
+
+\begin{thm}[Lehmann-Scheffe theorem] Suppose that $T$ is a complete sufficient statistic. Suppose that $d:\cX \to \bR$ is an unbiased estimator of $c:\Theta \to \bR$ with $E_{\theta}|d|^2 < \infty$ for all $\theta \in \Theta$. Then $\hat{d} = E_{\theta}(d|T)$ is the unique UMVU of $c$.
+
+\end{thm}
+
+\begin{proof} 
+
+\end{proof}
+
+\begin{eg}
+
+\end{eg}
 \appendix
 
 \section{Review of Probability}
