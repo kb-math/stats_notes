@@ -403,7 +403,7 @@ Note that if $d$ is an unbiased estimator of $c$ that is $L^1$ w.r.t each $P_{\t
 The Rao-Blackwell theorem applied to the square loss shows that if $d$ is UMVU then so is $\hat{d}$.
 
 We let $\cB_T$ denote the $\sigma$-algebra on $\cX$ induced by the statistic $T:\cX \to \cT$.
-\begin{prop} Suppose that $d:\cX \to \bR$ is a UMVU esimator of $c:\Theta \to \bR$. Then if $T$ is a sufficient statistic, then $d \in L^2(\cX, \cB_T, P_{\theta})$ for all $\theta \in \Theta$. In other words, $d$ is $\cB_T$ almost measurable and so $d(x) = \hat{d}(x)$ for $P_{\theta}$-almost all $x \in \cX$. \end{prop}
+\begin{prop} \label{prop: UMVU is T mes} Suppose that $d:\cX \to \bR$ is a UMVU esimator of $c:\Theta \to \bR$. Then if $T$ is a sufficient statistic, then $d \in L^2(\cX, \cB_T, P_{\theta})$ for all $\theta \in \Theta$. In other words, $d$ is $\cB_T$ almost measurable and so $d(x) = \hat{d}(x)$ for $P_{\theta}$-almost all $x \in \cX$. \end{prop}
 
 \begin{proof} Fix $\theta \in \Theta$. Note that $\hat{d} = E_{\theta}(d|T)$ is the orthogonal projection of $d$ onto the subspace $L^2(\cX, \cB_T, P_{\theta})$, thus $d - \hat{d}$ is orthogonal to every element on this subspace. Note that $c(\theta)$, being a constant function on $\cX$, is also in this subspace. Thus $d - \hat{d}$ and $\hat{d} - c(\theta)$ are orthogonal and so the Pythagoras theorem gives 
 \begin{align}\label{eqn: Pythagoras estimator d_hat} E_{\theta}(d - c(\theta))^2 = E_{\theta}(d - \hat{d})^2 + E_{\theta}(\hat{d} - c(\theta))^2  . \end{align}
@@ -412,21 +412,23 @@ However, as $d$ is UMVU, so must be $\hat{d}$ and they must achieve the same err
 
 We now want some conditions that imply that $\hat{d}$ is an actual UMVU. It turns out the concept of a complete sufficient statistic gives us this.
 
-\begin{mydef}[Complete sufficient statistic] We say that $T:\cX \to \cT$ is a \textit{complete sufficient statistic} if $T$ is complete and whenever a measurable $g:\cT \to \bR$ satisfies that $$E_{\theta}|g \circ T| < \infty \text{ and } E_{\theta}(g \circ T) = 0 \quad\text{for all } \theta \in \Theta$$ then we must have that $$g(Tx) = 0 \quad\text{for  $P_{\theta}$-almost all } x \in \cX.$$
+\begin{mydef}[Complete sufficient statistic] We say that $T:\cX \to \cT$ is a \textit{complete sufficient statistic} if $T$ is sufficient and satisfies the following property:  Whenever a measurable $g:\cT \to \bR$ satisfies that $$E_{\theta}|g \circ T| < \infty \text{ and } E_{\theta}(g \circ T) = 0 \quad\text{for all } \theta \in \Theta$$ then we must have that $$g \circ T = 0 \quad\text{$P_{\theta}$-almost surely for  all } \theta \in \Theta.$$
 
 \end{mydef}
 
-Here is a geometric way of viewing completeness (at least for square measurable $g$): It says that if $g \circ T \in L^2(\cX, \cB_T, P_{\theta})$ is orthogonal to the space of constant functions then $g \circ T$ must be the zero vector in $L^2(\cX, \cB_T, P_{\theta})$.
+Here is a geometric way of viewing completeness (at least for square measurable $g$): It says that if $g \circ T \in L^2(\cX, \cB_T, P_{\theta})$ is orthogonal to the space of constant functions, for all $\theta \in \Theta$, then $g \circ T$ must be the zero vector in $L^2(\cX, \cB_T, P_{\theta})$, for all $\theta \in \Theta$. We stress that it is not enough for the implication to hold for every fixed $\theta \in \Theta$ (i.e., we need the orthogonality to hold for all $\theta \in \Theta$ before we conclude that $g \circ T = 0$.).
 
 \begin{thm}[Lehmann-Scheffe theorem] Suppose that $T$ is a complete sufficient statistic. Suppose that $d:\cX \to \bR$ is an unbiased estimator of $c:\Theta \to \bR$ with $E_{\theta}|d|^2 < \infty$ for all $\theta \in \Theta$. Then $\hat{d} = E_{\theta}(d|T)$ is the unique UMVU of $c$.
 
 \end{thm}
 
-\begin{proof} 
+\begin{proof} Let us first show that $\hat{d}$ has is a UMVU before we show uniqueness. Suppose for contradiction that $d_2:\cX \to \bR$ is another unbiased estimator, with $E_{\theta}|d_2|^2 < \infty$ for all $\theta \in \Theta$ such that, for some $\theta_0 \in \Theta$ we have that $$E_{\theta_0} |d_2 - c(\theta)|^2 < E_{\theta_0} |\hat{d} - c(\theta)|^2.$$ Now by applying the Rao-Blackwell theorem to $d_2$, we have that $\hat{d_2}$ is an even better unbiased estimator for $c(\theta)$, and thus $$E_{\theta_0} |\hat{d_2} - c(\theta)|^2 < E_{\theta_0} |\hat{d} - c(\theta)|^2.$$ This implies that if we define $g:\cT \to \bR$ by $g(Tx) = \hat{d}(Tx) - \hat{d_2}(Tx)$, then we must have that $g \circ T$ is not the zero-function in $L^2(\cX, \cB_T,P_{\theta_0})$. However, we have for all $\theta \in \Theta$ that $$E_{\theta}(g \circ T) = E_{\theta(\hat{d} - \hat{d_2})} = c(\theta) - c(\theta) = 0,$$ which contradicts the completeness of $T$. Thus $\hat{d}$ is indeed a UMVU.
 
-\end{proof}
+Let us now show that it is unique. By Proposition~\ref{prop: UMVU is T mes} we have that if $d_3:\cX \to \bR$ is another UMVU, then $d_3 = \hat{d_3} \in L_2(X, \cB_T, P_{\theta})$ but $\hat{d}(x) - \hat{d_3}(x) =: g(Tx)$ is a function of $T$. Thus $$E_{\theta}(\hat{d} - d_3) = E_{\theta}(g\circ T) = c(\theta) - c(\theta) = 0$$ for all $\theta \in \Theta$ and so by definition of completeness we must have that $\hat{d}(x) = \hat{d_3}(x) = d_3(x)$ holds $P_{\theta}$-almost surely. \end{proof}
 
-\begin{eg}
+\begin{eg} Let $\cX = \{0,1\}^n$, $\Theta = [0,1]$ and suppose that $P_{\theta}$ is the distribution of $(X_1, \ldots, X_n)$ where $X_i$ is Bernoulli with $P(X_i = 1) = \theta$ and $X_1, \ldots, X_n$ are i.i.d. Let us now show that $T(x_1, \ldots, x_n) = \sum_{i=1}^n x_i$ is a complete sufficient statistic. Suppose that $g:\bZ_{\geq 0} \to \bR$ is any function (we do not need any $L^1$ assumptions as $\cX$ is finite), then $$E_{\theta}g(Tx) = \sum_{t=0}^n g(t) \binom{n}{t} \theta^t(1-\theta)^{n-t}. $$ The right hand side is a polynomial in $\theta$, thus if it is zero for all $\theta \in [0,1]$ then it must be equal to the zero polynomial. We must show that if this happens, then $g(t) = 0$ for all $t$. Suppose this it not the case, thus there is a minimal $k \in \{0, \ldots, n\}$ so that $g(k) \neq 0$. Hence $$E_{\theta}g(Tx) = \sum_{t=k}^n g(t) \binom{n}{t} \theta^t(1-\theta)^{n-t}.$$ The coefficient of $\theta^{k}$ can only have a contribution form the $t=k$ term, as for $k<t\leq n$ we have that $\theta^t (1-\theta)^{n-t}$ is a polynomial with a factor $\theta^{t}$. So the coefficient of $\theta^k$ is in fact $g(k) \binom{n}{k} \theta^{k}$ and so if this coefficient is zero then we must have $g(k) = 0$, a contradiction. Hence we have shown that if $E_{\theta}(g \circ T) = 0$ for all $\theta \in [0,1]$ (in fact, at least $n+1$ such $\theta$ will do), then $g \circ T = 0$, thus showing completeness (sufficiency was already shown in a previous example).
+
+Now applying the Lehmann-Scheffe theorem, we have that $d(x) = \frac{1}{n} \sum_{i=1}^n x_i$ is a UMVU for $\theta$ as it can be written as $d(x) = \frac{1}{n}T(x)$ and so $\hat{d} = d$. This loss is $$E_{\theta}(\hat{d} - \theta)^2 = Var(\frac{1}{n}(X_1 + \cdots + X_n)) = \frac{1}{n} Var(X_1) = \frac{1}{n}\theta(1-\theta).$$
 
 \end{eg}
 \appendix
