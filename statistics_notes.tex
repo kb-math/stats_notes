@@ -376,18 +376,24 @@ $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n)  = \frac{1}{\sqrt{2\pi\sigma^2}} \e
 
 \end{eg}
 
-\subsection{Applications to estimation}
+\subsection{Conditional Expectations with respect to sufficient statistics}
+
+Suppose $T:\cX \to \cT$ is sufficient for the family $P_{\theta}$. If $\psi:\cX \to \bC$ is a Borel-measurable function such that $$E_{\theta}(|\psi|) := \int_{\cX} |\psi(x)| dP_{\theta}(x) < \infty \quad\text{for all } \theta \in \Theta,$$ then the conditional expectation $E_{\theta}(\psi ~|~ T=t)$ is also $L^1$. We would like to define a canonical version for this conditional expectation via 
+\begin{align}\label{eqn: cond expectation w.r.t sufficient stat} E_{\theta}(\psi ~|~ T=t) = \int_{\cX} \psi(x) d\nu_t(x) \end{align} where $\nu_t(\cdot) = P_{\theta}( \cdot ~|~ T=t)$ are the measures as defined in the definition of classical sufficiency. The issue is that the integral on the right hand side of (\ref{eqn: cond expectation w.r.t sufficient stat}) may not be absolutely convergent for some $t \in \cT$. However, it is on some set $\cT_{\psi} \subset \cT$ that is $\Theta$-co-null (and depends on $\psi$). To see this, note that $$\int_{\cX} |\psi(x)| dP_{\theta}(x) = \int_{\cX} \int_{\cX} |\psi(x')| d\nu_{Tx}(x') dP_{\theta}(x)$$ by definition of conditional probabilities (applied to positive functions) and thus if define $$\cT_{\psi} = \left\{ t \in \cT ~:~ \int_{\cX} |\psi(x')| d\nu_{t}(x') < \infty \right\}$$ then this is a Borel measurable set (whose definition does not depent on $\theta$) with $P_{\theta}(T^{-1}\cT_{\psi}) = 1$.
+
+\subsection{Applications to estimation (Rao-Blackwell and Lehmann-Scheffe theorems)}
 
 Recall that $d:\cX \to \cA$ is the decision function and $L:\Theta \times \cA \to [0,\infty)$ denotes the loss function. The risk is then $$R(\theta, d) = \int_{\cX} L(\theta, d(x)) dP_{\theta}(x).$$ Recall that if $T:\cX \to \cT$ is a sufficient statistic then there are families of measures $\nu_t$, for $t \in \cT$, such that $$P_{\theta}(B~|~T=t) = \nu_t(B) \quad \text{for all } B \subset \cX.$$
 
-\begin{thm}[Rao-Blackwell theorem] Suppose that $\cA = \bR^d$ and that for each fixed $\theta$, the map $a \mapsto L(\theta, a)$ is convex. Suppose also that $x \mapsto d(x)$ is an $L^1$ function for each $P_{\theta}$, in other words $$\int_{\cX} \|d(x) \| dP_{\theta} < \infty.$$ Suppose that $T:\cX \to \cT$ is a sufficient statistic for the family of $P_{\theta}$. Then there is a $\cT$-measurable $\cX_d \subset \cX$ such that $P_{\theta}(\cX_d) = 1$ for all $\theta \in \Theta$ and a well-defined decision rule $\hat{d}:\cX_d \to \bR^d$ given by \begin{align}\label{eqn: Rao-Blackwell estimator} \hat{d}(x) = E_{\theta}(d |T=Tx) = \int_{\cX} d(x') d\nu_{Tx}(x')\end{align} which satisfies $$R(\theta, \hat{d}) \leq R(\theta, d).$$ Well-defined here means that integrals are absolutely convergent for all $x \in \cX_d$.
+\begin{thm}[Rao-Blackwell theorem] Suppose that $\cA = \bR^d$ and that for each fixed $\theta$, the map $a \mapsto L(\theta, a)$ is convex. Suppose also that $x \mapsto d(x)$ is an $L^1$ function for each $P_{\theta}$, in other words $$\int_{\cX} \|d(x) \| dP_{\theta} < \infty.$$ Suppose that $T:\cX \to \cT$ is a sufficient statistic for the family of $P_{\theta}$. Then there is a $T$-measurable $\cX_d \subset \cX$ such that $P_{\theta}(\cX_d) = 1$ for all $\theta \in \Theta$ and a well-defined decision rule $\hat{d}:\cX_d \to \bR^d$ given by \begin{align}\label{eqn: Rao-Blackwell estimator} \hat{d}(x) = E_{\theta}(d |T=Tx) = \int_{\cX} d(x') d\nu_{Tx}(x')\end{align} which satisfies $$R(\theta, \hat{d}) \leq R(\theta, d).$$ Well-defined here means that integral is absolutely convergent for all $x \in \cX_d$.
  
 \end{thm}
 
 Note that we can extend $\hat{d}$ to all of $\cX$ and the risk functions will not change.
 
-\begin{proof} Note that as $d$ is $L^1$ with respect to $P_{\theta}$, we must have that it is $L^1$ with respect to $P_{\theta}( \cdot ~|~ T=Tx) = \nu_t(\cdot)$ for $P_{\theta}$-almost all $x$. Thus we can let $\cX_d$ be the set of all $x$ so that the integral converges absolutely (it does not depend on $\theta$). Thus the expression for $\hat{d}(x)$ is well defined. By Jensen's theorem, we have that 
-$$L(\theta, \hat{d}(x)) = L\left(\theta, \int_{\cX} d(x') d\nu_{Tx}(x') \right) \leq \int_{\cX} L(\theta, d(x')) d\nu_{Tx}(x')  $$
+\begin{proof} Note that as $d$ is $L^1$ with respect to $P_{\theta}$, we can apply our canonical formula (\ref{eqn: cond expectation w.r.t sufficient stat}) with $d = \psi$. Thus we can let $\cX_d$ be the set of all $x$ so that the integral converges absolutely (it does not depend on $\theta$) and we see from the discussion below (\ref{eqn: cond expectation w.r.t sufficient stat}) that $P_{\theta}(\cX_d) = 1$ for all $\theta \in \Theta$. Thus the expression for $\hat{d}(x)$ is well defined. 
+By Jensen's theorem, we have that 
+$$L(\theta, \hat{d}(x)) = L\left(\theta, \int_{\cX} d(x') d\nu_{Tx}(x') \right) \leq \int_{\cX} L(\theta, d(x')) d\nu_{Tx}(x')  .$$
 
 Now we integrate both sides with respect to $P_{\theta}$ to get that 
 \begin{align*}R(\theta, \hat{d}) &\leq \int_{\cX} \int_{\cX} L(\theta, d(x')) d\nu_{Tx}(x')  dP_{\theta}(x)\\
