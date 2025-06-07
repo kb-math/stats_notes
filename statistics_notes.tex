@@ -225,7 +225,7 @@ A statistic is a measurable function $T:\cX \to \cT$ to some measurable space $(
 \end{mydef}
 
 
-\begin{eg} \label{eg: bernoulli bayes setup} Consider the case where $\cX = \{0,1\}^n$ and $\Theta = [0,1]$. Suppose that $P_{\theta}$ is the Binomial probability distribution on $\{0,1\}^n$ where $(X_1, \ldots, X_N) \in \cX$ is drawn i.i.d with $P(X_i = 1) = \theta.$ Let us for now assume the Prior distribution $\mu_{\Theta}$ is unknown. We know that $$P_{\theta}(X = x) =   \theta^{T(x)}(1-\theta)^{n - T(x)} $$ where $T(x) = \sum_{i=1}^n x_i$ is the number of successes. The posterior distribution is thus given by $$P(\Theta \in B ~|~ X=x) = \frac{P(\Theta \in B, X=x)}{P(X=x)} = \frac{ \int_B \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}{\int_{\Theta} \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}$$ for all $x \in \cX$ that occur with positive probability (this is all of $\cX$ except for possibly $x = (0,\ldots, 0)$ or $x = (1, \ldots, 1)$ in case $\theta$ is concentrated on $1$ or $0$ respectively).
+\begin{eg} \label{eg: bernoulli bayes setup} Consider the case where $\cX = \{0,1\}^n$ and $\Theta = [0,1]$. Suppose that $P_{\theta}$ is the Binomial probability distribution on $\{0,1\}^n$ where $(X_1, \ldots, X_n) \in \cX$ is drawn i.i.d with $P(X_i = 1) = \theta.$ Let us for now assume the Prior distribution $\mu_{\Theta}$ is unknown. We know that $$P_{\theta}(X = x) =   \theta^{T(x)}(1-\theta)^{n - T(x)} $$ where $T(x) = \sum_{i=1}^n x_i$ is the number of successes. The posterior distribution is thus given by $$P(\Theta \in B ~|~ X=x) = \frac{P(\Theta \in B, X=x)}{P(X=x)} = \frac{ \int_B \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}{\int_{\Theta} \theta^{T(x)}(1-\theta)^{n - T(x)} d \mu_{\Theta}(\theta)}$$ for all $x \in \cX$ that occur with positive probability (this is all of $\cX$ except for possibly $x = (0,\ldots, 0)$ or $x = (1, \ldots, 1)$ in case $\theta$ is concentrated on $1$ or $0$ respectively).
 
 
 We claim that $ T:\cX \to \bZ_{\geq 0}$ given by $T(x) = \sum_{i=1}^n x_i$ is a sufficient statistic. Indeed if we fix $x_0 \in \cX = \{0,1\}^n$ and we let $m=Tx_0$, we get that  
@@ -244,8 +244,12 @@ In fact, the same argument shows that $T$ is still a sufficient statistic if ins
 
 The classical definition of sufficiency does not make reference to a prior distribution and is thus not Bayesian.
 
-\begin{mydef} We say that a statistic $T:\cX \to \cT$ is \textit{sufficient in the classical sense} if we have a function $r:\cB \times \cT \to [0,1]$ such that for all $\theta \in \Theta$ and $B \in \cB$ (recall $\cB$ is the Borel $\sigma$-algebra on $\cX$) we have that $$P_{\theta}(B | T=t) = r(B,t) \quad \text{for } T^*P_{\theta}-\text{almost all } t \in \cT$$
-and $t \mapsto r(B,t)$ is Borel on $\cT$.
+\begin{mydef} We say that a Borel $A \subset \cX$ is $\Theta$-co-null if $P_{\theta}(A)=1$ for all $\theta \in \Theta$. Likewise, if $T:\cX \to \cT$ is a statistic, then we say that $B \subset \cT$ is $\Theta$-co-null if $T^{-1}B$ is $\Theta$-co-null, i.e., $(T^*P_{\theta})(B) = 1$ for all $\theta \in \Theta$ (confusion may arise if we have another statistic $T':\cX \to \cT$, but this tends to not be the case as we always deal with a single statistic at a time). 
+
+\end{mydef}
+
+\begin{mydef} We say that a statistic $T:\cX \to \cT$ is \textit{sufficient in the classical sense} if we have a $\Theta$-co-null Borel set $\cT_0 \subset \cT$ and a family of measures $\nu_t$, for $t \in \cT_0$, such that for all $\theta \in \Theta$ and for Borel $B \subset \cX$ we have that $$P_{\theta}(B | T=t) = \nu_t(B) \quad \text{for } T^*P_{\theta}-\text{almost all } t \in \cT$$
+and $t \mapsto \nu_t(B)$ is Borel on $\cT_0$.
 
 \end{mydef}
 
@@ -253,7 +257,7 @@ This is a technical way of saying that $T$ is sufficient if and only if $P_{\the
 
 \begin{eg} Let us continue from the binomial distribution in Example~\ref{eg: bernoulli bayes setup}. As $\cX = \{0,1\}^n$ is a finite set, we only have to consider the case where $B \subset \cX$ is a singleton $B=\{x_0\}$ for some $x_0 \in \cX$. Now $P_{\theta}(B | T=t) = 0$ if $Tx_0 \neq t$. If $Tx_0 = t$ then we have that $$P_{\theta}(B | T=t) = \frac{P_{\theta}\{x_0\}}{P_{\theta}\{x \in \cX ~|~ Tx = x_0\}} = \frac{1}{\binom{n}{t}}$$ where the last equality follows from the fact that all $x \in \cX$ with $Tx=t$ have the same probability in a binomial distribution. In fact, the same argument applies to the case where the $P_{\theta}$ are all exchangable. 
 
-Thus we may take $$r(\{x_0\},t) = \mathds{1}(Tx_0 = t) \binom{n}{t}^{-1}$$ and extend $r$ to $\cB \times \bZ$ by additivity. Thus this $T$ is indeed sufficient in the classical sense. 
+Thus we may take $$\nu_t(\{x_0\}) = \mathds{1}(Tx_0 = t) \binom{n}{t}^{-1}.$$ Thus this $T$ is indeed sufficient in the classical sense. 
 
 \end{eg}
 
@@ -261,7 +265,7 @@ Thus we may take $$r(\{x_0\},t) = \mathds{1}(Tx_0 = t) \binom{n}{t}^{-1}$$ and e
 
 In this section we prove equivalence of the classical and Bayesian definition of a sufficient statistics under the nice assumptions of Definition~\ref{def: nice} (which we always assume).
 
-\begin{lemma} Suppose $T:\cX \to \cT$ is a statistic and $\mu_{\Theta}$ is a prior on $\Theta$. Suppose also that there is a Borel map $s:\cT \times \Theta \to [0,1]$ so that $$s(t,\theta) = P_{\theta}(A~|~T=t) \quad\text{for $T^*P_{\theta}$-almost all $t \in \cT$}.$$ We have that $$P(X \in A ~|~ TX=Tx, \Theta = \theta) = s(Tx, \theta) \quad \text{for $P$-almost all $(x,\theta) \in \cX \times \Theta$}.$$
+\begin{lemma} Suppose $T:\cX \to \cT$ is a statistic and $\mu_{\Theta}$ is a prior on $\Theta$. Fix Borel $A \subset \cX$ and suppose that there is a Borel map $s:\cT \times \Theta \to [0,1]$ so that $$s(t,\theta) = P_{\theta}(A~|~T=t) \quad\text{for $T^*P_{\theta}$-almost all $t \in \cT$}.$$ We have that $$P(X \in A ~|~ TX=Tx, \Theta = \theta) = s(Tx, \theta) \quad \text{for $P$-almost all $(x,\theta) \in \cX \times \Theta$}.$$
 
 \end{lemma}
 
@@ -270,7 +274,6 @@ In this section we prove equivalence of the classical and Bayesian definition of
 The law of total probability tells us that the left hand side is equal to $$P((A \times \Theta) \cap  (T^{-1}C \times B) ) = P(X \in A\cap T^{-1}C, \Theta \in B).$$
 
 The right hand side is
-
 \begin{align*} \int_{B} \left(\int_{T^{-1}C} P_{\theta}(A | T=Tx) dP_{\theta}(x) \right) d\mu_{\Theta}(\theta) &= \int_B P_{\theta}(A \cap T^{-1}C) d\mu_{\Theta}(\theta) \\
 &= \int_{B} \int_{\cX} \mathds{1}_{A \cap T^{-1}C}(x) dP_{\theta}(x) d\mu_{\Theta}(\theta) \\
 &= P(X \in A\cap T^{-1}C, \Theta \in B)\end{align*} \end{proof}
@@ -279,8 +282,8 @@ The right hand side is
 
 \end{thm}
 
-\begin{proof} We first show the \textit{Moreover} claim. By the definition of sufficiency we have that $$P_{\theta}(A ~|~ T=t) = r(A,t)$$ for some measurable $t \mapsto r(A,t)$ and so indeed the Borel condition of the previous Lemma is satisfied. By the previous Lemma the left hand side of (\ref{P given T and theta is P_theta given T}) is equal to $r(A,Tx)$.  So now it remains to show that $r(A,Tx) = P(A \times \Theta ~|~ TX=Tx)$ for $P$-almost all $(x,\theta)$. Thus we must show that for $C \subset \cT$ we have that 
-\begin{align}\label{eq: r(A,Tx) and P_X} \int_{T^{-1}C \times \Theta} r(A,Tx) dP(x,\theta) = \int_{T^{-1}C \times \Theta}  P(A \times \Theta ~|~ TX=Tx) dP(x,\theta).\end{align}
+\begin{proof} We first show the \textit{Moreover} claim. By the definition of sufficiency we have that $$P_{\theta}(A ~|~ T=t) = \nu_t(A) $$ for some measures $\nu_t, t \in \cT_0$ where $\cT_0 \subset \cX$ is $\Theta$-co-null. So indeed the Borel condition of the previous Lemma is satisfied with\footnote{We can just extend $s(t, \theta)$ arbitrarily to all of $\cT$ to something Borel measureable (can set $s(t, \theta)= 0$ for $t \notin \cT_0$) and the condition of the previous Lemma still holds.}  $s(t, \theta) = \nu_t(A)$, where we see there is no dependence on $\theta$. By the previous Lemma the left hand side of (\ref{P given T and theta is P_theta given T}) is equal to $s(Tx,\theta)$.  So now it remains to show that $s(Tx,\theta) = P(A \times \Theta ~|~ TX=Tx)$ for $P$-almost all $(x,\theta)$. Thus we must show that for $C \subset \cT$ we have that 
+\begin{align}\label{eq: r(A,Tx) and P_X} \int_{T^{-1}C \times \Theta} s(Tx,\theta) dP(x,\theta) = \int_{T^{-1}C \times \Theta}  P(A \times \Theta ~|~ TX=Tx) dP(x,\theta).\end{align}
 By definition of conditional probabiltity w.r.t $TX:\cX \times \Theta \to \cT$, the right hand side is equal to $$P(A \times \Theta \cap T^{-1}C \times \Theta) = P(X \in A \cap T^{-1}C).$$ 
 Repeating the calculation of the previous Lemma we have that the left hand side of (\ref{eq: r(A,Tx) and P_X}) is
 \begin{align*} \int_{\Theta} \left(\int_{T^{-1}C} P_{\theta}(A | T=Tx) dP_{\theta}(x) \right) d\mu_{\Theta}(\theta) &= \int_{\Theta} P_{\theta}(A \cap T^{-1}C) d\mu_{\Theta}(\theta) \\
@@ -363,7 +366,7 @@ for $\nu^*$-almost all $x \in X$. As $P_{\theta} \ll \nu^*$ we have it also hold
 
 \begin{eg} Let $\cX = \bR^n$, $\Theta = \{ (\mu, \sigma) \in \bR^2 ~|~ \mu \in \bR, \sigma>0\}$ and for $\theta = (\mu, \sigma)$ let $P_{\theta}$ be the distribution of $(X_1, \ldots, X_n)$ where each $X_i$ is Gaussian with mean $\mu$ and variance $\sigma^2$ and the $X_i$ are independent. Thus if $\nu$ is the Lebesgue measure on $\bR^d$ then $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i - \mu)^2 \right). $$
 
-Now let $\overline{x} = \frac{1}{n}\sum_{i=1}^n x_i$ for $x=(x_1, \ldots, x_n)$ and $$s^2 = \frac{1}{(n-1)} \sum_{i=1}^n(x_i - \overline{x})^2$$. Thus the sum inside the exponential can be written as 
+Now let $\overline{x} = \frac{1}{n}\sum_{i=1}^n x_i$ for $x=(x_1, \ldots, x_n)$ and $$s^2 = \frac{1}{(n-1)} \sum_{i=1}^n(x_i - \overline{x})^2.$$ Thus the sum inside the exponential can be written as 
 \begin{align*}\sum_{i=1}^n(x_i - \overline{x} + \overline{x} - \mu) &= \sum_{i=1}^n(x_i - \overline{x})^2 + 2 (\overline{x} - \mu)\sum_{i=1}^n(x_i - \overline{x}) + \sum_{i=1}^n (\overline{x}-\mu)^2. \\ 
 &=  (n-1)s^2 + 2 (\overline{x} - \mu)(n\overline{x}- n\overline{x}) + \sum_{i=1}^n (\overline{x}-\mu)^2. \\
 &= (n-1)s^2 + \sum_{i=1}^n (\overline{x}-\mu)^2.\end{align*}
@@ -375,23 +378,23 @@ $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n)  = \frac{1}{\sqrt{2\pi\sigma^2}} \e
 
 \subsection{Applications to estimation}
 
-Recall that $d:\cX \to \cA$ is the decision function and $L:\Theta \times \cA \to [0,\infty)$ denotes the loss function. The risk is then $$R(\theta, d) = \int_{\cX} L(\theta, d(x)) dP_{\theta}(x).$$ Recall (see Theorem~\ref{thm: bayesian implies classical sufficient}) that if $T:\cX \to \cT$ is a sufficient statistic then there are families of measures $\nu^*_t$, for $t \in \cT$, such that $$P_{\theta}(B~|~T=t) = \nu^*_t(B) \quad \text{for all } B \subset \cX.$$
+Recall that $d:\cX \to \cA$ is the decision function and $L:\Theta \times \cA \to [0,\infty)$ denotes the loss function. The risk is then $$R(\theta, d) = \int_{\cX} L(\theta, d(x)) dP_{\theta}(x).$$ Recall that if $T:\cX \to \cT$ is a sufficient statistic then there are families of measures $\nu_t$, for $t \in \cT$, such that $$P_{\theta}(B~|~T=t) = \nu_t(B) \quad \text{for all } B \subset \cX.$$
 
-\begin{thm}[Rao-Blackwell theorem] Suppose that $\cA = \bR^d$ and that for each fixed $\theta$, the map $a \mapsto L(\theta, a)$ is convex. Suppose also that $x \mapsto d(x)$ is an $L^1$ function for each $P_{\theta}$, in other words $$\int_{\cX} \|d(x) \| dP_{\theta} < \infty.$$ Suppose that $T:\cX \to \cT$ is a sufficient statistic for the family of $P_{\theta}$. Then there is a $\cT$-measurable $\cX_d \subset \cX$ such that $P_{\theta}(\cX_d) = 1$ for all $\theta \in \Theta$ and a well-defined decision rule $\hat{d}:\cX_0 \to \bR^d$ given by \begin{align}\label{eqn: Rao-Blackwell estimator} \hat{d}(x) = E_{\theta}(d |T=Tx) = \int_{\cX} d(x') d\nu^*_{Tx}(x')\end{align} which satisfies that $$R(\theta, \hat{d}) \leq R(\theta, d).$$ Well-defined here means that integrals are absolutely convergent for all $x \in \cX_d$.
+\begin{thm}[Rao-Blackwell theorem] Suppose that $\cA = \bR^d$ and that for each fixed $\theta$, the map $a \mapsto L(\theta, a)$ is convex. Suppose also that $x \mapsto d(x)$ is an $L^1$ function for each $P_{\theta}$, in other words $$\int_{\cX} \|d(x) \| dP_{\theta} < \infty.$$ Suppose that $T:\cX \to \cT$ is a sufficient statistic for the family of $P_{\theta}$. Then there is a $\cT$-measurable $\cX_d \subset \cX$ such that $P_{\theta}(\cX_d) = 1$ for all $\theta \in \Theta$ and a well-defined decision rule $\hat{d}:\cX_d \to \bR^d$ given by \begin{align}\label{eqn: Rao-Blackwell estimator} \hat{d}(x) = E_{\theta}(d |T=Tx) = \int_{\cX} d(x') d\nu_{Tx}(x')\end{align} which satisfies $$R(\theta, \hat{d}) \leq R(\theta, d).$$ Well-defined here means that integrals are absolutely convergent for all $x \in \cX_d$.
  
 \end{thm}
 
 Note that we can extend $\hat{d}$ to all of $\cX$ and the risk functions will not change.
 
-\begin{proof} Note that as $d$ is $L^1$ with respect to $P_{\theta}$, we must have that it is $L^1$ with respect to $P_{\theta}( \cdot ~|~ T=Tx) = \nu^*_t(\cdot)$ for $P_{\theta}$-almost all $x$. Thus we can let $\cX_d$ be the set of all $x$ so that the integral converges absolutely (it does not depend on $\theta$). Thus the expression for $\hat{d}(x)$ is well defined. By Jensen's theorem, we have that 
-$$L(\theta, \hat{d}(x)) = L\left(\theta, \int_{\cX} d(x') d\nu^*_{Tx}(x') \right) \leq \int_{\cX} L(\theta, d(x')) d\nu^*_{Tx}(x')  $$
+\begin{proof} Note that as $d$ is $L^1$ with respect to $P_{\theta}$, we must have that it is $L^1$ with respect to $P_{\theta}( \cdot ~|~ T=Tx) = \nu_t(\cdot)$ for $P_{\theta}$-almost all $x$. Thus we can let $\cX_d$ be the set of all $x$ so that the integral converges absolutely (it does not depend on $\theta$). Thus the expression for $\hat{d}(x)$ is well defined. By Jensen's theorem, we have that 
+$$L(\theta, \hat{d}(x)) = L\left(\theta, \int_{\cX} d(x') d\nu_{Tx}(x') \right) \leq \int_{\cX} L(\theta, d(x')) d\nu_{Tx}(x')  $$
 
 Now we integrate both sides with respect to $P_{\theta}$ to get that 
-\begin{align*}R(\theta, \hat{d}) &\leq \int_{\cX} \int_{\cX} L(\theta, d(x')) d\nu^*_{Tx}(x')  dP_{\theta}(x)\\
+\begin{align*}R(\theta, \hat{d}) &\leq \int_{\cX} \int_{\cX} L(\theta, d(x')) d\nu_{Tx}(x')  dP_{\theta}(x)\\
 &= \int_{\cX} L(\theta, d(x)) dP_{\theta}(x) \\
 &= R(\theta, \hat{d})   \end{align*}
 
-where we used the law of total probability applied to $P_{\theta}(\cdot ~|~T=Tx) = \nu^*_{Tx}$. \end{proof}
+where we used the law of total probability applied to $P_{\theta}(\cdot ~|~T=Tx) = \nu_{Tx}(\cdot)$. \end{proof}
 
 Thus the Rao-Blackwell theorem allows us to construct more efficient estimators that are a function of the sufficient statistic $T$.
 
@@ -425,8 +428,7 @@ Here is a geometric way of viewing completeness (at least for square measurable 
 \end{thm}
 
 \begin{proof} Let us first show that $\hat{d}$ is a UMVU before we show uniqueness. Suppose for contradiction that $d_2:\cX \to \bR$ is another unbiased estimator, with $E_{\theta}|d_2|^2 < \infty$ for all $\theta \in \Theta$ such that, for some $\theta_0 \in \Theta$ we have that $$E_{\theta_0} |d_2 - c(\theta)|^2 < E_{\theta_0} |\hat{d} - c(\theta)|^2.$$ 
-Now by applying the Rao-Blackwell theorem to $d_2$, we have that $\hat{d_2}$ is an even better unbiased estimator for $c(\theta)$, and thus $$E_{\theta_0} |\hat{d_2} - c(\theta)|^2 < E_{\theta_0} |\hat{d} - c(\theta)|^2.$$ T
-his implies that if we define $g:\cT \to \bR$ by\footnote{this is well defined as $\hat{d}, \hat{d_2}$ are functions of $T$ by construction in the Rao-Blackwell theorem above.} $g(Tx) = \hat{d}(x) - \hat{d_2}(x)$, then we must have that $g \circ T$ is not the zero-function in $L^2(\cX, \cB_T,P_{\theta_0})$. 
+Now by applying the Rao-Blackwell theorem to $d_2$, we have that $\hat{d_2}$ is an even better unbiased estimator for $c(\theta)$, and thus $$E_{\theta_0} |\hat{d_2} - c(\theta)|^2 < E_{\theta_0} |\hat{d} - c(\theta)|^2.$$ This implies that if we define $g:\cT \to \bR$ by\footnote{This is well defined as $\hat{d}, \hat{d_2}$ are functions of $T$ by construction in the Rao-Blackwell theorem above.} $g(Tx) = \hat{d}(x) - \hat{d_2}(x)$, then we must have that $g \circ T$ is not the zero-function in $L^2(\cX, \cB_T,P_{\theta_0})$. 
 However, we have for all $\theta \in \Theta$ that $$E_{\theta}(g \circ T) = E_{\theta}(\hat{d} - \hat{d_2}) = c(\theta) - c(\theta) = 0,$$ which contradicts the completeness of $T$. Thus $\hat{d}$ is indeed a UMVU.
 
 Let us now show that it is unique. By Proposition~\ref{prop: UMVU is T mes} we have that if $d_3:\cX \to \bR$ is another UMVU, then $d_3 = \hat{d_3} \in L_2(X, \cB_T, P_{\theta})$ but $\hat{d}(x) - \hat{d_3}(x) =: g(Tx)$ is a function of $T$. Thus $$E_{\theta}(\hat{d} - d_3) = E_{\theta}(g\circ T) = c(\theta) - c(\theta) = 0$$ for all $\theta \in \Theta$ and so by definition of completeness we must have that $\hat{d}(x) = \hat{d_3}(x) = d_3(x)$ holds $P_{\theta}$-almost surely. \end{proof}
@@ -442,6 +444,10 @@ Now applying the Lehmann-Scheffe theorem, we have that $d(x) = \frac{1}{n} \sum_
 Note that the space of estimatable functions forms a vector space.
 
 \begin{eg} Let us continue with the Example~\ref{eg: Bernoulli complete} and try to find all possible estimatable functions $c:\Theta \to \bR$. Suppose that $c$ is estimatable by $d$, we can assume $d = d(T)$ is a function of $T$ (by replacing $d$ with $\hat{d}$). Thus $$c(\theta) = \sum_{t=0}^n d(t) \binom{n}{t} \theta^t(1-\theta)^{n-t}$$ is in fact a polynomial in $\theta$ of degree at most $n$. Thus the space of estimatable functions is at most $n+1$ dimensional. Now consider $$d((x_1, \ldots, x_n)) = X_1\ldots X_k$$ for $k \in \{0,\ldots, n\}$. We have $$E(d) = E(X_1 \cdots X_k) = E(X_1)^k = \theta^k.$$  Thus the estimatable functions are exactly the polynomials in $\theta$ of degree at most $n$. \end{eg}
+
+\section{Exponential Families}
+
+We now construct a rich class of parametric families $P_{\theta}$ which have complete sufficient statistics.
 
 \appendix
 
