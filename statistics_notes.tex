@@ -754,7 +754,7 @@ However note that $$\phi_R \to \phi \quad \text{as R } \to \infty$$ pointwise an
 
 \begin{corol} If two finite signed measures have the same characteristic functions, then they are equal. \end{corol}
 
-\begin{corol} Let $L_v:\bR^d \to \bR$ be the projection $L_v(x) = \langle v, x \rangle$. Suppose that $\mu$ and $\nu$ are two finite signed measures on $\bR^d$ such that for all $v \in \bR^d$ we have that $L_v^* \mu = L_v^* \nu$. Then $\mu = \nu$.
+\begin{corol}\label{corol: mu projections unique} Let $L_v:\bR^d \to \bR$ be the projection $L_v(x) = \langle v, x \rangle$. Suppose that $\mu$ and $\nu$ are two finite signed measures on $\bR^d$ such that for all $v \in \bR^d$ we have that $L_v^* \mu = L_v^* \nu$. Then $\mu = \nu$.
 
 \end{corol}
 
@@ -785,5 +785,15 @@ Thus after expanding these factors in the upper bound, we get a sum of terms of 
 \end{corol}
 
 \begin{proof} Let $U = (-\epsilon, \epsilon) \times \bR \subset \bC$ and note that for $z = t+ \omega i \in U$, where $\omega \in \bR$ and $t \in (-\epsilon, \epsilon)$ we have that $$|\exp(xz)| = |\exp(xt)|$$ and so $M_{\mu}(z)$ is indeed defined (the definining integral converges absolutely) for $z \in U$. It is holomorphic on $U$ and thus, as it vanishes on the interval $(-\epsilon, \epsilon)$ and it vanishes on all of $U$. In particular, it vanishes on the imaginary line $\bR i$ and so the characteristic function of $\mu$ vanishes. Thus $\mu = 0$. \end{proof}
+
+We can define the moment generating functions for finite signed measures $\mu$ on $\bR^d$ as follows. If $v \in \bR^d$ then $$M_{\mu}(v) = \int_{\bR^d} \exp(\langle v, x \rangle) d\mu(x)$$ where the domain of $M_{\mu}$ is the set of those $v$ where the integral converges absolutely.
+
+\begin{thm} Suppose that the domain of $M_{\mu}$ contains an open subset $U \subset \bR^d$ such that $0 \in U$. Suppose that $M_{\mu}(u) = 0$ for all $u \in U$. Then $\mu = 0$ is the zero measure on $\bR^d$.
+
+\end{thm}  
+
+\begin{proof} From Corollary~\ref{corol: mu projections unique}, it will be enough to show that for all $v \in \bR^d$, the pushforward measure $L_v^*(\mu)$ is the zero measure on $\bR^d$. Now fixing $v \in \bR^d$, there exists an $\epsilon$ such that the domain of $M_{\mu}$ contains $tv$, for all $t \in (-\epsilon, \epsilon)$.  This means that the following integral converges absolutely: 
+
+$$M_{\mu}(tv) = \int_{\bR^d} \exp(t \langle v, x \rangle) d\mu(x) = \int_{\bR^d} \exp(t L_v(x)) d\mu(x) =  \int_{\bR} \exp(t y) d(L^*_v)(\mu).$$ But as $tv \in U$ we have that this integral is zero. Thus the moment generating function of $L^*_v$ vanishes (and converges absolutely) for $t \in (-\epsilon, \epsilon)$. This means that $L^*_v$ is the zero measure, as desired \end{proof}
 
 \end{document}
