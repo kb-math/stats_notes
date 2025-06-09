@@ -740,12 +740,12 @@ Let $|\mu| = \mu^+ + \mu^-$, which is a finite positive measure. For $\omega \in
 
 The characteristic function is also known as the Fourier transform.
 
-\begin{thm} Suppose that $$\widehat{\mu}(\omega) = 0 \quad\text{for all } \omega \in \bR^d.$$ 
+\begin{thm} Suppose that $$\widehat{\mu}(\omega) = 0 \quad\text{for all } \omega \in \bR^d.$$ Then $\mu = 0$ is the zero measure on $\bR^d$.
 
 \end{thm}
 
 \begin{proof} This follows from Fourier Inversion for Tempered Distributions, but let us give a simpler proof using just the more elementary Stone-Weierstrass Theorem. First, choose a constant $M$ so that $\mu^+(B) + \mu^-(B) < M$ for all $B \subset \bR^d$. It will be enough to show that if $\phi:\bR^d \to \bR$ is a compactly supported continuous function, then $$\int_{\bR^d} \phi(x) d\mu(x) = 0.$$
-Now take $R$ large enough so that the support of $\varphi$ is contained inside the box $(-R/2,R/2)^d$. Now fix $\epsilon >0$. By the Stone-Weierstrass theorem, we have that a trigonometric polynomial $$P_R = \sum_{i=1}^k c_{i,R} e_{\omega_{i,R}}$$ such that $$|f(x) - P_R(x)| < \epsilon \quad\text{for all } x \in [-R/2,R/2]^d$$ and $P_R$ is $R$-periodic (by this we mean that $P_R(x + v) = P_R(x)$ for all $v \in R\bZ^d$). Thus if we let $\phi_R:\bR^d \to \bR$ be a function that equals to $\phi_R$ on the box $(-R/2,R/2)^d$ but is $R$-periodic on $\bR^d$ then we have that $$\|\phi_R - P_R \|_{\infty} < \epsilon.$$ It follows now that 
+Now take $R$ large enough so that the support of $\phi$ is contained inside the box $(-R/2,R/2)^d$. Now fix $\epsilon >0$. By the Stone-Weierstrass theorem, we have a trigonometric polynomial $$P_R = \sum_{i=1}^k c_{i,R} e_{\omega_{i,R}}$$ such that $$|f(x) - P_R(x)| < \epsilon \quad\text{for all } x \in [-R/2,R/2]^d$$ and $P_R$ is $R$-periodic (by this we mean that $P_R(x + v) = P_R(x)$ for all $v \in R\bZ^d$). Thus if we let $\phi_R:\bR^d \to \bR$ be a function that equals to $\phi_R$ on the box $(-R/2,R/2)^d$ but is $R$-periodic on $\bR^d$ then we have that $$\|\phi_R - P_R \|_{\infty} < \epsilon.$$ It follows now that 
 $$\left| \int_{\bR^d} \phi_R d\mu - \int_{\bR^d} P_R d\mu \right| < M\epsilon.$$
 However $$\int_{\bR^d} P_R d\mu = \sum_{i=1}^k c_{i,R} \hat{\mu}(\omega_{i,R}) = 0.$$
 Thus we have that $$\left| \int_{\bR^d} \phi_R d\mu \right| < M\epsilon.$$
@@ -765,12 +765,12 @@ To define the moment generating function of $\mu$, we would like to extend the c
 Define the moment generating function to be $$M_{\mu}(z) = \int_{\bR} \exp(xz) d\mu(x)$$ whose domain is the set of all $z \in \bC$ where this integral converges absolutely.
 
 \begin{prop} 
-Suppose that $U \subset \bC$ is an open set containing the domain of $M_{\mu}$ (i.e., the integral converges absolutely for $z \in U$). Then $M_{\mu}$ is holomorphic on $U$ and its derivative on $U$ is given by $$M_{\mu}'(z) = \int_{\bR} x\exp(xz) d\mu(x),$$ and this integral converges absolutely for $z \in \bC$.
+Suppose that $U \subset \bC$ is an open set containing the domain of $M_{\mu}$ (i.e., the integral converges absolutely for $z \in U$). Then $M_{\mu}$ is holomorphic on $U$ and its derivative on $U$ is given by $$M_{\mu}'(z) = \int_{\bR} x\exp(xz) d\mu(x),$$ and this integral converges absolutely for $z \in U$.
 
 \end{prop}
 
 \begin{proof} Fix $z \in U$. We have $$\frac{M_{\mu}(z+w) -M_{\mu}(z)}{w} = \int_{\bR} \frac{e^{x(z+w)}-e^{xz}}{w} d\mu(x)$$ for small enough $w \in \bC$ (as $U$ is open).
-Thus, by the Lebesgue dominated convergence theorem, it will be enough to show that for small $w$, the integrand is bounded by a single integrable function. We can now use the the general mean-value inequality $$|f(z+w) - f(z)| \leq |w| \sup_{t \in [0,1]} |f'(z+tw)|$$ to $f(z) = e^{xz}$ to get that 
+Thus, by the Lebesgue dominated convergence theorem, it will be enough to show that for small $w$, the integrand is bounded by a single integrable function. We can now use the general mean-value inequality $$|f(z+w) - f(z)| \leq |w| \sup_{t \in [0,1]} |f'(z+tw)|$$ to $f(z) = e^{xz}$ to get that 
 
 $$ \left| \frac{e^{x(z+w)}-e^{xz}}{w} \right| \leq \sup_{t \in [0,1]} |x\exp(x(z+wt))| = |x||\exp(xz)| \sup_{t \in [0,1]} |\exp(xwt)|.$$ Now as $x$ is real, the maximum occurs at either $t=0$ or $t=1$ depending on whether $xw$ has positive or negative real part. 
 Thus  $$\left| \frac{e^{x(z+w)}-e^{xz}}{w} \right| \leq |x||\exp(xz)|(|\exp(xw)| + 1) $$ 
@@ -780,7 +780,7 @@ $$\left| \frac{e^{x(z+w)}-e^{xz}}{w} \right| \leq C_{\epsilon}(e^{\epsilon x} + 
 
 Thus after expanding these factors in the upper bound, we get a sum of terms of the form $$C|\exp(x(z + \delta))|$$ for some $\delta \in \bC$ with $|\delta|<2\epsilon$ and thus $z+\delta \in U$ so such a term is integrable w.r.t to $\mu$, by assumption. Thus the dominated convergence theorem applies. \end{proof}
 
-\begin{corol} Suppose that there exists $\epsilon>0$ so that for $t \in (-\epsilon, \epsilon)$ we have that $$\int_{\bR} |\exp(tx)| d\mu(t) < \infty.$$ If $M_{\mu}(t) = 0$ for all $t \in (-\epsilon, \epsilon)$ then $\mu = 0$ is the zero measure. In other words, if two finite signed measures have the same (well-defined) characteristic function on some interval containing $0$, then they must be equal.
+\begin{corol} Suppose that there exists $\epsilon>0$ so that for $t \in (-\epsilon, \epsilon)$ we have that $$\int_{\bR} |\exp(tx)| d\mu(x) < \infty.$$ If $M_{\mu}(t) = 0$ for all $t \in (-\epsilon, \epsilon)$ then $\mu = 0$ is the zero measure. In other words, if two finite signed measures have the same (well-defined) characteristic function on some interval containing $0$, then they must be equal.
 
 \end{corol}
 
@@ -792,8 +792,8 @@ We can define the moment generating functions for finite signed measures $\mu$ o
 
 \end{thm}  
 
-\begin{proof} From Corollary~\ref{corol: mu projections unique}, it will be enough to show that for all $v \in \bR^d$, the pushforward measure $L_v^*(\mu)$ is the zero measure on $\bR^d$. Now fixing $v \in \bR^d$, there exists an $\epsilon$ such that the domain of $M_{\mu}$ contains $tv$, for all $t \in (-\epsilon, \epsilon)$.  This means that the following integral converges absolutely: 
+\begin{proof} From Corollary~\ref{corol: mu projections unique}, it will be enough to show that for all $v \in \bR^d$, the pushforward measure $L_v^*(\mu)$ is the zero measure on $\bR^d$. Now fixing $v \in \bR^d$, there exists an $\epsilon$ such that $tv \in U$, for all $t \in (-\epsilon, \epsilon)$.  This means that the following integral converges absolutely: 
 
-$$M_{\mu}(tv) = \int_{\bR^d} \exp(t \langle v, x \rangle) d\mu(x) = \int_{\bR^d} \exp(t L_v(x)) d\mu(x) =  \int_{\bR} \exp(t y) d(L^*_v)(\mu).$$ But as $tv \in U$ we have that this integral is zero. Thus the moment generating function of $L^*_v$ vanishes (and converges absolutely) for $t \in (-\epsilon, \epsilon)$. This means that $L^*_v$ is the zero measure, as desired \end{proof}
+$$M_{\mu}(tv) = \int_{\bR^d} \exp(t \langle v, x \rangle) d\mu(x) = \int_{\bR^d} \exp(t L_v(x)) d\mu(x) =  \int_{\bR} \exp(t y) d(L^*_v\mu)(y).$$ But as $tv \in U$ we have that this integral is zero. Thus the moment generating function of $L^*_v$ vanishes (and converges absolutely) for $t \in (-\epsilon, \epsilon)$. This means that $L^*_v$ is the zero measure, as desired \end{proof}
 
 \end{document}
