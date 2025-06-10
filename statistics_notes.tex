@@ -453,7 +453,7 @@ Note that the space of estimatable functions forms a vector space.
 
 \begin{eg} We now construct distributions $P_{\theta}$ which have no complete sufficient statistic. Let $\cX = \Theta = \bZ$ and let $P_{\theta}$ be the uniform distribution on $\{\theta, \theta +1\}$, i.e., $P_{\theta}(\theta) = \frac{1}{2} = P_{\theta}(\theta+1)$. Now suppose that $T:\cX \to \cT$ is a sufficient statistic. We claim that $T$ must be injective. First, by Fischer-Neyman Factorization theorem, we have that $$P_{\theta}(x) = h_{\theta}(Tx)g(x)$$ for some functions $h_{\theta}$ and $g$. Suppose for contradiction that $Ta= Tb = t$ for some integers $a<b$. Now $$\frac{1}{2} = P_x(x) = h_x(Tx)g(x)$$ and so $g(x) \neq 0$ for all $x \in \bZ$. Observe that $$ 0 = P_b(a) = h_b(Ta)g(a) = h_b(t)g(a)$$ and thus $h_b(t) = 0$ as $g(a) \neq 0$. On the other hand $$\frac{1}{2} = P_b(b) = h_b(Tb)g(b) = h_b(t)g(b) = 0,$$ which is a contradiction. Thus $T$ must be injective. This means that any function $G:\cX \to \bR$ is a function of $T$. In particular, the function $G(x) = (-1)^x$ is a function of $T$. But $$E_{\theta}G = 0 \quad \text{for all } \theta \in \Theta$$ but $G$ is not the zero function, thus this shows that $T$ can not be complete. Note that the identity function $T(x) = x$ is sufficient, as is always the case.\end{eg}
 
-\section{Exponential Families}
+\subsection{Exponential Families}
 
 We now construct a rich class of parametric families $P_{\theta}$ which have complete sufficient statistics.
 
@@ -463,15 +463,35 @@ We now construct a rich class of parametric families $P_{\theta}$ which have com
 
 Note that $T:\cX \to \bR^k$ given by $T(x) = (T_1(x),\ldots, T_k(x))$ is a suffficient statistic, by the Fischer-Neyman factorization.
 
-We let $\pi:\cX \to \bR^k$ be the map given by $\pi(x) = (\pi_1(x), \ldots, \pi_k(x))$. 
+We let $\pi:\Theta \to \bR^k$ be the map given by $\pi(\theta) = (\pi_1(\theta), \ldots, \pi_k(\theta))$. 
 
 \begin{prop} Suppose that the range of $\pi$, i.e., the set $$\pi(\Theta) = \{ \pi(\theta) \in \bR^k ~|~ \theta \in \Theta\}$$ contains a non-empty open set. Then $T:\cX \to \bR^k$ is a complete sufficient statistic for the $P_{\theta}$.
 
 \end{prop}
 
-\begin{proof} 
+\begin{proof} We must show that if $g:\bR^k \to \bR$ is measurable such that $$E_{\theta}|g \circ T| < \infty \text{ and } E_{\theta}(g \circ T) = 0$$ for all $\theta \in \Theta$ then $g(Tx) = 0$ for $P_{\theta}$-almost all $x \in \cX$. Note that $$E_{\theta}(g \circ T) = \int_{\bR^k} g(u) d(T^*P_{\theta})(u)$$ and thus we will now compute the pushforward measure $T^*P_{\theta}$. Let $\nu_T$ be the pushforward measure of $h(x)d\nu(x)$, thus 
+$$E_{\theta}(g \circ T) = \int_{\cX} C(\theta)h(x)g(Tx)\exp\left(\sum_{i=1}^k \pi_i(\theta) T_i \right)  d\nu(x) = \int_{\bR^d} C(\theta)g(u)\exp\left(\langle \pi(\theta),u \rangle \right)  d\nu_T(u)$$ 
+where all these integrals are absolutely convergent by assumption.
 
-\end{proof}
+Now let $\mu_{\theta}$ be the finite signed measure on $\bR^k$ with density given by 
+$$\frac{d\mu_{\theta}}{d\nu_T}(u) = C(\theta)g(u)\exp\left(\langle \pi(\theta),u \rangle \right).$$ 
+Note that $\nu_{\theta}$ is a finite signed measure since the density is $L^1$ w.r.t $d\nu_T$ by assumption. 
+
+Thus we have $$0 = E_{\theta}(g \circ T) = \int_{\bR^k} 1 \mu_{\theta}(u)$$
+
+As $\pi(\Theta)$ is open, choose $\delta$ so small so that $\pi(\theta) + v \in \pi(\Theta)$ for all $\|v\| < \delta$. Fixing such $v$, we can thus write $\pi(\theta) + v = \pi(\theta_v)$ for some $\theta_v \in \theta$.
+
+Now observe that 
+$$\frac{d\mu_{\theta_v}}{d\nu_T}(u) = C(\theta_v)g(u) \exp(\langle\pi(\theta) + v, u \rangle) = C(\theta)^{-1}C(\theta_v) \exp(\langle v, u \rangle)\frac{d\mu_{\theta}}{d\nu_T}(u). $$
+
+This means that $$E_{\theta_v}(g \circ T) = C(\theta)^{-1}C(\theta_v) \int_{\bR^d} \exp(\langle v, u \rangle) d\mu_{\theta}$$ and thus  $$\int_{\bR^k} \exp(\langle v, u \rangle) d\mu_{\theta} = 0$$ with this integral being absolutely convergent. 
+But this integral is exactly equal to the moment generating function $M_{\mu_{\theta}}(v)$. Thus we have shown that the moment generating function of $\mu_{\theta}$ is defined and equals $0$ on a neighbourhood of the origin of $0 \in \bR^k$, thus $\mu_{\theta} = 0$ by Theorem~\ref{thm: mgf zero}. 
+
+Thus $g(u) = 0$ for $\nu_T$-almost all $u \in \bR^k$. That is $$0 = \int |g(u)| \nu_T = \int |g(Tx)|h(x) d\nu(x)$$ and thus $g(Tx) = 0$ holds for $P_{\theta}$-almost all $x \in \cX.$\end{proof}
+
+\begin{eg}
+
+\end{eg}
 
 \appendix
 
@@ -788,7 +808,7 @@ Thus after expanding these factors in the upper bound, we get a sum of terms of 
 
 We can define the moment generating functions for finite signed measures $\mu$ on $\bR^d$ as follows. If $v \in \bR^d$ then $$M_{\mu}(v) = \int_{\bR^d} \exp(\langle v, x \rangle) d\mu(x)$$ where the domain of $M_{\mu}$ is the set of those $v$ where the integral converges absolutely.
 
-\begin{thm} Suppose that the domain of $M_{\mu}$ contains an open subset $U \subset \bR^d$ such that $0 \in U$. Suppose that $M_{\mu}(u) = 0$ for all $u \in U$. Then $\mu = 0$ is the zero measure on $\bR^d$.
+\begin{thm}\label{thm: mgf zero} Suppose that the domain of $M_{\mu}$ contains an open subset $U \subset \bR^d$ such that $0 \in U$. Suppose that $M_{\mu}(u) = 0$ for all $u \in U$. Then $\mu = 0$ is the zero measure on $\bR^d$.
 
 \end{thm}  
 
