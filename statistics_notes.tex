@@ -364,7 +364,7 @@ for $\nu^*$-almost all $x \in X$. As $P_{\theta} \ll \nu^*$ we have it also hold
 
 \end{eg}
 
-\begin{eg} Let $\cX = \bR^n$, $\Theta = \{ (\mu, \sigma) \in \bR^2 ~|~ \mu \in \bR, \sigma>0\}$ and for $\theta = (\mu, \sigma)$ let $P_{\theta}$ be the distribution of $(X_1, \ldots, X_n)$ where each $X_i$ is Gaussian with mean $\mu$ and variance $\sigma^2$ and the $X_i$ are independent. Thus if $\nu$ is the Lebesgue measure on $\bR^d$ then $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i - \mu)^2 \right). $$
+\begin{eg}\label{eg: normal sufficient} Let $\cX = \bR^n$, $\Theta = \{ (\mu, \sigma) \in \bR^2 ~|~ \mu \in \bR, \sigma>0\}$ and for $\theta = (\mu, \sigma)$ let $P_{\theta}$ be the distribution of $(X_1, \ldots, X_n)$ where each $X_i$ is Gaussian with mean $\mu$ and variance $\sigma^2$ and the $X_i$ are independent. Thus if $\nu$ is the Lebesgue measure on $\bR^d$ then $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i - \mu)^2 \right). $$
 
 Now let $\overline{x} = \frac{1}{n}\sum_{i=1}^n x_i$ for $x=(x_1, \ldots, x_n)$ and $$s^2 = \frac{1}{(n-1)} \sum_{i=1}^n(x_i - \overline{x})^2.$$ Thus the sum inside the exponential can be written as 
 \begin{align*}\sum_{i=1}^n(x_i - \overline{x} + \overline{x} - \mu) &= \sum_{i=1}^n(x_i - \overline{x})^2 + 2 (\overline{x} - \mu)\sum_{i=1}^n(x_i - \overline{x}) + \sum_{i=1}^n (\overline{x}-\mu)^2. \\ 
@@ -490,8 +490,17 @@ But this integral is exactly equal to the moment generating function $M_{\mu_{\t
 Thus $g(u) = 0$ for $\nu_T$-almost all $u \in \bR^k$. That is $$0 = \int |g(u)| \nu_T = \int |g(Tx)|h(x) d\nu(x)$$ and thus $g(Tx) = 0$ holds for $P_{\theta}$-almost all $x \in \cX.$\end{proof}
 
 \begin{eg}
+We continue from Example~\ref{eg: normal sufficient}, where we recall that $\cX = \bR^n$, $\Theta = \{ (\mu, \sigma) \in \bR^2 ~|~ \mu \in \bR, \sigma>0\}$ and for $\theta = (\mu, \sigma)$ let $P_{\theta}$ be the distribution of $(X_1, \ldots, X_n)$ where each $X_i$ is Gaussian with mean $\mu$ and variance $\sigma^2$ and the $X_i$ are independent. Thus if $\nu$ is the Lebesgue measure on $\bR^d$ then $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i - \mu)^2 \right). $$
 
+We saw that we can rewrite this as $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n)  = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( \frac{-n\mu}{2\sigma^2} \right) \exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n x_i^2 +\frac{1}{\sigma^2}\mu \sum_{i=1}^n x_i\right).$$ Thus we see that the $P_{\theta}$ form a $2$-parameter exponential family with $$T_1(x) = \sum_{i=1}^n x_i^2, \quad T_2(x) = \sum_{i=1}^n x_i$$ and $$\pi(\mu, \sigma^2) = (-\sigma^{-2}/2, \mu \sigma^{-2}).$$ Thus the image of $\pi$ is the set $(-\infty, 0) \times (0,\infty)$ which is an open subset of $\bR^2$, thus by the theorem above $T(x) = (T_1(x), T_2(x))$ is a sufficient statistic.
+
+Note that the sample variance $$s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \overline{x})^2 = \frac{1}{n-1}\left( \sum_{i=1}^n x_i^2 + (n-1)\overline{x}^2 \right)$$ is a function of $T(x)$ and thus the more common statistic $x \mapsto (\overline{x}, s^2)$, which was discussed in Example~\ref{eg: normal sufficient}, is also a complete sufficient statistic (as any function of this statistic is also a function of $T$, completeness is inherited from $T$).
+
+Now what if we defined $\Theta' = \{ (\mu, \sigma) ~|~ \mu = 0, \sigma > 0 \}$. Then we will still have an exponential family and $T$ will still be sufficient, but the image of $\pi$ is now no longer an open subset of $\bR^2$, so we cannot conclude that $T$ is a complete statistic. Indeed, it is not since if we define $$g(x) = \sin\left(\sum_{i=1}^n x_i\right)$$ then we see that $g$ is indeed a function of $T$ but $g(x) \frac{dP_{\theta}}{d\nu}(x)$ is an odd function of $x$ and thus $\int g(x) dP_{\theta}(x) = 0$. However clearly $g$ is not the zero function. Thus $T$ is not complete for the subfamily $\Theta'$.
 \end{eg}
+
+\begin{eg} Let $\cX = \{0,1\}^n$, $\Theta = (0,1)$ and let $P_{\theta}$ be the distribution on $\cX$ where $(X_1, \ldots, X_n) \in \cX$ has i.i.d component with $P_{\theta}(X_i = 1) = \theta$. Thus, letting $T(x) = \sum_{i=1}^n x_i$ we have 
+$$P_{\theta}(x_1, \ldots, x_n) = \theta^{T(x)}(1-\theta)^{n - T{x}} = (1-\theta)^{n} (\theta(1-\theta)^{-1})^{T(x)} = C(\theta) \exp(\log(\theta(1-\theta)^{-1}) T(x)).$$ Thus this forms a $1$-paremeter exponential family with $$\pi(\theta) = \log\left(\frac{\theta}{1-\theta}\right).$$ The image of $\pi$ is thus $(0, \infty)$, which is an open subset of $\bR$. Thus $T$ is a complete and sufficient statistic, as we saw earlier in a previous example. \end{eg}
 
 \appendix
 
