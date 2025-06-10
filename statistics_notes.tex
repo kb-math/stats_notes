@@ -500,7 +500,7 @@ Now what if we defined $\Theta' = \{ (\mu, \sigma) ~|~ \mu = 0, \sigma > 0 \}$. 
 \end{eg}
 
 \begin{eg} Let $\cX = \{0,1\}^n$, $\Theta = (0,1)$ and let $P_{\theta}$ be the distribution on $\cX$ where $(X_1, \ldots, X_n) \in \cX$ has i.i.d component with $P_{\theta}(X_i = 1) = \theta$. Thus, letting $T(x) = \sum_{i=1}^n x_i$ we have 
-$$P_{\theta}(x_1, \ldots, x_n) = \theta^{T(x)}(1-\theta)^{n - T{x}} = (1-\theta)^{n} (\theta(1-\theta)^{-1})^{T(x)} = C(\theta) \exp(\log(\theta(1-\theta)^{-1}) T(x)).$$ Thus this forms a $1$-paremeter exponential family with $$\pi(\theta) = \log\left(\frac{\theta}{1-\theta}\right).$$ The image of $\pi$ is thus $(0, \infty)$, which is an open subset of $\bR$. Thus $T$ is a complete and sufficient statistic, as we saw earlier in a previous example. \end{eg}
+$$P_{\theta}(x_1, \ldots, x_n) = \theta^{T(x)}(1-\theta)^{n - T{x}} = (1-\theta)^{n} (\theta(1-\theta)^{-1})^{T(x)} = C(\theta) \exp(\log(\theta(1-\theta)^{-1}) T(x)).$$ Thus this forms a $1$-paremeter exponential family with $$\pi(\theta) = \log\left(\frac{\theta}{1-\theta}\right).$$ The image of $\pi$ is thus $\bR$, which is an open subset of $\bR$. Thus $T$ is a complete and sufficient statistic, as we saw earlier in a previous example. \end{eg}
 
 \appendix
 
