@@ -750,18 +750,26 @@ Now observe that for $x \in X'$ we have that if $x \in A $ then $[x] \subset \cA
 
 \section{Characteristic and moment generating functions}
 
-In this section, we let $\mu$ be a finite signed measure on $\bR^d$. This means that $\mu = \mu^+ - \mu^-$ where $\mu^+, \mu^-$ are finite positive measures. 
+In this section, we let $\mu$ be a finite signed measure on $\bR^d$. By the Hahn-Jordan decomposition, this means that there exists a Borel subset $P \subset \bR^d$ such that $\mu$ is a positive finite measure on $P$ and $-\mu$ is a positive finite measure on $\bR^d \setminus P$. Thus $\mu = \mu^+ - \mu^-$ where $\mu^+$ is $\mu$ restricted to $P$ and $\mu^-$ is $-\mu$ restricted to $\bR^d \setminus P$, so both $\mu^{+}$ and $\mu^{-}$ are finite positive measures. Note that $P$ is $\mu$-almost unique, thus $\mu^{+}$ and $\mu^{-}$ are unique.
 
-\begin{eg} A typical example is where $\mu$ has density w.r.t the Lebesgue measure given by a real valued integrable function, i.e., there is a function $g:\bR^d \to \bR$ such that $$\|g\|_1 = \int_{\bR^d} |g(x)| d\lambda_d(x) < \infty$$ and $\mu(B) = \int_{B} g(x) d\lambda_d(x)$ where $\lambda_d$ denotes the Lebesgue measure on $\bR^d$. Here $\mu^+$ has density given by $\max(g,0)$ and $\mu^-$ has density given by $-\min(g,0)$.
+\begin{eg} A typical example is where $\mu$ has density w.r.t the Lebesgue measure given by a real valued integrable function, i.e., there is a function $g:\bR^d \to \bR$ such that $$\|g\|_1 = \int_{\bR^d} |g(x)| d\lambda_d(x) < \infty$$ and $\mu(B) = \int_{B} g(x) d\lambda_d(x)$ where $\lambda_d$ denotes the Lebesgue measure on $\bR^d$. Here $P = \{x \in \bR^d ~|~ g(x) > 0 \}$. Thus $\mu^+$ has density given by $\max(g,0)$ and $\mu^-$ has density given by $\max(-g,0)$.
 \end{eg}
 
-\begin{mydef} We say that an integral of the form $\int_{\bR} f d\mu$ \textit{converges absolutely} if $\int_{\bR} |f| d\mu^{+} < \infty$ and $\int_{\bR^d} |f| d\mu^{-}< \infty$.
+\begin{mydef}\label{def: abs conv signed mes} We say that an integral of the form $\int_{\bR} f d\mu$ \textit{converges absolutely} if $\int_{\bR} |f| d\mu^{+} < \infty$ and $\int_{\bR^d} |f| d\mu^{-}< \infty$.
 \end{mydef}
 
-Note that in this case, the value of the integral is  
-$$\int_{\bR} f d\mu = \int_{\bR^d} f d\mu^{+} - \int_{\bR^d} f d\mu^{-}.$$ It is easy to see that this integral is linear for such $f$ and the dominated convergence theorem applies (by applying it to $\mu^+$ and $\mu^-$). 
+Note that in this case, the value of the integral is defined to be
+$$\int_{\bR} f d\mu = \int_{\bR^d} f d\mu^{+} - \int_{\bR^d} f d\mu^{-}.$$ It is easy to see that this integral is linear for such $f$ and the dominated convergence theorem applies (by applying it to $\mu^+$ and $\mu^-$).
 
-Let $|\mu| = \mu^+ + \mu^-$, which is a finite positive measure. For $\omega \in \bR^d$ we define the bounded continous function $e_{\omega}:\bR^d \to \bC$ given by $$e_{\omega}(x) = \exp(2\pi i\langle \omega, x \rangle).$$
+\begin{lemma}\label{lemma: integral additive signed mes} Let $f:\bR^d \to \bC$ be a bounded function. Then $\mu \mapsto \int f d\mu$ is a linear functional on the space of finite signed measures. \end{lemma}
+
+\begin{proof} Suppose that $\mu_1,\mu_2$ are finite signed measures and $\nu = \mu_1 + \mu_2$. The Hahn-Jordan decomposition thus gives 
+$$\nu^{+} - \nu^{-} = \mu_1^+ - \mu_1^- + \mu_2^+ - \mu_2^-,$$ 
+which gives the following equality of positive measures
+$$\nu^+ + \mu_1^{-} + \mu_2^- = \nu^{-} + \mu_1^+ + \mu_2^+.$$ Now $\mu \mapsto \int f d\mu$ is additive on the set of positive measures. So we obtain
+$$\int f d\nu^+ + \int f d\mu_1^{-} + \int f d\mu_2^- = \int f d\nu^{-} + \int f d\mu_1^+ + \int f d\mu_2^+.$$ Rearranging this and using the definition $\int f d\mu$ for finite signed measures, we complete the proof. \end{proof}
+
+For $\omega \in \bR^d$ we define the bounded continous function $e_{\omega}:\bR^d \to \bC$ given by $$e_{\omega}(x) = \exp(2\pi i\langle \omega, x \rangle).$$
 
 \begin{mydef} Define the Characteristic Function of $\mu$ to be $$\widehat{\mu}(\omega) = \int_{\bR^d} e_{\omega}(x) d\mu(x).$$
 
@@ -783,6 +791,17 @@ However note that $$\phi_R \to \phi \quad \text{as R } \to \infty$$ pointwise an
 
 \begin{corol} If two finite signed measures have the same characteristic functions, then they are equal. \end{corol}
 
+\begin{proof} By ~\ref{lemma: integral additive signed mes} the map $\mu \mapsto M_{\mu}$ is a linear map (from the space of signed measures to the space of complex functions on $\bR^d$). By the previous theorem, it has a trivial kernel so is injective. \end{proof}
+
+Note that if $T:X \to Y$ is a measurable map and $\mu$ is a finite signed measure on $X$, then the push-forward is defined as usual: $T^*\mu (B) = \mu(T^{-1}B)$ for $B \subset X$. Thus $\mu_T := T^*\mu$ is a positive finite signed measure. 
+
+\begin{eg}[Warning!!] Note that $T^*\mu = T^*\mu^+ - T^*\mu-$ but $T^*\mu^+$ may not equal $(T^*\mu)^+$. For example, if $T:\{0,1\} \to \{0\}$ is the constant map, and $\mu(\{0\}) = -1$ then $\mu(\{1\}) = 1$ then $T*\mu = 0$ is the zero measure and so $(T^*\mu)^+$ is the zero measure, yet $T^*\mu^+$ is the probability meausre on $\{0\}$. \end{eg}
+
+Note that for bounded $f:Y \to \bC$ we still have that $\int f dT^*\mu = \int (f \circ T) d\mu$ holds for positive finite measures and hence it also does for signed measures since
+$$\int_Y f dT^*\mu = \int_Y f dT^*(\mu^+ - \mu^-) = \int_Y f d(T^*\mu^+ - T^*\mu^-) = \int_Y f d(T^*\mu^+) - \int_Y f d(T^*\mu^-), $$
+
+where in the last equation we used Lemma~\ref{lemma: integral additive signed mes}. 
+
 \begin{corol}\label{corol: mu projections unique} Let $L_v:\bR^d \to \bR$ be the projection $L_v(x) = \langle v, x \rangle$. Suppose that $\mu$ and $\nu$ are two finite signed measures on $\bR^d$ such that for all $v \in \bR^d$ we have that $L_v^* \mu = L_v^* \nu$. Then $\mu = \nu$.
 
 \end{corol}
@@ -791,7 +810,7 @@ However note that $$\phi_R \to \phi \quad \text{as R } \to \infty$$ pointwise an
 
 To define the moment generating function of $\mu$, we would like to extend the characteristic function to complex values. The issue is that we may have non-converging integrals. 
 
-Define the moment generating function to be $$M_{\mu}(z) = \int_{\bR} \exp(xz) d\mu(x)$$ whose domain is the set of all $z \in \bC$ where this integral converges absolutely.
+Define the moment generating function to be $$M_{\mu}(z) = \int_{\bR} \exp(xz) d\mu(x)$$ whose domain is the set of all $z \in \bC$ where this integral converges absolutely (in the sense of Definition~\ref{def: abs conv signed mes}).
 
 \begin{prop} 
 Suppose that $U \subset \bC$ is an open set containing the domain of $M_{\mu}$ (i.e., the integral converges absolutely for $z \in U$). Then $M_{\mu}$ is holomorphic on $U$ and its derivative on $U$ is given by $$M_{\mu}'(z) = \int_{\bR} x\exp(xz) d\mu(x),$$ and this integral converges absolutely for $z \in U$.
@@ -799,7 +818,7 @@ Suppose that $U \subset \bC$ is an open set containing the domain of $M_{\mu}$ (
 \end{prop}
 
 \begin{proof} Fix $z \in U$. We have $$\frac{M_{\mu}(z+w) -M_{\mu}(z)}{w} = \int_{\bR} \frac{e^{x(z+w)}-e^{xz}}{w} d\mu(x)$$ for small enough $w \in \bC$ (as $U$ is open).
-Thus, by the Lebesgue dominated convergence theorem, it will be enough to show that for small $w$, the integrand is bounded by a single integrable function. We can now use the general mean-value inequality $$|f(z+w) - f(z)| \leq |w| \sup_{t \in [0,1]} |f'(z+tw)|$$ to $f(z) = e^{xz}$ to get that 
+Thus, by the Lebesgue dominated convergence theorem, it will be enough to show that for small $w$, the integrand is bounded by a single $\mu$-integrable function (i.e., a function integrable w.r.t both $\mu^+$ and $\mu^-$). We can now use the general mean-value inequality $$|f(z+w) - f(z)| \leq |w| \sup_{t \in [0,1]} |f'(z+tw)|$$ to $f(z) = e^{xz}$ to get that 
 
 $$ \left| \frac{e^{x(z+w)}-e^{xz}}{w} \right| \leq \sup_{t \in [0,1]} |x\exp(x(z+wt))| = |x||\exp(xz)| \sup_{t \in [0,1]} |\exp(xwt)|.$$ Now as $x$ is real, the maximum occurs at either $t=0$ or $t=1$ depending on whether $xw$ has positive or negative real part. 
 Thus  $$\left| \frac{e^{x(z+w)}-e^{xz}}{w} \right| \leq |x||\exp(xz)|(|\exp(xw)| + 1) $$ 
@@ -822,7 +841,11 @@ We can define the moment generating functions for finite signed measures $\mu$ o
 \end{thm}  
 
 \begin{proof} From Corollary~\ref{corol: mu projections unique}, it will be enough to show that for all $v \in \bR^d$, the pushforward measure $L_v^*(\mu)$ is the zero measure on $\bR^d$. Now fixing $v \in \bR^d$, there exists an $\epsilon$ such that $tv \in U$, for all $t \in (-\epsilon, \epsilon)$.  This means that the following integral converges absolutely: 
-
-$$M_{\mu}(tv) = \int_{\bR^d} \exp(t \langle v, x \rangle) d\mu(x) = \int_{\bR^d} \exp(t L_v(x)) d\mu(x) =  \int_{\bR} \exp(t y) d(L^*_v\mu)(y).$$ But as $tv \in U$ we have that this integral is zero. Thus the moment generating function of $L^*_v$ vanishes (and converges absolutely) for $t \in (-\epsilon, \epsilon)$. This means that $L^*_v$ is the zero measure, as desired \end{proof}
+\begin{align*} M_{\mu}(tv) &= \int_{\bR^d} \exp(t \langle v, x \rangle) d\mu(x) \\ 
+&= \int_{\bR^d} \exp(t L_v(x)) d\mu(x) \\
+&= \int_{\bR^d} \exp(t L_v(x)) d\mu^+(x) - \int_{\bR^d} \exp(t L_v(x)) d\mu^-(x) \\
+&=  \int_{\bR} \exp(t y) d(L^*_v\mu^+)(y) -  \int_{\bR} \exp(t y) d(L^*_v\mu^-)(y)
+\end{align*} 
+But as $tv \in U$ we have that $M_{\mu}(tv) = 0$ and thus these two integrals are equal. Thus the moment generating function of $L^*_v \mu^{+}$ and $L^*_v \mu^{-}$ are equal for $t \in (-\epsilon, \epsilon)$. This means that these two measures are equal and thus $L^*_v$ is the zero measure, as desired. \end{proof}
 
 \end{document}
