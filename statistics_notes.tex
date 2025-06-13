@@ -475,16 +475,19 @@ where all these integrals are absolutely convergent by assumption.
 
 Now let $\mu_{\theta}$ be the finite signed measure on $\bR^k$ with density given by 
 $$\frac{d\mu_{\theta}}{d\nu_T}(u) = C(\theta)g(u)\exp\left(\langle \pi(\theta),u \rangle \right).$$ 
-Note that $\nu_{\theta}$ is a finite signed measure since the density is $L^1$ w.r.t $d\nu_T$ by assumption. 
+Note that $\mu_{\theta}$ is a finite signed measure since the density is $L^1$ w.r.t $\nu_T$ by assumption. 
 
 Thus we have $$0 = E_{\theta}(g \circ T) = \int_{\bR^k} 1 \mu_{\theta}(u)$$
 
 As $\pi(\Theta)$ is open, choose $\delta$ so small so that $\pi(\theta) + v \in \pi(\Theta)$ for all $\|v\| < \delta$. Fixing such $v$, we can thus write $\pi(\theta) + v = \pi(\theta_v)$ for some $\theta_v \in \theta$.
 
 Now observe that 
-$$\frac{d\mu_{\theta_v}}{d\nu_T}(u) = C(\theta_v)g(u) \exp(\langle\pi(\theta) + v, u \rangle) = C(\theta)^{-1}C(\theta_v) \exp(\langle v, u \rangle)\frac{d\mu_{\theta}}{d\nu_T}(u). $$
+\begin{align*} 
+E_{\theta_v}(g \circ T) &= C(\theta_v) \int_{\bR^d} g(u) \exp(\langle\pi(\theta_v), u \rangle) d\nu_T(u) \\ 
+&=C(\theta_v) \int_{\bR^d} g(u) \exp(\langle\pi(\theta) + v, u \rangle) d\nu_T(u) \\ 
+&= C(\theta)^{-1}C(\theta_v) \int_{\bR^d} \exp(\langle v, u \rangle) d\mu_{\theta}(u) \end{align*}
 
-This means that $$E_{\theta_v}(g \circ T) = C(\theta)^{-1}C(\theta_v) \int_{\bR^d} \exp(\langle v, u \rangle) d\mu_{\theta}$$ and thus  $$\int_{\bR^k} \exp(\langle v, u \rangle) d\mu_{\theta} = 0$$ with this integral being absolutely convergent. 
+with all integrals absolutely convergent by assumption. As $E_{\theta_v}(g \circ T) = 0$ we have $$\int_{\bR^k} \exp(\langle v, u \rangle) d\mu_{\theta} = 0$$ with this integral being absolutely convergent. 
 But this integral is exactly equal to the moment generating function $M_{\mu_{\theta}}(v)$. Thus we have shown that the moment generating function of $\mu_{\theta}$ is defined and equals $0$ on a neighbourhood of the origin of $0 \in \bR^k$, thus $\mu_{\theta} = 0$ by Theorem~\ref{thm: mgf zero}. 
 
 Thus $g(u) = 0$ for $\nu_T$-almost all $u \in \bR^k$. That is $$0 = \int |g(u)| \nu_T = \int |g(Tx)|h(x) d\nu(x)$$ and thus $g(Tx) = 0$ holds for $P_{\theta}$-almost all $x \in \cX.$\end{proof}
@@ -795,12 +798,12 @@ However note that $$\phi_R \to \phi \quad \text{as R } \to \infty$$ pointwise an
 
 Note that if $T:X \to Y$ is a measurable map and $\mu$ is a finite signed measure on $X$, then the push-forward is defined as usual: $T^*\mu (B) = \mu(T^{-1}B)$ for $B \subset X$. Thus $\mu_T := T^*\mu$ is a positive finite signed measure. 
 
-\begin{eg}[Warning!!] Note that $T^*\mu = T^*\mu^+ - T^*\mu-$ but $T^*\mu^+$ may not equal $(T^*\mu)^+$. For example, if $T:\{0,1\} \to \{0\}$ is the constant map, and $\mu(\{0\}) = -1$ then $\mu(\{1\}) = 1$ then $T*\mu = 0$ is the zero measure and so $(T^*\mu)^+$ is the zero measure, yet $T^*\mu^+$ is the probability meausre on $\{0\}$. \end{eg}
+\begin{eg}[Warning!!] Note that $T^*\mu = T^*\mu^+ - T^*\mu^-$ but $T^*\mu^+$ may not  equal $(T^*\mu)^+$. For example, if $T:\{0,1\} \to \{0\}$ is the constant map, and $\mu(\{0\}) = -1$, $\mu(\{1\}) = 1$ then $T*\mu = 0$ is the zero measure and so $(T^*\mu)^+$ is the zero measure, yet $T^*\mu^+$ is the probability meausre on $\{0\}$. \end{eg}
 
-Note that for bounded $f:Y \to \bC$ we still have that $\int f dT^*\mu = \int (f \circ T) d\mu$ holds for positive finite measures and hence it also does for signed measures since
+Note that for bounded $f:Y \to \bC$ we still have that $\int f dT^*\mu = \int (f \circ T) d\mu$ holds. To see this, note that
 $$\int_Y f dT^*\mu = \int_Y f dT^*(\mu^+ - \mu^-) = \int_Y f d(T^*\mu^+ - T^*\mu^-) = \int_Y f d(T^*\mu^+) - \int_Y f d(T^*\mu^-), $$
 
-where in the last equation we used Lemma~\ref{lemma: integral additive signed mes}. 
+where in the last equation we used Lemma~\ref{lemma: integral additive signed mes}.
 
 \begin{corol}\label{corol: mu projections unique} Let $L_v:\bR^d \to \bR$ be the projection $L_v(x) = \langle v, x \rangle$. Suppose that $\mu$ and $\nu$ are two finite signed measures on $\bR^d$ such that for all $v \in \bR^d$ we have that $L_v^* \mu = L_v^* \nu$. Then $\mu = \nu$.
 
@@ -840,7 +843,7 @@ We can define the moment generating functions for finite signed measures $\mu$ o
 
 \end{thm}  
 
-\begin{proof} From Corollary~\ref{corol: mu projections unique}, it will be enough to show that for all $v \in \bR^d$, the pushforward measure $L_v^*(\mu)$ is the zero measure on $\bR^d$. Now fixing $v \in \bR^d$, there exists an $\epsilon$ such that $tv \in U$, for all $t \in (-\epsilon, \epsilon)$.  This means that the following integral converges absolutely: 
+\begin{proof} From Corollary~\ref{corol: mu projections unique}, it will be enough to show that for all $v \in \bR^d$, the pushforward measure $L_v^*(\mu)$ is the zero measure on $\bR^d$. Now fixing $v \in \bR^d$, there exists an $\epsilon$ such that $tv \in U$, for all $t \in (-\epsilon, \epsilon)$.  This means that the following integrals converge absolutely: 
 \begin{align*} M_{\mu}(tv) &= \int_{\bR^d} \exp(t \langle v, x \rangle) d\mu(x) \\ 
 &= \int_{\bR^d} \exp(t L_v(x)) d\mu(x) \\
 &= \int_{\bR^d} \exp(t L_v(x)) d\mu^+(x) - \int_{\bR^d} \exp(t L_v(x)) d\mu^-(x) \\
