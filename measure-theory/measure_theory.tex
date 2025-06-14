@@ -104,6 +104,71 @@
 \newtheorem{question}[dummy]{Question}
 \newtheorem{conjecture}[dummy]{Conjecture}
 
+\section{Lebesgue integral}
+
+\begin{mydef} Let $X$ be a measurable space. We say that $f:X \to \bC$ is a simple function if it is measurable and the range $f(X) = \{f(x) ~|~ x \in X\}$ is a finite set. \end{mydef}
+
+\begin{lemma} Let $f:X \to \bC$ be measurable. Then $f$ is a simple function if and only if $$f = \sum_{i=1}^n c_i \mathds{1}_{A_i}$$ for some positive integer $n$ and measurable $A_1, \ldots, A_n \subset X$ and $c_i \in \bC$.
+\end{lemma}
+
+\begin{proof} If $f$ is simple then the range of $f$ is a finite set $\{c_1, \ldots, c_n\}$. So we can just take $A_i = f^{-1}(c_i)$. 
+
+Conversely, suppose $f$ takes such a form. Define now $q:X \to \{0,1\}^n$ by the map $$f(x) = (\mathds{1}_{A_1}(x), \ldots, \mathds{1}_{A_n}(x)).$$ Thus $f(x) = \langle q(x), c \rangle$ where $c = (c_1, \ldots, c_n)$. So clearly $f$ takes finitely many values (at most $2^n$), as it only depends on $q(x)$. \end{proof}
+
+Thus, the space of simple functions form a vector space.
+
+We say that $A_1, \ldots, A_n$ is a measurable partition of $X$ if each $A_i \subset X$ is measurable, $A_i \cap A_j = \emptyset$ for $i \neq j$ and $$\bigcup_{i=1}^n A_i = X.$$
+
+\begin{lemma}\label{lemma: simple func int partition} Let $\mu$ be a measure on a space $X$ and suppose $f:X \to \bC$ is measurable. Suppose that $$f = \sum_{i=1}^n c_i\mathds{1}_{A_i},$$ for some positive integer $n$, some measurable partition $A_1, \ldots, A_n \subset X$ of $X$ and some $c_i \in \bR$. Then the quantity $$I_{\mu}(f) := \sum_{i=1}^n c_i \mu(A_i)$$ does not depend on $n$ and the $(A_1,c_1), \ldots, (A_n, c_n)$.
+
+\end{lemma}
+
+\begin{proof} Let $q_1, \ldots, q_m$ be all the possible distinct values of $c_i$, for $i \in \{1, \ldots, n\}$ such that $A_i \neq \emptyset$. Let $$I_j = \{ i \in \{1, \ldots, n\} ~|~ c_i = q_j \}.$$ Let $$B_j = \bigsqcup_{i \in I_j} A_i.$$ Note that the $B_j$ form a measurable partition of $X$ into non-empty subsets. Thus $$f = \sum_{j=1}^m q_j \sum_{i \in I_j} \mathds{1}_{A_i} = \sum_{i=1}^m q_j \mathds{1}_{B_j}. $$ Likewise, $$\sum_{i=1}^n c_i \mu(A_i) = \sum_{j=1}^m q_j \sum_{i \in I_j} \mu(A_i) = \sum_{j=1}^m q_j \mu(B_j).$$ If $x \in B_j$ then $f(x) = q_j$ and so as the $B_j$ are disjoint and non-empty, we thus have that $$f^{-1}(q_j) = B_j.$$ This shows that $$\sum_{i=1}^n c_i \mu(A_i) = \sum_{y \in \bR} y \mu(f^{-1}(y))$$ and is thus not dependent on the choice of $A_1, \ldots A_n$ nor the $c_1, \ldots, c_n$. \end{proof}
+
+\begin{lemma} Suppose that $f,g:X \to \bC$ are simple functions. Then $$I_{\mu}(f+g) = I_{\mu}(f) + I_{\mu}(g).$$
+
+\end{lemma}
+
+\begin{proof} We can write $$f = \sum_{i=1}^n c_i \mathds{1}_{A_i}$$ and $$g = \sum_{i=1}^m d_i \mathds{1}_{B_i}.$$ Now let $$Q_{i,j} = A_i \cap B_j.$$ Thus $$f = \sum_{i=1}^nc_i\mathds{1}_{A_i} = \sum_{i=1}^n c_i\sum_{j=1}^m \mathds{1}_{Q_{i,j}} = \sum_{i,j} c_i \mathds{1}_{Q_{i,j}}.$$ Likewise $$g = \sum_{i,j} d_j \mathds{1}_{Q_{i,j}}.$$ Thus by Lemma~\ref{lemma: simple func int partition} we have $$I_{\mu}(f+g) = \sum_{i,j} (c_i + d_j) \mu(Q_{i,j}) =  \sum_{i,j} c_i \mu(Q_{i,j}) + \sum_{i,j} d_j \mu(Q_{i,j}) = I_{\mu}(f) + I_{\mu}(g).   $$
+
+\end{proof}
+
+\begin{mydef} Let $\mu$ be a measure on a space $X$. Let $f:X \to [0, \infty]$ be a positive measurable function. Define the Lebesgue integral to be $$\int_{X} f d\mu = \sup \{ I_{\mu}(f) ~|~ g:X \to [0,\infty) \text{ is a simple function with } 0 \leq g \leq f. \}.$$
+
+\end{mydef}
+
+\begin{lemma} If $f_1,f_2:X \to [0,\infty]$ are such that $0 \leq f_1 \leq f_2$ then $$0 \leq \int_X f_1 d\mu \leq \int_X f_2 d\mu.$$
+
+\end{lemma}
+
+\begin{proof} Obvious. \end{proof}
+
+\begin{lemma} If $f:X \to [0,\infty)$ is simple then $I_{\mu}(f) = \int_X f d\mu$. \end{lemma}
+\begin{proof} Clearly $I_{\mu}(f) \leq \int_X f d\mu$ since we can take $f=g$. Now we prove the other inequality. Thus suppose $g:X \to [0,\infty) $ is simple such that $0 \leq g \leq f$. Then $0 \leq f-g$ and $f-g$ is simple so $I_{\mu}(f-g) \geq 0$. However $$I_{\mu}(f) = I_{\mu}(g) + I_{\mu}(f-g) \geq I_{\mu}(g).$$ Thus $I_{\mu}(f) \geq \int_X f d\mu$. \end{proof}
+
+\begin{thm}[Monotone convergence theorem] Suppose that $f_1,f_2,\ldots: X \to [0,\infty]$ be a sequence of measurable functions that is pointwise increasing, i.e., such that $f_{n}(x) \leq f_{n+1}(x)$ for all $x \in X$ and $n \in \bZ_{>0}$. Then $$\int_{X} f_i d\mu \to \int_{X} \lim_{n\to \infty} f_n(x).$$
+
+\end{thm}
+
+\begin{proof} Let $f(x) = \lim_{n \to \infty} f_n(x)$. Let $I = \int_X f_n d\mu$. If $I = 0$ then the theorem is true, so assume $I>0$. Hence let $0< I_1 < I_2 < \ldots <I$ be a sequence such that $I_{n} \to I$, i.e., if $I < \infty$ then we can let $I_n = I - n^{-1}$ otherwise we can let $I_n = n$. Fix an integer $Q>0$. Now there exists a simple function $g:X \to [0,\infty)$ such that $0\leq g \leq f$ and 
+\begin{align}\label{eqn: g > I_Q} \int g d\mu > I_Q.\end{align}
+Now write $$g = \sum_{i=1}^m c_i \mathds{1}_{A_i}$$ for some measurable disjoint $A_1, \ldots, A_m \subset X$ and $0 < c_i < \infty$. 
+For convenience, let us consider two cases. 
+
+Case 1: $\mu(A_i) = \infty$ for some $A_i$.
+
+Then in this case $I = \infty$ as $\int_{X} g d\mu \geq c_i \mu(A_i) \infty$. Now let $$B_n = \{ x \in A_i ~|~ f_n(x) > c_i/2 \}.$$ Note that $$\bigcup_{n} B_n = A_i,$$ and thus $\mu(B_n) \to \mu(A_i) = \infty$. Now $f_n(x) \geq \frac{c_i}{2}\mathds{1}_{B_n}$ and hence $$\int_{X} f_n d\mu \geq \frac{c_i}{2}\mu(B_n) \to \infty,$$ which completes the proof of the monotone convergence theorem in this case.
+
+Case 2: $\mu(A_i) < \infty$ for each $A_i$.
+
+From (\ref{eqn: g > I_Q}), we can now fix $0 < \epsilon < 1$ such that $(1-\epsilon)\int_X g d > I_Q.$ Let 
+$$B_{n,i} =  \{ x \in A_i ~|~ f_n(x) > (1-\epsilon)c_i \}.$$  Now 
+$$\int_{X} f_n d\mu \geq \sum_{i=1}^m (1-\epsilon)c_i \mu(B_{i,n}) \to \sum_{i=1}^m (1-\epsilon)c_i \mu(A_i) \quad \text{as } n \to \infty.$$
+
+But $$\sum_{i=1}^m (1-\epsilon)c_i \mu(A_i) = (1-\epsilon) \int_{X} g d\mu > I_Q. $$
+
+Thus we have shown that for large enough $n$ we have $$\int_X f_n d\mu > I_Q,$$
+which completes the proof. \end{proof}
 
 \section{Outer measures}
 
