@@ -125,7 +125,7 @@ We say that $A_1, \ldots, A_n$ is a measurable partition of $X$ if each $A_i \su
 
 \begin{proof} Let $q_1, \ldots, q_m$ be all the possible distinct values of $c_i$, for $i \in \{1, \ldots, n\}$ such that $A_i \neq \emptyset$. Let $$I_j = \{ i \in \{1, \ldots, n\} ~|~ c_i = q_j \}.$$ Let $$B_j = \bigsqcup_{i \in I_j} A_i.$$ Note that the $B_j$ form a measurable partition of $X$ into non-empty subsets. Thus $$f = \sum_{j=1}^m q_j \sum_{i \in I_j} \mathds{1}_{A_i} = \sum_{i=1}^m q_j \mathds{1}_{B_j}. $$ Likewise, $$\sum_{i=1}^n c_i \mu(A_i) = \sum_{j=1}^m q_j \sum_{i \in I_j} \mu(A_i) = \sum_{j=1}^m q_j \mu(B_j).$$ If $x \in B_j$ then $f(x) = q_j$ and so as the $B_j$ are disjoint and non-empty, we thus have that $$f^{-1}(q_j) = B_j.$$ This shows that $$\sum_{i=1}^n c_i \mu(A_i) = \sum_{y \in \bR} y \mu(f^{-1}(y))$$ and is thus not dependent on the choice of $A_1, \ldots A_n$ nor the $c_1, \ldots, c_n$. \end{proof}
 
-\begin{lemma} Suppose that $f,g:X \to \bC$ are simple functions. Then $$I_{\mu}(f+g) = I_{\mu}(f) + I_{\mu}(g).$$
+\begin{lemma}\label{lemma: I additive} Suppose that $f,g:X \to \bC$ are simple functions. Then $$I_{\mu}(f+g) = I_{\mu}(f) + I_{\mu}(g).$$
 
 \end{lemma}
 
@@ -143,7 +143,7 @@ We say that $A_1, \ldots, A_n$ is a measurable partition of $X$ if each $A_i \su
 
 \begin{proof} Obvious. \end{proof}
 
-\begin{lemma} If $f:X \to [0,\infty)$ is simple then $I_{\mu}(f) = \int_X f d\mu$. \end{lemma}
+\begin{lemma}\label{lemma: I is int} If $f:X \to [0,\infty)$ is simple then $I_{\mu}(f) = \int_X f d\mu$. \end{lemma}
 \begin{proof} Clearly $I_{\mu}(f) \leq \int_X f d\mu$ since we can take $f=g$. Now we prove the other inequality. Thus suppose $g:X \to [0,\infty) $ is simple such that $0 \leq g \leq f$. Then $0 \leq f-g$ and $f-g$ is simple so $I_{\mu}(f-g) \geq 0$. However $$I_{\mu}(f) = I_{\mu}(g) + I_{\mu}(f-g) \geq I_{\mu}(g).$$ Thus $I_{\mu}(f) \geq \int_X f d\mu$. \end{proof}
 
 \begin{thm}[Monotone convergence theorem] Suppose that $f_1,f_2,\ldots: X \to [0,\infty]$ be a sequence of measurable functions that is pointwise increasing, i.e., such that $f_{n}(x) \leq f_{n+1}(x)$ for all $x \in X$ and $n \in \bZ_{>0}$. Then $$\int_{X} f_i d\mu \to \int_{X} \lim_{n\to \infty} f_n(x).$$
@@ -169,6 +169,52 @@ But $$\sum_{i=1}^m (1-\epsilon)c_i \mu(A_i) = (1-\epsilon) \int_{X} g d\mu > I_Q
 
 Thus we have shown that for large enough $n$ we have $$\int_X f_n d\mu > I_Q,$$
 which completes the proof. \end{proof}
+
+\begin{prop} Let $f:X \to [0, \infty]$ be measurable. Then there exists measurable $A_1,A_2, \ldots \subset X$ and such that $$f(x) = \sum_{n=1}^{\infty} \frac{1}{n} \mathds{1}_{A_n}.$$ Thus $f$ is a monotonic limit of simple functions.
+
+\end{prop}
+
+\begin{proof} We define $A_1,A_2,\ldots$ recursively as follows. Let $$f_n = \sum_{i=1}^n \frac{1}{i} \mathds{1}_{A_i}.$$ We let $f_0 = 0$. Let $n \geq 0$ and suppose $0 \leq f_n \leq f$ has already been constructed (more precisely, we mean $A_1,\ldots, A_n$ have already been constructed). Let $$A_{n+1} = \{ x \in X ~|~ f_n(x) + \frac{1}{n+1} \leq f(x).\}$$ Thus $$f_{n+1} = f_n + \frac{1}{n+1} \mathds{1}_{A_{n+1}} \leq f$$ still holds.
+
+We must now show that $$f_n \to f.$$ First, if $f(x) = \infty$ then $x \in \mathds{1}_{A_n}$ for all $n$ and thus $$\sum_{n=1}^{\infty} \frac{1}{n}\mathds{1}_{A_n}(x) = \sum_{n=1}^{\infty} \frac{1}{n} = \infty = f(x).$$
+Now suppose that $f(x) < \infty$. Suppose for contradiction that $$\lim_{k \to \infty} f_k(x) < f(x) - 1/N$$ for some $N>0$. As $f_n$ is increasing, it now follows that for $n>N$ we have $$f_n(x) \leq \lim_{k \to \infty} f_k(x) \leq f(x) - \frac{1}{N} \leq f(x) - \frac{1}{n+1}.$$ But this precisely means that $x \in A_n$ for all $n>N$. Thus $$f(x) \geq \sum_{n=N+1}^{\infty}\frac{1}{n} = \infty,$$ which is a contradiction. \end{proof}
+
+\begin{thm}\label{thm: int additive for positive} Suppose that $f,g:X \to [0,\infty]$ are measurable. Then $$\int_X (f+g)d\mu = \int_X f d\mu + \int_X g d\mu.$$
+\end{thm}
+
+\begin{proof} We know this is true for $f,g$ simple by Lemma~\ref{lemma: I additive} and Lemma~\ref{lemma: I is int}. Now we can write $f$ and $g$ as monotonic limits of simple functions $f_n$, $g_n$. But $f_n + g_n \to f+g$ monotonically. So the monotone convergence theorem completes the proof. \end{proof}
+
+\begin{mydef} We let $\int_A f d\mu = \int_X \mathds{1}_A f d\mu$. We now define $$\int_{X} f d\mu = \int_{f \geq 0} f d\mu - \int_{f < 0} |f| d\mu,$$ in case it is not the case that these integrals are not both $\infty$ (in which case, it is undefined).
+\end{mydef}
+
+Observe that in the definition above, we can replace strict inequality with non-strict inequality and vice versa (this is because $\int_X 0 d\mu = 0$ and the integral is additive on non-negative functions.
+Also, let us define the positive part $f^+ = \mathds{1}_{f \geq 0} f$ and negative part $f^- = -\mathds{1}_{f < 0}f$ of $f$. Thus by definition we have $f^+$ and $f^-$ are both $\geq 0$ and $$\int_X f d\mu = \int_X f^+ d\mu - \int_X f^- d\mu$$ under the assumption that at least one of these integrals is not infinite.
+
+\begin{lemma} Suppose that $f,g:X \to [0,\infty]$ are measurable with $\int_X g d\mu < \infty$ or $\int_X f d\mu < \infty$. Then $$\int_X (f-g) d\mu = \int_X f d\mu - \int_X g d\mu$$ with the left hand side being well defined (either the positive or negative part has finite integral). \end{lemma}
+
+\begin{proof} By definition 
+\begin{align*} \int_X (f-g) d\mu &= \int_X (f-g)^+ d\mu - \int_X (g-f)^+ d\mu \\
+&= \int_{f \geq g} (f-g) - \int_{g > f} (g-f) d\mu
+\end{align*} 
+but $(f-g)^+ \leq f$ and $(g-f)^+ \leq g$ so at least one of these integrals on the right hand side is non-infinite. Thus the integral is well defined.
+Now by Theorem~\ref{thm: int additive for positive}, we have 
+\begin{align} \label{eqn f-g int} \int_{f \geq g} (f-g)d\mu + \int_{f \geq g} g d\mu = \int_{f \geq g} f d\mu \end{align}
+and 
+\begin{align} \label{eqn g-f int} \int_{g > f} (g-f) d\mu + \int_{g>f} f d\mu = \int_{g>f} g d\mu.  \end{align}
+We will now assume $\int_X f d\mu < \infty$ (the other case will then follow by symmetry).
+Thus the right hand side of (\ref{eqn f-g int}) is non-infinite and so all terms are non-infinite. So we can safely rearrange this equation. Likewise, the term $\int_{g>f} d \mu <\infty$ so it can safely be moved to the right hand side in the other equation (\ref{eqn g-f int}). After rerranging and subtracting these two equations, we obtain that 
+
+$$\int_X (f-g) d\mu = \int_{f \geq g} f d\mu - \int_{f \geq g} g d\mu - \left(\int_{g>f} g d\mu -\int_{g>f} f d\mu\right).  $$
+
+Only the third integral can possibly be infinite as argued above, thus the terms can be safely grouped to give $$\int_X (f-g) d\mu = \int_{f\geq g} f + \int_{g>f} d \mu - \left(\int_{g>f} g d\mu + \int_{f \geq g} g d\mu\right).$$ Finally, the proof is complete using Theorem~\ref{thm: int additive for positive}. \end{proof}
+
+\begin{thm} Suppose that $f,g:X \to (-\infty, \infty]$ are such that either $$\int_{f \geq 0} f d\mu + \int_{g \geq 0} g d\mu < \infty$$ or $$\int_{f < 0} f d\mu + \int_{g < 0} g d\mu > -\infty.$$
+
+Then the following holds and is well defined (no $\infty - \infty$ terms and all integrals exist) $$\int_X (f+g) d\mu = \int_X f d\mu + \int_X g d\mu.$$
+
+\end{thm}
+
+\begin{proof} Write $f = f^+ - f^-$ and $g = g^+ - g^-$ as above. We assume the first condition, thus $$\int_X f^+ + g^+ d\mu < \infty.$$ Now $$f+g = f^+ + g^+ - (f^- + g^-),$$ so the assumption of the previous theorem must apply (likewise, they also apply for the other case). After applying this theorem, rearranging and using additivity of the integral for positive functions the proof is complete. \end{proof}
 
 \section{Outer measures}
 
