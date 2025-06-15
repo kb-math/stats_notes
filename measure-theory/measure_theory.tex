@@ -104,8 +104,11 @@
 \newtheorem{question}[dummy]{Question}
 \newtheorem{conjecture}[dummy]{Conjecture}
 
+\tableofcontents
+
 \section{Lebesgue integral}
 
+\subsection{Definition, basic properties and monotone convergence}
 \begin{mydef} Let $X$ be a measurable space. We say that $f:X \to \bC$ is a simple function if it is measurable and the range $f(X) = \{f(x) ~|~ x \in X\}$ is a finite set. \end{mydef}
 
 \begin{lemma} Let $f:X \to \bC$ be measurable. Then $f$ is a simple function if and only if $$f = \sum_{i=1}^n c_i \mathds{1}_{A_i}$$ for some positive integer $n$ and measurable $A_1, \ldots, A_n \subset X$ and $c_i \in \bC$.
@@ -179,6 +182,7 @@ which completes the proof. \end{proof}
 We must now show that $$f_n \to f.$$ First, if $f(x) = \infty$ then $x \in \mathds{1}_{A_n}$ for all $n$ and thus $$\sum_{n=1}^{\infty} \frac{1}{n}\mathds{1}_{A_n}(x) = \sum_{n=1}^{\infty} \frac{1}{n} = \infty = f(x).$$
 Now suppose that $f(x) < \infty$. Suppose for contradiction that $$\lim_{k \to \infty} f_k(x) < f(x) - 1/N$$ for some $N>0$. As $f_n$ is increasing, it now follows that for $n>N$ we have $$f_n(x) \leq \lim_{k \to \infty} f_k(x) \leq f(x) - \frac{1}{N} \leq f(x) - \frac{1}{n+1}.$$ But this precisely means that $x \in A_n$ for all $n>N$. Thus $$f(x) \geq \sum_{n=N+1}^{\infty}\frac{1}{n} = \infty,$$ which is a contradiction. \end{proof}
 
+\subsection{Additivity of the integral}
 \begin{thm}\label{thm: int additive for positive} Suppose that $f,g:X \to [0,\infty]$ are measurable. Then $$\int_X (f+g)d\mu = \int_X f d\mu + \int_X g d\mu.$$
 \end{thm}
 
@@ -215,6 +219,26 @@ Then the following holds and is well defined (no $\infty - \infty$ terms and all
 \end{thm}
 
 \begin{proof} Write $f = f^+ - f^-$ and $g = g^+ - g^-$ as above. We assume the first condition, thus $$\int_X f^+ + g^+ d\mu < \infty.$$ Now $$f+g = f^+ + g^+ - (f^- + g^-),$$ so the assumption of the previous theorem must apply (likewise, they also apply for the other case). After applying this theorem, rearranging and using additivity of the integral for positive functions the proof is complete. \end{proof}
+
+\subsection{Integrable functions and convergence}
+
+We say that a measurable $f:X \to \bC$ is integrable if $\int_X |f| d\mu <\infty$.
+
+\begin{lemma} Suppose that $f:X \to \bC$ is integrable. Then for $\epsilon>0$ there exists a measurable $A \subset X$ such that $\mu(A) < \infty$ and $$\int_{X \setminus A} |f| d\mu < \epsilon.$$\end{lemma}
+
+\begin{proof} Let $0 \leq h_1 \leq h_2 \leq \ldots$ be a sequence of simple functions converging monotinically to $|f|$. Thus $\int_{X} h_n d\mu < \infty$ and so, as $h_n$ is simple, there is a measurable set $A_n$ such that $\mu(A_n) < \infty$ and $h_n(x) = 0$ for $x \in X \setminus A$. By the monotone convergence theorem, there is a large enough $n$ so that $$\int_X (|f| - h_n) d\mu < \epsilon.$$ However $$\epsilon > \int_{X}(|f|-h_n) d\mu = \int_{A_n}(|f| - h_n) + \int_{X \setminus A_n} |f| d\mu$$ as $h = 0$ on $X \setminus A_n$. So we can take $A = A_n$ as all integrands are non-negative. \end{proof}
+
+\begin{thm}[Lebesgue dominated convergence theorem] Suppose that $f_1,f_2,\ldots :X \to \bC$ are measurable and $g:X \to [0,\infty]$ is integrable, i.e, $\int_X g d\mu < \infty$ such that $|f_n| \leq g$ for all $f_n$. Suppose that $f_n \to f$ pointwise, then $f$ is integrable and $$\int_X |f_n - f| d\mu \to 0,$$ 
+thus
+$$\int_X f_n d\mu \to \int_X f d\mu.$$
+
+\end{thm}
+
+\begin{proof} Note that $|f| \leq |g|$ thus $|f|$ is integrable. Fix $\epsilon>0$ and use the previous lemma to find $A \subset X$ with $\mu(A)<\infty$ and $\int_{X \setminus A} |g|d\mu < \epsilon$. Thus $$\int_{X \setminus A} |f - f_n| \leq \int_{X \setminus A} 2g d\mu < 2\epsilon.$$ Now as $\mu(A)<\infty$, we can choose $\delta >0$ so that $$\delta \mu(A) < \epsilon.$$ 
+
+Let $$A_n = \{ x \in A ~|~ |f_m(x) - f(x)| < \delta \text{ for all } m \geq n. \}.$$
+
+Notice that $A_n \subset A_{n+1}$ and $\bigcup_n A_n = A$. Thus by the monotone convergence theorem, we have $$|\int_{A_n} g - \int_{A} g| < \epsilon$$ for all large enough $n > N$. This means that $$\int_{A \setminus A_n} g < \epsilon$$ for all $n>N$ and consequently $$\int_{A \setminus A_n} |f - f_n| \leq \int_{A \setminus A_n} 2g < 2\epsilon .$$ Finally, $|f(x) - f_n(x)| < \delta$ for all $x \in A_n$, by definition of $A_n$. Thus $$\int_{A_n} |f(x) - f_n(x)| \leq \mu(A) \delta <\epsilon.$$ By splitting up $\int_X = \int_{X\setminus A} + \int_{A \setminus A_n} + \int_{A_n}$ and combining the estimates gathered, we obtain $$\int_X |f - f_n| d\mu < 2\epsilon + 2\epsilon + \epsilon = 5 \epsilon$$ for $n>N$. Thus completing the proof. \end{proof}
 
 \section{Outer measures}
 
