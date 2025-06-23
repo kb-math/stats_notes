@@ -146,13 +146,13 @@ If instead we use the loss function $L(\theta, a) = |\sigma^2 - a|$ then a good 
 
 We can use this language to define hypothesis testing:
 
-\begin{mydef} Suppose now that we have a partition $\Theta = \Theta_0 \sqcup \Theta_1$ of the parameter space and our action space is $\cA = \{ \Theta_0, \Theta_1\}$. We have a $0-1$ loss function given by $$L(\theta, \Theta_i) = 1 - \mathds{1}_{\Theta_i}(\theta).$$ Thus $L(\theta, a)$ measures whether we chose the right partition $a \in \cA$ that $\theta$ landed in. We see that the risk $$R(\theta, d) = P_{\theta} (\left\{ \omega \in \Omega ~|~ \theta \notin d(X(\omega)) \right\} )$$ is the probability that our decision algorithm chooses the wrong partition.
+\begin{mydef}\label{def: intro hypothesis testing} Suppose now that we have a partition $\Theta = \Theta_0 \sqcup \Theta_1$ of the parameter space and our action space is $\cA = \{ \Theta_0, \Theta_1\}$. We have a $0-1$ loss function given by $$L(\theta, \Theta_i) = 1 - \mathds{1}_{\Theta_i}(\theta).$$ Thus $L(\theta, a)$ measures whether we chose the right partition $a \in \cA$ that $\theta$ landed in. We see that the risk $$R(\theta, d) = P_{\theta} (\left\{ \omega \in \Omega ~|~ \theta \notin d(X(\omega)) \right\} )$$ is the probability that our decision algorithm chooses the wrong partition.
 
 The action $\Theta_0$ is called the \textit{Null Hypothesis} while $\Theta_1$ is called the \textit{Alternative hypothesis}. A \textit{Type I} error is an action that chooses the alternative hypothesis ($\Theta_1$) when the null hypotheiss is true ($\theta \in \Theta_0$). A \textit{Type II error} is an action that chooses the null hypothesis when the alternative is true.
 
 \end{mydef}
 
-\begin{eg} Suppose we have a dice that is either fair (null hypothesis) or always rolls a 6 (alternative hypothesis). Suppose we have rolled this dice $n$ times and observed the outcomes $(X_1, \ldots, X_n) \in \{1,2,3,4,5,6\}^n = \cX$. Say $\Theta = \{\theta_0, \theta_1\}$ where $P_{\theta_0}$ is the uniform distribution on $\cX$ (dice is fair) while $P_{\theta_1}$ is the probability measure concentrated on $(6, \ldots, 6) \in \cX$. Our decision rule simply chooses $\theta_1$ if and only if we roll all $6$. We have $R(\theta_0, d) = 1/6^n$ while $R(\theta_1,d) = 0$.
+\begin{eg}\label{eg: biased dice intro} Suppose we have a dice that is either fair (null hypothesis) or always rolls a 6 (alternative hypothesis). Suppose we have rolled this dice $n$ times and observed the outcomes $(X_1, \ldots, X_n) \in \{1,2,3,4,5,6\}^n = \cX$. Say $\Theta = \{\theta_0, \theta_1\}$ where $P_{\theta_0}$ is the uniform distribution on $\cX$ (dice is fair) while $P_{\theta_1}$ is the probability measure concentrated on $(6, \ldots, 6) \in \cX$. Our decision rule simply chooses $\theta_1$ if and only if we roll all $6$. We have $R(\theta_0, d) = 1/6^n$ while $R(\theta_1,d) = 0$.
 
 \end{eg}
 
@@ -504,6 +504,98 @@ Now what if we defined $\Theta' = \{ (\mu, \sigma) ~|~ \mu = 0, \sigma > 0 \}$. 
 
 \begin{eg} Let $\cX = \{0,1\}^n$, $\Theta = (0,1)$ and let $P_{\theta}$ be the distribution on $\cX$ where $(X_1, \ldots, X_n) \in \cX$ has i.i.d component with $P_{\theta}(X_i = 1) = \theta$. Thus, letting $T(x) = \sum_{i=1}^n x_i$ we have 
 $$P_{\theta}(x_1, \ldots, x_n) = \theta^{T(x)}(1-\theta)^{n - T{x}} = (1-\theta)^{n} (\theta(1-\theta)^{-1})^{T(x)} = C(\theta) \exp(\log(\theta(1-\theta)^{-1}) T(x)).$$ Thus this forms a $1$-paremeter exponential family with $$\pi(\theta) = \log\left(\frac{\theta}{1-\theta}\right).$$ The image of $\pi$ is thus $\bR$, which is an open subset of $\bR$. Thus $T$ is a complete and sufficient statistic, as we saw earlier in a previous example. \end{eg}
+
+\section{Hypothesis Testing}
+
+We recall the concepts of Hypothesis Testing introduced in Definition~\ref{def: intro hypothesis testing}. Suppose we have a partition $\Theta = \Theta_1 \sqcup \Theta_2$ of the parameter space $\Theta$. Our action space is $\cA = \{\Theta_0, \Theta_1\}$ and we have a decision rule, which we call a \textit{non-randomized test}, $d:\cX \to \{\Theta_0, \Theta_1\}$ and our loss function is $$L(\theta, \Theta_i) = 1 - \mathds{1}_{\Theta_i}(\theta).$$ Thus $L(\theta, d(x))$ equals $1$ if $\theta \in d(x)$ and $0$ if $\theta \notin d(x)$. 
+
+\textbf{Interpretation:} The parameter $\theta$ is unknown to the statistician, who samples $x \in \cX$ according to $P_{\theta}$. The statistictian must now \textit{guess wisely} based on the sampeld $x$ whether $\theta$ is in $\Theta_0$ or $\Theta_1$, thus $d(x) \in \{\Theta_0, \Theta_1\}$ represents the statisticians choice. The case $\theta \in \Theta_0$ is called the \textit{null hypothesis} while the case $\theta \in \Theta_1$ is called the \textit{alternative hypothesis}. So we say that the statistician \textit{rejects the null hypothesis} if $d(x) = \Theta_1$, while the statiscitian \textit{accepts the null hypothesis} if $d(x) = \Theta_0$.
+
+The associated risk is $$R(\theta, d) = \int_{\cX} L(\theta, d(x)) = P_{\theta}(\theta \notin d(x)),$$ i.e., the probability of choosing the wrong hypothesis.
+
+\begin{mydef} A \textit{randomized test} is a map $\varphi:\cX \to [0,1]$. Define maps $$\alpha_{\varphi}:\Theta_0 \to [0,1]$$ by $$\alpha_{\varphi}(\theta) = E_{\theta}(\varphi)$$ and $\beta_{\varphi}:\Theta_1 \to [0,1]$ given by $$\beta_{\varphi}(\theta) = 1 - E_{\theta}(\varphi).$$
+
+\end{mydef}  
+
+\textbf{Interpretation:} A \textit{randomized} test is a decision rule where, after $x$ is sampled, the value $d(x)$ is randomly chosen where with probability $\varphi(x)$ we choose $d(x) = \Theta_1$ and with probability $1 - \varphi(x)$ we choose $d(x) = \Theta_0$. Thus for $\theta \in \Theta_0$, we have that $\alpha_{\varphi}(\theta)$ is the probability that we falsely reject the null hypothesis, that is, we falsely choose the hypothesis $\Theta_1$ where firstly $x$ is chosen randomly according to $P_{\theta}$ and then $d(x) = \Theta_i$ is chosen randomly where $P(d(x) = \Theta_1 ~|~ x) = \varphi(x)$. Hence 
+$$P_{\theta}(d(x) = \Theta_1) = \int_{\cX} P(d(x) = \Theta_1 ~|~ x) dP_{\theta}(x) = E_{\theta}(\varphi), $$ which explains how $\varphi(x)$ is interpreted as a probability. A non-randomized rule is the case where $\varphi(x) \in \{0,1\}$ for all $x \in \cX$.
+
+\begin{mydef} The \textit{size} of a randomized test $\varphi$ is equal to $$\alpha_{\varphi} = \sup_{\theta \in \Theta_0} \alpha_{\varphi}(\theta) \in [0,1].$$
+The \textit{power} of $\varphi$ is $\gamma_{\varphi}:\Theta_1 \to [0,1]$ is defined as $$\gamma_{\varphi}(\theta) = E_{\theta}(\varphi).$$
+
+\end{mydef}
+
+\textbf{Interpretation:} The size of the test is the supremum probability of falsely accepting the null hypothesis. So it is the least upper bound (over $\theta \in \Theta_0$) that measures the probability that we falsely reject the null hypothesis (that is, we choose $\Theta_1$) when in fact the null hypothesis ($\theta \in \Theta_0$) is true. The power measures the probabiliy that we can get a strong enough signal to reject the null hypothesis, in the case that the null hypothesis is indeed actually false.
+
+So we want to minimize the size, but maximise the power. Our number one priority is to keep the size low, thus the null hypothesis should be rejected only if there is strong evidence against it. Thus we should let the null hypothesis be something we wish to prove false. Typically, we want $\alpha \leq 0.05$.
+
+\begin{eg} Suppose that a manufacturor wishes to test whether a product has a defect or not. Suppose $\theta$ is the (unknown) proportion of products that have a defect. Say the manufacturer wishes that $\theta \leq 0.05$. Thus we let the null hypothesis be $\theta \in \Theta_0 = (0.05, 1]$ (as we wish to prove it wrong) and the alternative hypothesis is $\theta \in \Theta_1 = [0,0.05)$. The manufacturer randomly samples $40$ such products so the sample is $x =(x_1, \ldots, x_{40})\in \cX = \{0,1\}^{40}$ (where $x_i = 1$ means the ith product in the sample has a defect) and has a decision rule given by $d_1(x) = \Theta_1$ if and only if there was at most $1$ defect. In other words, we have a non-randomized test given by $$\varphi_1(x) = \mathds{1}(\sum_{i=1}^{40} x_i \leq 1).$$
+Thus $$\alpha_{\varphi_1}(\theta) =  P_{\theta}(\sum_{i} x_i \leq 1) = (1-\theta)^{40} + 40(1-\theta)^{39}\theta$$
+for $\theta \in \Theta_0 = (0.05, 1].$ Some simple calculus shows that the supremum is attained at the endpoint $\theta = 0.05$. Thus the size of the test is $$\alpha_{\varphi_1} = 0.399.$$ This means that the statistician cannot confidently reject the hypotesis $\theta > 0.05$, even if at most $5 \%$ of the sample has a defect. He simply does not have enough data to make $\alpha_{\varphi_1} \leq 0.05$.
+
+Now if instead he takes $100$ samples, so $\cX = \{0,1\}^{100}$ and uses the same criteria of only at most $1$ defect, then we get that $$\alpha_{\varphi} = 0.95^{100} + 100(0.95)^{99}\times 0.05 = 0.037$$ and so the test has a good enough size in this case. For $\theta = 0.05$, the power $\gamma_{\varphi}(\theta)$ of this test is equal to $\alpha$, but as $\theta \to 0$ then the power converges to $1$, i.e., if $\theta$ is close to $0$ then with very high probability we (correctly) reject the null hypothesis.
+\end{eg}
+
+\subsection{Neyman-Pearson Lemma}
+
+Say we want to choose a test $\varphi$ where $\alpha_{\varphi}$ is at most some fixed value, usually $0.05$. There are many such tests to choose from, but we would like those which have the highest possible power. This motivates the following definition.
+
+\begin{mydef}[UMP test] A \textit{UMP (uniformly most powerful) test of size} $\alpha \in [0,1]$ is a test $\varphi$ such that $\alpha_{\varphi} = \alpha$ and for all tests $\varphi'$ with $\alpha_{\varphi'} \leq \alpha$ we have $$\gamma_{\varphi}(\theta) \geq \gamma_{\varphi'}(\theta) \quad\text{for all } \theta \in \Theta_1.$$
+\end{mydef}
+
+We recall that we always assume the nice condition of Definition??, i.e., $$\frac{dP_{\theta}}{d\nu} = f(x|\theta)$$ where $\nu$ is a $\sigma$-finite measure on $\cX$ and $(x,\theta) \mapsto f(x|\theta)$ is measurable.
+
+\begin{prop}[Neyman-Pearson for simple hypotheses] Suppose that $\Theta = \{\theta_0, \theta_1\}$ has only two points and let the null hypothesis be $\Theta_0 = \{ \theta_0\}$ and the alternative is $\Theta_1 = \{ \theta_1 \}$. Then for each constant $k \in [0,\infty)$ and $\gamma \in [0,1]$ consider the test 
+
+$$\varphi(x) = 
+\begin{cases}
+1, & \text{ if } f(x|\theta_1) > kf(x|\theta_0) \\
+\gamma, & f(x|\theta_1) = k f(x|\theta_0) \\  
+0, & f(x|\theta_1) < kf(x|\theta).\end{cases}$$
+
+Then $\varphi$ is a UMP test of size $$\alpha = P_{\theta_0}\left(f(x|\theta_1) > kf(x|\theta_0) \right) + \gamma P_{\theta_0} \left(f(x|\theta_1) = k f(x|\theta_0)\right).$$
+
+Conversely, given any $\alpha \in (0,1)$, we can find such $k,\gamma$ so that the test $\varphi$ is UMP of size $\alpha$. \end{prop}
+
+\begin{proof} Suppose that $\psi$ is a test of size at most $\alpha_{\psi} \leq \alpha$. The power difference is 
+\begin{align*}
+\gamma_{\varphi}(\theta_1) - \gamma_{\psi}(\theta_1) &= E_{\theta_1}\varphi - E_{\theta_1}\psi \\
+&= \int_{A_1}(\varphi(x) - \psi(x)) f(x|\theta_1)d\nu(x) + \int_{A_2}(\varphi(x) - \psi(x)) f(x|\theta_1)d\nu(x) + \int_{A_3}(\varphi(x) - \psi(x)) f(x|\theta_1)d\nu(x) \end{align*}
+
+where $$A_1(x) = \{x \in \cX ~|~ f(x|\theta_1) > kf(x|\theta_0) \},$$ $$A_2(x) = \{x \in \cX ~|~ f(x|\theta_1) = kf(x|\theta_0) \},$$ $$A_3(x) = \{x \in \cX ~|~ f(x|\theta_1) < kf(x|\theta_0) \}.$$
+
+Now for $x \in A_1$ we have that $\varphi(x)- \psi(x) = 1 - \psi(x) \geq 0$ and $f(x|\theta_1) \geq kf(x|\theta_0).$ Thus $$(\varphi(x) - \psi(x))f(x|\theta_1) \geq (\varphi(x) - \psi(x))f(x|\theta_1)$$ for $x \in A_1$
+and hence 
+$$\int_{A_1}(\varphi(x) - \psi(x)) f(x|\theta_1)d\nu(x) \geq \int_{A_1}(\varphi(x) - \psi(x)) k f(x|\theta_0)d\nu(x). $$
+For $x \in A_2$, we have $f(x|\theta_0) = kf(x|\theta_1)$ and so $$\int_{A_2}(\varphi(x) - \psi(x)) f(x|\theta_1)d\nu(x) = \int_{A_2}(\varphi(x) - \psi(x)) k f(x|\theta_0)d\nu(x). $$ Now for $x \in A_3$ we have $\varphi(x) - \psi(x) = 0 - \psi(x) \leq 0$ but $f(x|\theta_1) < kf(x|\theta_0)$ and thus $$(\varphi(x) - \psi(x))f(x|\theta_1) \geq (\varphi(x) - \psi(x))kf(x|\theta_0).$$ Hence $$\int_{A_3}(\varphi(x) - \psi(x)) f(x|\theta_1)d\nu(x) \geq \int_{A_3}(\varphi(x) - \psi(x)) k f(x|\theta_0)d\nu(x). $$ Combining this inequalities we get that 
+
+\begin{align*}
+\gamma_{\varphi}(\theta_1) - \gamma_{\psi}(\theta_1) &\geq \int_{\cX}(\varphi(x) - \psi(x)) kf(x|\theta_0)d\nu(x)  \\
+&= k (E_{\theta_0}\varphi - E_{\theta_0}\psi) \\
+&= k (\alpha_{\varphi} - \alpha_{\psi}) \\
+& \geq 0.  \end{align*}
+
+Thus $\varphi$ is indeed UMP.
+
+We now show that if $\alpha \in (0,1)$, then we can choose such a $k$ and $\gamma$. First, define $$Y(x) = \frac{f(x|\theta_1)}{f(x|\theta_0)}.$$ Thus we can write $$\alpha = P_{\theta_0} (Y > k) + \gamma P_{\theta_0}(Y = k).$$ Observe that $P_{\theta_0}$ almost surely, we have that $f(x|\theta_0) >0$, so $Y$ is well defined and $0\leq Y < \infty$. If there exists $k$ such that $P_{\theta_0}(Y>k) = \alpha$, then we take this $k$ and $\gamma=0$. If not, then let $$k_0 = \inf \left\{ k \in \bR ~|~ P_{\theta_0} (Y > k) \leq \alpha \right\}.$$ Note that $0 \leq k_0 < \infty$ since $0 \leq Y < k$ almost surely.
+
+We see that $$P_{\theta_0}(Y > k_0) = \lim_{n \to \infty}P_{\theta_0}(Y > k_0 + 1/n) \leq \alpha$$ and thus 
+\begin{align}\label{eqn: Neyman-Peason alpha k_0} P_{\theta_0}(Y>k_0) < \alpha \end{align} 
+(as we assumed no such $k$ exists). On the other hand 
+\begin{align}\label{eqn: simple Neyman-Pearson proof lower bound} P_{\theta_0}(Y \geq k_0) = \lim_{n \to \infty} P_{\theta}(Y>k_0 - 1/n) \geq \alpha. \end{align}
+ Thus $P_{\theta_0}(Y = k_0) > 0$ and so we can define $$\gamma = \frac{\alpha - P_{\theta_0}(Y>k)}{P_{\theta}(Y=k)}.$$ It remains to show that $\gamma \in [0,1]$. We know $\gamma >0$ from (\ref{eqn: Neyman-Peason alpha k_0}). However $$\gamma = \frac{\alpha - P_{\theta_0}(Y>k)}{P_{\theta}(Y \geq k) - P_{\theta}(Y>k)}$$ and so from (\ref{eqn: simple Neyman-Pearson proof lower bound}) we have $\gamma \leq 1$. \end{proof}
+
+\begin{eg} We recall Example~\ref{eg: biased dice intro}. Suppose we have a dice that is either fair (null hypothesis) or always rolls a 6 (alternative hypothesis). Suppose we have rolled this dice $n$ times and observed the outcomes $(X_1, \ldots, X_n) \in \{1,2,3,4,5,6\}^n = \cX$. Say $\Theta = \{\theta_0, \theta_1\}$ where $P_{\theta_0}$ is the uniform distribution on $\cX$ (dice is fair) while $P_{\theta_1}$ is the probability measure concentrated on $(6, \ldots, 6) \in \cX$.
+
+Let us apply the Neyman-Pearson lemma to find a UMP test. Here $\nu$ is the counting measure $\nu\{x\} = 1$ for all $x \in \cX$. Here $$f(x|\theta_0) = 6^{-n}$$ and $$f(x|\theta_1) = \mathds{1}_{\{(6,\ldots, 6)\}}(x).$$ 
+Consider $0<k < 6^{n}$. Now $f(x|\theta_1) > k f(x|\theta_0)$ occurs if and only if $x = (6,\ldots, 6)$ and otherwise we have $f(x|\theta_1) = 0 < k 6^{-n} = f(x|\theta_0)$. Thus the test which rejects $\Theta_0$ if and only if we roll all $6$ is a UMP test. It has size $\alpha = 6^{-n}$ and power $P_{\theta_1}(x = (6,\ldots, 6)) = 1,$ thus we can directly see that it is UMP. 
+
+Now consider the interesting critical case $k = 6^{n}$. Here we $kf(x|\theta_0) = 1$ for all $x$ hence we will never have $f(x|\theta_1) > kf(x|\theta_0)$. So the corresponding test will accept $\Theta_0$ if we roll something that is not a $6$ but if we roll all $6$ then the test will randomly, with probability $\gamma \in [0,1]$, choose to reject the null hypothesis. In other words, the test is $$\varphi(x) = \gamma \mathds{1}_{\{(6,\ldots, 6)\}}(x).$$ Thus the size of the test is $$\alpha = E_{\theta}(\varphi) = \gamma 6^{-n},$$ i.e., it is the probability of rolling all $6$ and then randomly (independent of the roll) choosing to reject the null hypothesis. 
+The power of the the test is equal to $E_{\theta_1}(\varphi) = \gamma$.
+By Neyman-Pearson, this test is UMP.
+
+We have created all $\alpha \in [0,6^{-n}]$. To get the remaining ones, we consider the case $k=0$. We never have $f(x|\theta_1) < kf(x|\theta_0)$, while the case $f(x|\theta_1)>kf(x|\theta_0)$ occurs only if we roll all $6$. We have $f(x|\theta_1) = kf(x|\theta_0)$ whenever we roll at least one non $6$. In this case, we reject the null hypothesis with probability $\gamma$ (which is stupid). Thus the size of this test is $$\alpha = 6^{-n} + (1-6^{-n})\gamma.$$ The power of this test is $1$, so clearly it is UMP.
+\end{eg}
 
 \appendix
 
