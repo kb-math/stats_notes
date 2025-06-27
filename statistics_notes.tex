@@ -597,6 +597,47 @@ By Neyman-Pearson, this test is UMP.
 We have created all $\alpha \in [0,6^{-n}]$. To get the remaining ones, we consider the case $k=0$. We never have $f(x|\theta_1) < kf(x|\theta_0)$, while the case $f(x|\theta_1)>kf(x|\theta_0)$ occurs only if we roll all $6$. We have $f(x|\theta_1) = kf(x|\theta_0)$ whenever we roll at least one non $6$. In this case, we reject the null hypothesis with probability $\gamma$ (which is stupid). Thus the size of this test is $$\alpha = 6^{-n} + (1-6^{-n})\gamma.$$ The power of this test is $1$, so clearly it is UMP.
 \end{eg}
 
+\subsection{Unbiased tests and one-parameter exponential families}
+
+\begin{mydef} We say that a test $\varphi:\cX \to [0,1]$, for a hypothesis testing problem $\Theta = \Theta_0 \sqcup \Theta_1$, is \textit{unbiased} if the power is bounded below by the size of the test, i.e., $$\inf_{\theta \in \Theta_1} \gamma_{\varphi}(\theta) \geq \alpha_{\varphi}.$$ In other words $$\inf_{\theta \in \Theta_1} E_{\theta}\varphi \geq \sup_{\theta \in \Theta_0} E_{\theta}(\varphi).$$
+
+We say that an unbiased test $\varphi^*$ is UMPU (uniformly most powerful unbiased) if for all unbiased tests $\varphi$ of size $\alpha_{\varphi} = \alpha_{\varphi^*}$ we have that 
+$$\gamma_{\varphi}(\theta) \leq \gamma_{\varphi^*}(\theta) \quad\text{for all } \theta \in \Theta_1.$$
+
+\end{mydef}
+
+We now construct UMPU tests for one-parameter exponential families where $\Theta_0 = \{\theta_{0}\}$ contains a single point and $\Theta$ is an open subset of $\bR$. Thus, for this section we fix density functions $$\frac{dP_{\theta}}{d\nu}(x) = C(\theta)h(x) \exp(\theta T(x)).$$ Recall that these means that these densities are absolutely convergent for all $\theta$ and the integrals equal to $1$.
+
+We first show a technical lemma that states that $\theta \mapsto E_{\theta}(\varphi)$ is differentiable and we can differentiate under the integral sign.
+
+\begin{lemma} The map $\theta \mapsto C(\theta)$ is smooth (infinitely differentiable). Moreover, we can differentiate under the integral sign in the sense that 
+$$\frac{d}{d\theta}(E_{\varphi}(\theta)) = \int_{\cX} \varphi(x)\left(C'(\theta)h(x) \exp(\theta T(x)) + C(\theta)h(x)T(x) \exp(\theta T(x)) \right) d\nu(x)$$ with this integral absolutely convergent.
+
+\end{lemma}
+
+\begin{proof} To show the first claim about $C(\theta)$, we will use the standard differentiation under the integral sign theorem to show that $C(\theta)^{-1} > 0$ (defined by an integral) can be differentiated under the integral sign. This means it is enough to show that and point in $\Theta$ has open open neighbhourhood $U$ such that $$h(x)|T(x)|\exp(\theta T(x)) \leq K(x) \quad\text{for all } \theta \in U$$ for some integrable function $K(x) = K_U(x)$. Thus fix and $\theta_0 \in \Theta$. As $\Theta$ is open we have $\delta>0$ so that $[\theta_0 -2\delta, \theta_0 + 2\delta] \subset \Theta$. There exists a constant $A = A_{\delta}>0$ such that $$|t| \leq A_{\delta}(\exp(\delta t) + \exp(-\delta t)) \quad\text{for all } t \in \bR.$$ Now for all $\theta \in U = (\theta_0 - \delta, \theta_0 + \delta)$ we have
+\begin{align*}h(x)|T(x)|\exp(\theta T(x)) &\leq A_{\delta} h(x) (\exp(\delta T(x)) + \exp(-\delta T(x)) ) \exp(\theta T(x))  \\
+& = \sum_{\pm} A_{\delta} h(x) \exp((\theta \pm \delta)T(x))  \end{align*}
+
+But $\theta \pm \delta \in \Theta_0$ so these upper bounds are integrable. We still need to find an integrable function $K(x) = K_U(x)$ upper bounding this (independently of $\theta \in U$). Observe that $$h(x)\exp(\theta)T(x) \leq \sum_{\pm} \exp(\theta_0 \pm 2\delta)T(x)$$ holds because if $T(x) \geq 0$ then $\exp(\theta T(x))$ is increasing in $\theta$, otherwise it is decreasing and thus the upper bound is obtained. We can thus let $K(x)$ be this bound (it does not depend on $\theta \in U$ but does on $\theta_0$ and thus only on $U$, which is fine).
+
+Thus we can differentiate under the integral. We can continue in this way (by replacing $h(x)$ with $h(x)T(x)$) and conclude that $\theta$ is smooth.
+
+The second claim now follows since $C'(\theta)$ and $C(\theta)^{-1}$ bounded on compact subsets of $\Theta_0$, so the integrand on the right hand side can be uniformly bounded by integrable functions already constructed in the previous arguments:
+ \begin{align*} |\varphi(x)\left(C'(\theta)h(x) \exp(\theta T(x)) + C(\theta)h(x)T(x) \exp(\theta T(x))\right)| \leq  |C'(\theta)| \cdot |h(x) \exp(\theta T(x))| \\ + C(\theta)|h(x)T(x) \exp(\theta T(x))| \end{align*}
+but each term has already bounded by $K(x)$ in the previous argument. \end{proof}
+
+We can compute the derivative above as follows
+
+\begin{align*} \frac{d}{d\theta}(E_{\varphi}(\theta)) &= \int_{\cX} \varphi(x)\left(C'(\theta)h(x) \exp(\theta T(x)) + C(\theta)h(x)T(x) \exp(\theta T(x)) \right) d\nu(x) \\
+&= C'(\theta)C(\theta)^{-1} E_{\theta}(\varphi) + E_{\theta}(T \varphi) \end{align*}
+
+\begin{prop} If $\varphi:\cX \to [0,1]$ is an unbiased test, where $\Theta_0 = \{ \theta_0 \}$ and $\Theta$ is an open subset of $\bR$, then $$C'(\theta_0)C(\theta_0)^{-1} E_{\theta_0}(\varphi) = - E_{\theta_0}(T \varphi).$$
+
+\end{prop}
+
+\begin{proof} By definition of unbiased, the point $\theta_0$, is a minimum of $E_{\varphi}(\theta)$ and thus has zero derivative. \end{proof}
+
 \appendix
 
 \section{Review of Probability}
