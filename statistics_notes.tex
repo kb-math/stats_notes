@@ -597,7 +597,49 @@ By Neyman-Pearson, this test is UMP.
 We have created all $\alpha \in [0,6^{-n}]$. To get the remaining ones, we consider the case $k=0$. We never have $f(x|\theta_1) < kf(x|\theta_0)$, while the case $f(x|\theta_1)>kf(x|\theta_0)$ occurs only if we roll all $6$. We have $f(x|\theta_1) = kf(x|\theta_0)$ whenever we roll at least one non $6$. In this case, we reject the null hypothesis with probability $\gamma$ (which is stupid). Thus the size of this test is $$\alpha = 6^{-n} + (1-6^{-n})\gamma.$$ The power of this test is $1$, so clearly it is UMP.
 \end{eg}
 
-\subsection{Unbiased tests and one-parameter exponential families}
+
+\subsection{One sided UMP tests}
+
+We now construct UMP tests for one-parameter exponential families where $\Theta \subset \bR\}$. Thus, for this section we fix density functions $$\frac{dP_{\theta}}{d\nu}(x) = C(\theta)h(x) \exp(\theta T(x)).$$ Recall that these means that these densities are absolutely convergent for all $\theta \in \Theta \subset \bR$ and the integrals equal to $1$.
+
+As we will frequenty switch the hypothesis (e.g., shrinking it to a single point), we will define say a test is UMP($\Theta_0$, $\Theta_1$) if it is UMP for the the null hypothesis $\Theta_0$ and alternative hypotehsis $\Theta_1$.
+We first start with the special case where $\Theta_0$ and $\Theta_1$ each consist of a single point.
+
+\begin{prop} Fix $\theta_0 < \theta_1$ in $\Theta$, $t \in \bR$ and $\gamma \in [0,1]$. Then the test $\varphi^*:\cX \to [0,1]$ given by
+$$\varphi^*(x) = \begin{cases}
+1, & \text{ if } T(x) > t \\
+\gamma, & \text{ if } T(x) = t \\  
+0, & \text{ if } T(x) < t.\end{cases}.$$
+
+is UMP($\{\theta_0\}, \{\theta_1\}$).
+
+Moreover, for any $\alpha \in (0,1)$ there exists $t \in \bR$ and $\gamma \in [0,1]$ such that $\varphi^*$ is UMP($\{\theta_0\}, \{\theta_1\}$) of size $$\alpha = P_{\theta_0}(T > t) + \gamma P_{\theta_0}(T = t). $$
+
+\end{prop}
+
+\begin{proof} We can use the Neyman-Pearson lemma with chosen $k$ and $\gamma$. We assume $h(x)>0$ for all $x \in \cX$ as this holds $P_{\theta}$-almost surely for all $\theta$. Thus we have well defined ratios of densitities given by $$f(x|\theta_1)/f(x|\theta_0) = C(\theta_1)C_{\theta_0}^{-1} \exp((\theta_1 - \theta_0)T(x)). $$
+
+So $f(x|\theta_1)/f(x|\theta_0)  > k$ if and only if $$\log(k C(\theta_1)^{-1}C_{\theta_0})>(\theta_1 - \theta_0) T(x).$$ Thus as $\theta_1 - \theta_0 > 0$, this inequality holds if and only if $T(x) > t$ where $$t  =\frac{\log(k C(\theta_1)^{-1}C_{\theta_0})}{\theta_1 - \theta_0 }.$$
+So the existence of $t$ and $\gamma$ follows from the existence of $k$ and $\gamma$ in the Neyman-Pearson lemma as the mapping $k \mapsto t$ is a bijection $(0,\infty) \to (-\infty, \infty)$.  \end{proof}
+
+For the remainder of this section, fix such a test $\varphi^*$. Note that we do not fix $\theta_0$ or $\theta_1$, but we do fix such a $t$ and $\gamma$. We call such a test a \textit{one-sided} test (for this exponential family)
+
+\begin{lemma}\label{lemma: one-sided test is unbiased} Let $\theta_0, \theta_1 \in \Theta$ with $\theta_0 \leq \theta_1$. The test $\varphi^*$ satisfies that $$E_{\theta_0}(\varphi^*) \leq E_{\theta_1}(\varphi^*),$$ i.e., it is (non-strictly) increasing on $\Theta$.
+
+\end{lemma}
+
+\begin{proof} Let $\alpha = E_{\theta_0}(\varphi^*)$ be the size of the test and let $\varphi_{\alpha}(x) = \alpha$ be a test that is the constant function $\alpha$. Note that $\varphi_{\alpha}$ has power and size $\alpha$. Since $\varphi_{\alpha}$ has size $\alpha$ and since $\varphi^*$ is UMP($\{\theta_0, \theta_1\}$), we must have $$\alpha = E_{\theta_1}(\varphi_{\alpha}) \leq E_{\theta_1}(\varphi^*).$$
+
+\end{proof}
+
+\begin{thm} Suppose $$\Theta_0 = \{\theta \in \Theta ~|~ \theta \leq \theta_0\}$$ and $$\Theta_1 = \{\theta \in \Theta ~|~ \theta > \theta_0 \}$$ for some $\theta_0 \in \Theta_0$. 
+The test $\varphi^*$ is UMP($\Theta_0, \Theta_1$) of size $$\alpha_{\varphi^*} = E_{\theta_0}(\varphi^*) = P_{\theta_0}(T > t) + \gamma P_{\theta_0}(T = t). $$
+
+\end{thm}
+
+\begin{proof} By definition of size, $$\alpha = \alpha_{\varphi^*} = \sup_{\theta \in \Theta_0} E_{\theta}(\varphi).$$ However, by the previous lemma we have that this supremum occurs at $\theta_0$, thus proving the claim about the size of this test. Now suppose that $\psi:\cX \to [0,1]$ is any test of size at most $\alpha$ and let $\theta_1 \in \Theta_1$. Thus as $\varphi^*$ is UMP($\{\theta_0\}, \{\theta_1\}$) we must have that $$E_{\theta_1}(\psi_1) \geq E_{\theta_1}(\varphi^*).$$ \end{proof}
+
+\subsection{Two sided unbiased tests and one-parameter exponential families}
 
 \begin{mydef} We say that a test $\varphi:\cX \to [0,1]$, for a hypothesis testing problem $\Theta = \Theta_0 \sqcup \Theta_1$, is \textit{unbiased} if the power is bounded below by the size of the test, i.e., $$\inf_{\theta \in \Theta_1} \gamma_{\varphi}(\theta) \geq \alpha_{\varphi}.$$ In other words $$\inf_{\theta \in \Theta_1} E_{\theta}\varphi \geq \sup_{\theta \in \Theta_0} E_{\theta}(\varphi).$$
 
@@ -606,7 +648,11 @@ $$\gamma_{\varphi}(\theta) \leq \gamma_{\varphi^*}(\theta) \quad\text{for all } 
 
 \end{mydef}
 
-We now construct UMPU tests for one-parameter exponential families where $\Theta_0 = \{\theta_{0}\}$ contains a single point and $\Theta$ is an open subset of $\bR$. Thus, for this section we fix density functions $$\frac{dP_{\theta}}{d\nu}(x) = C(\theta)h(x) \exp(\theta T(x)).$$ Recall that these means that these densities are absolutely convergent for all $\theta$ and the integrals equal to $1$.
+The notion of unbiasedness is natural condition. Another way of stating it is that one is more likely to reject the null hypothesis if it is false, rather than when it is true. 
+
+Note that by Lemma~\ref{lemma: one-sided test is unbiased}, we have that the one-sided tests for one-parameter exponential families are unbiased (and also UMP, thus UMPU).
+
+We now construct \textit{two-sided} UMPU tests for one-parameter exponential families where $\Theta_0 = \{\theta_{0}\}$ contains a single point and $\Theta$ is an open subset of $\bR$. Thus, for this section we fix density functions $$\frac{dP_{\theta}}{d\nu}(x) = C(\theta)h(x) \exp(\theta T(x)).$$ Recall that these means that these densities are absolutely convergent for all $\theta$ and the integrals equal to $1$.
 
 We first show a technical lemma that states that $\theta \mapsto E_{\theta}(\varphi)$ is differentiable and we can differentiate under the integral sign.
 
@@ -637,6 +683,41 @@ We can compute the derivative above as follows
 \end{prop}
 
 \begin{proof} By definition of unbiased, the point $\theta_0$, is a minimum of $E_{\varphi}(\theta)$ and thus has zero derivative. \end{proof}
+
+
+\begin{eg}
+Consider the case $\cX = \bR^n$, $\Theta = \bR$, $\Theta_0 = \{\theta_0\}$ and let $P_{\theta}$ be the distribution of $(X_1, \ldots, X_n)$ where each $X_i$ is Gaussian with mean $\theta$ and variance $\sigma^2>0$, which we assume is a fixed known constant, and the $X_i$ are independent. Thus if $\nu$ is the Lebesgue measure on $\bR^d$ then $$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i - \theta)^2 \right). $$
+
+We saw that we can rewrite this as 
+$$\frac{dP_{\theta}}{d\nu}(x_1, \ldots, x_n)  = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( \frac{-n\theta}{2\sigma^2} \right) \exp\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n x_i^2 +\frac{1}{\sigma^2}\theta \sum_{i=1}^n x_i\right).$$
+Thus we see that the $P_{\theta}$ form a $1$-parameter exponential family with $$T(x) = \frac{n}{\sigma^2} \overline{x}.$$
+
+We now consider a test of the form $$\varphi(x) = 1 - \mathds{1}(T(x))_{[t_1,t_2]}$$ where $t_1<t_2 \in \bR$. As we shall see, not all choices of $t_1,t_2$ give an unbiased test for the null hypothesis $\theta = \theta_0$. Let us calculate the power
+$$E_{\varphi}(\theta) = 1 - P_{\theta}(t_1 \leq T(x) \leq t_2).$$ Note that the distribution of $\sigma^2 T(X) = X_1 + \cdots + X_n$ is $N(n\theta, n\sigma^2)$. Thus the distribution of $$\frac{\sigma^2T(x) - n\theta}{\sqrt{n}\sigma}$$ is the standard normal distribution. Thus $$E_{\varphi}(\theta) = 1 - Pr(\frac{\sigma^2t_1 - n\theta}{\sqrt{n}\sigma} \leq Z \leq \frac{\sigma^2t_2 - n\theta}{\sqrt{n}\sigma}  ) =: 1 - Pr(a(t_1, \theta) < Z < b(t_2, \theta))$$ where $Z$ denotes the standard normal variable and $a(t_1, \theta)$, $b(t_2, \theta)$ are those endpoints given. 
+To achieve unbiasedness, we would like $E{\varphi}(\theta)$ to be minimal at $\theta = \theta_0$, in other words, we want the maximum of $1 - E_{\varphi}(\theta) = Pr(a(t_1,\theta) < Z < b(t_2, \theta))$ to occur at $\theta = \theta_0$.
+However, observe that the interval $[a(t_1,\theta), b(t_2,\theta)]$ has length $$\frac{1}{\sqrt{n}} \sigma(t_2 - t_1)$$ and thus does not depend on $\theta$. Also, this interval's left endpoint point can be any real number. Thus, this probability is maximized precisely when the centre of this interval is zero (sliding window over a Gaussian), i.e.,  when $$\frac{\sigma^2(t_1+t_2) - 2n\theta)}{\sqrt{n}\sigma} = 0.$$ Thus the power is minimized at $n\theta = \frac{\sigma^2t_1 + \sigma^2t_2}{2}$.
+In other words, the test is unbiased, for the null hypothesis $\Theta_0 = \{\theta_0\}$, if and only if the centre of $[\sigma^2 t_1,\sigma^2t_2]$ is $n\theta_0$. In other words, the unbiased test of size $\alpha$ is: accept (fail to reject) the null hypothesis $\theta = \theta_0$ if and only if 
+$$-z_{\alpha} \leq \frac{\sum_{i=1}^n (x_i - \theta_0)}{\sqrt{n}\sigma} \leq z_{\alpha}$$ where $z_{\alpha} >0$ is chosen so that $$Pr(-z_{\alpha} < Z < z_{\alpha}) = 1 - \alpha.$$
+
+\end{eg}
+
+We now provide a theorem that shows that, in the case of $1$-parameter exponential families, tests that are based on the statistic $T$ have the property that unbiasedness implies UMPU.
+
+\begin{thm} Let $t_1<t_2$ and define the test 
+$$\varphi(x) = \begin{cases}
+1, & \text{ if } T(x) > t_2 \text{ or } T(x) < t_1\\
+\gamma_i, & \text{ if } T(x) = t_i \\  
+0, & \text{ if } t_1 < T(x) < t_2.\end{cases}.$$
+
+If $\varphi$ is unbiased, then it is UMPU (where we assume, as throughout this section, that the null hypothesis is $\Theta_0 = \{\theta_0\}$ and $\Theta$ is an open subset of $\bR$).
+
+\end{thm}
+
+\begin{remark} As the example above shows, this test may be biased (not unbiased) for some $t_1,t_2$. The theorem has unbiasdness as an assumption and UMPU is the conclusion. \end{remark}
+
+\begin{proof} Let $\varphi_1$ be another unbiased test of size $\alpha_{\varphi_1} = \alpha_{\varphi}.$ Thus by 
+
+\end{proof}
 
 \appendix
 
