@@ -617,9 +617,9 @@ Moreover, for any $\alpha \in (0,1)$ there exists $t \in \bR$ and $\gamma \in [0
 
 \end{prop}
 
-\begin{proof} We can use the Neyman-Pearson lemma with chosen $k$ and $\gamma$. We assume $h(x)>0$ for all $x \in \cX$ as this holds $P_{\theta}$-almost surely for all $\theta$. Thus we have well defined ratios of densitities given by $$f(x|\theta_1)/f(x|\theta_0) = C(\theta_1)C_{\theta_0}^{-1} \exp((\theta_1 - \theta_0)T(x)). $$
+\begin{proof} We can use the Neyman-Pearson lemma with chosen $k$ and $\gamma$. We assume $h(x)>0$ for all $x \in \cX$ as this holds $P_{\theta}$-almost surely for all $\theta$. Thus we have well defined ratios of densities given by $$f(x|\theta_1)/f(x|\theta_0) = C(\theta_1)C_{\theta_0}^{-1} \exp((\theta_1 - \theta_0)T(x)). $$
 
-So $f(x|\theta_1)/f(x|\theta_0)  > k$ if and only if $$\log(k C(\theta_1)^{-1}C_{\theta_0})>(\theta_1 - \theta_0) T(x).$$ Thus as $\theta_1 - \theta_0 > 0$, this inequality holds if and only if $T(x) > t$ where $$t  =\frac{\log(k C(\theta_1)^{-1}C_{\theta_0})}{\theta_1 - \theta_0 }.$$
+So $f(x|\theta_1)/f(x|\theta_0)  > k$ if and only if $$(\theta_1 - \theta_0) T(x) > \log(k C(\theta_1)^{-1}C_{\theta_0}).$$ Thus as $\theta_1 - \theta_0 > 0$, this inequality holds if and only if $T(x) > t$ where $$t  =\frac{\log(k C(\theta_1)^{-1}C_{\theta_0})}{\theta_1 - \theta_0 }.$$
 So the existence of $t$ and $\gamma$ follows from the existence of $k$ and $\gamma$ in the Neyman-Pearson lemma as the mapping $k \mapsto t$ is a bijection $(0,\infty) \to (-\infty, \infty)$.  \end{proof}
 
 For the remainder of this section, fix such a test $\varphi^*$. Note that we do not fix $\theta_0$ or $\theta_1$, but we do fix such a $t$ and $\gamma$. We call such a test a \textit{one-sided} test (for this exponential family)
@@ -656,7 +656,7 @@ We now construct \textit{two-sided} UMPU tests for one-parameter exponential fam
 
 We first show a technical lemma that states that $\theta \mapsto E_{\theta}(\varphi)$ is differentiable and we can differentiate under the integral sign.
 
-\begin{lemma} The map $\theta \mapsto C(\theta)$ is smooth (infinitely differentiable). Moreover, we can differentiate under the integral sign in the sense that 
+\begin{lemma}\label{lemma: integrate diff sign exp family} The map $\theta \mapsto C(\theta)$ is smooth (infinitely differentiable). Moreover, we can differentiate under the integral sign in the sense that 
 $$\frac{d}{d\theta}(E_{\varphi}(\theta)) = \int_{\cX} \varphi(x)\left(C'(\theta)h(x) \exp(\theta T(x)) + C(\theta)h(x)T(x) \exp(\theta T(x)) \right) d\nu(x)$$ with this integral absolutely convergent.
 
 \end{lemma}
@@ -678,7 +678,7 @@ We can compute the derivative above as follows
 \begin{align*} \frac{d}{d\theta}(E_{\varphi}(\theta)) &= \int_{\cX} \varphi(x)\left(C'(\theta)h(x) \exp(\theta T(x)) + C(\theta)h(x)T(x) \exp(\theta T(x)) \right) d\nu(x) \\
 &= C'(\theta)C(\theta)^{-1} E_{\theta}(\varphi) + E_{\theta}(T \varphi) \end{align*}
 
-\begin{prop} If $\varphi:\cX \to [0,1]$ is an unbiased test, where $\Theta_0 = \{ \theta_0 \}$ and $\Theta$ is an open subset of $\bR$, then $$C'(\theta_0)C(\theta_0)^{-1} E_{\theta_0}(\varphi) = - E_{\theta_0}(T \varphi).$$
+\begin{prop}\label{prop: one-param unbiased derivative} If $\varphi:\cX \to [0,1]$ is an unbiased test, where $\Theta_0 = \{ \theta_0 \}$ and $\Theta$ is an open subset of $\bR$, then $$C'(\theta_0)C(\theta_0)^{-1} E_{\theta_0}(\varphi) = - E_{\theta_0}(T \varphi).$$
 
 \end{prop}
 
@@ -703,10 +703,10 @@ $$-z_{\alpha} \leq \frac{\sum_{i=1}^n (x_i - \theta_0)}{\sqrt{n}\sigma} \leq z_{
 
 We now provide a theorem that shows that, in the case of $1$-parameter exponential families, tests that are based on the statistic $T$ have the property that unbiasedness implies UMPU.
 
-\begin{thm} Let $t_1<t_2$ and define the test 
+\begin{thm} Let $t_1<t_2$, $\gamma \in [0,1]$ and define the test 
 $$\varphi(x) = \begin{cases}
 1, & \text{ if } T(x) > t_2 \text{ or } T(x) < t_1\\
-\gamma_i, & \text{ if } T(x) = t_i \\  
+\gamma, & \text{ if } T(x) = t_i \\  
 0, & \text{ if } t_1 < T(x) < t_2.\end{cases}.$$
 
 If $\varphi$ is unbiased, then it is UMPU (where we assume, as throughout this section, that the null hypothesis is $\Theta_0 = \{\theta_0\}$ and $\Theta$ is an open subset of $\bR$).
@@ -715,9 +715,54 @@ If $\varphi$ is unbiased, then it is UMPU (where we assume, as throughout this s
 
 \begin{remark} As the example above shows, this test may be biased (not unbiased) for some $t_1,t_2$. The theorem has unbiasdness as an assumption and UMPU is the conclusion. \end{remark}
 
-\begin{proof} Let $\varphi_1$ be another unbiased test of size $\alpha_{\varphi_1} = \alpha_{\varphi}.$ Thus by 
+\begin{proof} We first give an alternative expression for $\varphi$.
 
-\end{proof}
+Fix $\theta_1 \in \Theta_1 = \Theta \setminus \{ \theta_0 \}$. Now let $g(t) = \exp((\theta_1- \theta_0)t)$ and let $L(t) = a_0 + a_1t$ be a degree $1$ polynomial function chosen so that $$L(t_i) = g(t_i) \quad \text{for } i \in \{1,2\}.$$
+
+Note that by convexity of the $g$, we have that 
+\begin{itemize}
+\item $t \notin [t_1,t_2]$ if and only if $L(t) < g(t)$,
+\item $t \in \{t_1,t_2\}$ if and only if $g(t) = L(t)$,
+\item $t_1 < t < t_2$ if and only if $L(t) > g(t)$.
+\end{itemize}
+
+Thus we can define $\varphi$ via these inequalities instead. Now $L(t) < g(t)$ occurs if and only if $$a_0 \exp(\theta_0t) + a_1 t \exp(\theta_0 t) < \exp(\theta_1 t)$$, which occurs if and only $$k_0 \exp(\theta_0 T(x)) h(x) + k_1 t C(\theta_0) T(x) \exp(\theta_0 T(x)) h(x) \leq C(\theta_1)\exp(\theta_1 T(x)) h(x),$$ where $k_i = a_i C(\theta_1)^{-1}$ and $t = T(x)$ and we assume $h(x)>0$ (as this holds almost surely). Letting 
+\begin{align*} f_0(x) &= C(\theta_0) h(x)\exp(\theta_0 T(x)), \\
+f_1(x) &= C(\theta_0)h(x)T(x) \exp(\theta_0 T(x)), \\
+f_2(x) &= C(\theta_1) h(x) \exp(\theta_1 T(x))
+\end{align*} we now have
+
+$$\varphi(x) = \begin{cases}
+1, & \text{ if } f_2(x) > k_0 f_0(x) + k_1 f_1(x) \\
+\gamma, & \text{ if } f_2(x) = k_0 f_0(x) + k_1 f_1(x)  \\  
+0, & \text{ if } f_2(x) < k_0 f_0(x) + k_1 f_1(x) .\end{cases}$$
+
+Observe that $f_0, f_1, f_2$ are all positive functions that are integrable w.r.t $\nu$ (for $f_0$, $f_2$ this follows as these are density functions for probability measures, while the integrability of $f_2$ was shown in Lemma~\ref{lemma: integrate diff sign exp family} when differentiating under the integral sign).
+
+Now, assuming that $\psi:\cX \to [0,1]$ is unbiased and has size $\alpha := \alpha_{\varphi}$ we have 
+\begin{align*} \int_{\cX} \psi f_0 d\nu(x) = c_0 \end{align*} and 
+\begin{align*} \int_{\cX} \psi f_1 d\nu(x) = c_1\end{align*}
+
+where $c_0 = \alpha$ and, by Proposition~\ref{prop: one-param unbiased derivative}, $c_1 = -C'(\theta_0) C(\theta_0)^{-1} \alpha $. Thus, to show $\varphi$ is UMPU, we will show that any such $\psi$ has less power than $\varphi$. Note that $\varphi$ also satisfies the above properties (with $\varphi$ in place of $\psi$) as we assume it is unbiased and has size $\alpha$.
+
+First, observe that $$(\varphi - \psi)(f_2 - k_0f_0 - k_1f_1) \geq 0$$ and thus
+
+\begin{align*} 
+0 &\leq \int_{\cX} (\varphi - \psi)(f_2 - k_0f_0 - k_1f_1) d\nu \\
+&= \int_{\cX} \varphi f_2 d\nu - \int_{\cX} \psi f_2 d\nu - \sum_{i=0}^1 k_i \left( \int_{\cX} \varphi f_i d\nu - \int_{\cX} \psi f_i d\nu \right) \\
+&= \int_{\cX} \varphi f_2 d\nu - \int_{\cX} \psi f_2 d\nu - \sum_{i=0}^1 k_i \left( \int_{\cX} c_i - c_i\right) \\ 
+&= \int_{\cX} \varphi f_2 d\nu - \int_{\cX} \psi f_2 d\nu \\ 
+&= E_{\theta_1} \varphi - E_{\theta_1} \psi.
+\end{align*}
+
+Thus we have that $\varphi$ has larger power than $\psi$ at any point $\theta_1 \in \Theta_1$. \end{proof}
+
+
+Note that UMP implies unbiased (the proof of Lemma~\ref{lemma: one-sided test is unbiased} works in genreal) and thus UMP implies UMPU. However, UMPU does not imply UMP which can be seen from the follow example. The intuition is that a test could be biased by being too good at rejecting the null hypothesis for some conveniently chosen $\theta_1 \in \Theta_1$.
+
+\begin{eg}
+
+\end{eg}
 
 \appendix
 
