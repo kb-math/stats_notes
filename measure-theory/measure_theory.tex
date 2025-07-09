@@ -448,4 +448,100 @@ $$\varphi \left(\int_{\Omega} f(\omega) d\nu(\omega) \right) \leq \liminf_{N \to
 In particular, if $\varphi \geq 0$ or $\varphi \circ f \in L^1(\Omega)$ then 
 $$\varphi \left(\int_{\Omega} f(\omega) d\nu(\omega) \right) \leq \int_{\Omega} \varphi(f(\omega)) d\nu(\omega).$$ 
 \end{thm}
+
+\section{Haussdorf measure}
+
+\begin{mydef} Fix $s > 0$. Let $\alpha_s>0$ be chosen such that $\alpha_s$ is the volume of the unit $s$-ball. For $A \subset \bR^d$ (not necessarily Borel) we define 
+$$H^s_{\delta} (A) = \inf \left\{ \sum_{i=1}^{\infty} \alpha_s r_i^s ~|~ A \subset \bigcup_{i=1}^{\infty} B(x_i, r_i) \quad\text{for some } r_1,r_2, \ldots \in [0,\delta] \text{ and } x_1,x_2,\ldots \in \bR^d. \right\}.$$ We define the $s$-dimensional Haussdorf measure to be 
+$$H^s(A) = \lim_{s \to 0} H_s^{\delta}. $$
+
+\end{mydef}
+
+In other words $H^s_{\delta}(A)$ measures the optimal way of covering $A$ with balls of radius at most $\delta$, where each ball of radius $r$ has measure $\alpha_s r^d$. 
+
+It is clear the $H^s$ is an outer measure on $\bR^d$.
+
+\begin{mydef} Let $\mu$ be an outer measure on a metric space $X$. We say that $\mu$ is a metric outer measure if it has the property that whenever $A_1,A_2 \subset X$ are such that $d(A_1, A_2) > 0$, then $\mu(A_1 \cup A_2) = \mu(A_1) + \mu(A_2).$ 
+
+\end{mydef}
+
+Note that the Haussdorf measure is a metric outer measure as can be seen by the following argument. If the distance between $A_1,A_2 \subset \bR^d$ is strictly greater than $\epsilon>0$, then any ball of radius at most $\epsilon$ cannot intersect both $A_1$ and $A_2$. Thus for $0 < \delta <\epsilon$ we have that 
+$$H^s_{\delta}(A_1 \cup A_2) = H^s_{\delta}(A_1) + H^s_{\delta}(A_2).$$
+
+\begin{lemma} Let $\mu$ be a metric outer measure on a metric space $X$. Suppose that $A \subset X$ is such that $\mu(A) < \infty$ and suppose that $A_1 \subset A_2 \subset \ldots$ are such that $A = \bigcup_{n \geq 1} A_n$ and $$d(A \setminus A_{n+1}, A_n) >0 $$ for all $n \geq 1$. Then $$\lim_{n \to \infty} \mu(A_n) = \mu(A).$$
+
+\end{lemma}
+
+\begin{proof} Let $B_n = A_{n+1}\setminus A_n$. Now observe that $B_1,B_3, \ldots, B_{2N-1}$ are all disjoint sets and the distance between any two is non-zero. Thus by definition of metric measure we have that $$\sum_{i=1}^N\mu(B_{2i-1}) = \mu(\bigcup_{i=1}^N B_{2i-1}) \leq \mu(A) < \infty.$$ The same argument holds for even indexes. Thus $$\sum_{n=1}^{\infty} \mu(B_n) < \infty.$$ 
+Now $$\mu(A \setminus A_n) = \sum_{i=n+1}^{\infty} \mu(B_i) \to 0 \quad\text{as } n \to \infty.$$
+
+Thus from $\mu(A) \leq \mu(A \setminus A_n) + \mu(A_n)$ we see that $$\mu(A) \leq \lim_{n \to \infty} \mu(A_n).$$
+
+This completes the proof as $\mu(A_n) \leq \mu(A)$ holds. \end{proof}
+
+\begin{thm} Let $\mu$ be a metric outer measure on a metric space $X$. Then each Borel set is $\mu$-measurable.
+
+\end{thm}
+
+\begin{proof} We will show that all closed sets are Borel measurable and this will be enough be since the $\mu$-measurable sets form a sigma algebra.
+
+Thus let $C \subset X$ be closed. We must show that for all $A \subset X$ we have that $$\mu(A) \geq \mu(A \cap C) + \mu(A')$$ where $A' = A \setminus C$. This holds if $\mu(A) = \infty$, so we assume $\mu(A) < \infty$. 
+
+Now let $$A_n = \{a \in A ~|~ d(a, C) > \frac{1}{n} \}.$$ Now that $A_n \subset A_{n+1}$ and as $C$ is closed, we have that $$\bigcup_{n=1}^{\infty} A_n = A'.$$ 
+
+Note also that if $x \in A_n$ and $y \in A' \setminus A_{n+1}$ then we must have $$d(x,y) \geq \frac{1}{n} - \frac{1}{n+1}$$ which can be seen as follows: We have $d(y, C) \leq 1/(n+1)$ and so there exists $c \in C$ so that $$d(y,c) < \frac{1}{n+1} + \epsilon.$$ However $$\frac{1}{n} < d(x,c) \leq d(x,y) + d(y,c) \leq d(x,y) + \frac{1}{n+1} + \epsilon.$$ Thus we have $d(A_n, A' \setminus A_{n+1}) >0,$ so the previous Lemma applies. This means that $$\mu(A \cap C) + \mu(A') =\mu(A \cap C) + \lim_{n \to \infty} \mu(A_n) = \lim_{n \to \infty} \mu((A \cap C) \cup \mu(A_n)) \leq \mu(A),$$ where we use the identity $\mu((A \cap C) \cup \mu(A_n)) = \mu(A \cap C) + \mu(A_n)$ since $d(A \cap C, A_n) \geq 1/n > 0$ and $\mu$ is a metric measure. \end{proof}
+
+Thus the Haussdorf measure forms a Borel measure (i.e., it is $\sigma$-additive on Borel sets).
+
+\begin{prop}\label{prop: Haussdorf is Lebesgue} For (not necessarily measurable) $B \subset \bR^d$ we have $$H^d(B) = \cL_d(B),$$ i.e., the $d$-dimensional Haussdorf measure is equal to the $d$-dimensional Lebesgue measure. In fact, $H^d(B) = H^d_{\delta}(B)$ for all $\delta>0$.
+
+\end{prop}
+
+To prove this, we need some results about covering open sets with balls.
+
+\begin{lemma} Let $\cC$ be a collection of (open or closed) balls in $\bR^d$ with non-zero radius. Then there exists $\cC' \subset \cC$ such that $\cC'$ is a maximal disjoint subcollection of $\cC$ (i.e., the elements of $\cC'$ are disjoint and for and $B \in \cC \setminus \cC'$ we have that $B \cap B' \neq \emptyset$ for some $B' \in \cC'$). Moreover, any such $\cC'$ must be countable.
+
+\end{lemma}
+
+\begin{proof} To see that any such $\cC'$ is countable, note that each element of $\cC'$ contains some rational point (point in $\bQ^d$). But there are only finitely many such rational points and no two such balls can share such a point.
+
+To show existence of $\cC'$, we can use Zorn's lemma. But let us avoid that. We recursively select a (finite or countable) sequence of balls $B_1, B_2, \ldots \in \cC$ as follows. Let us order the rational points $q_1,q_2,\ldots \in \bQ^d$. Let $i(B) = \min\{ i ~|~ q_i \in B \}$. We recursively let $B_n$ be chosen so that $$i(B_n) = \min \{ i(B) ~|~ B \in \cC \setminus \cB_{n-1} \text{ and } B \cap B' = \emptyset \quad \text{for all } B' \in \cB_{n-1} \}$$ where $\cB_0 = \emptyset$ and $\cB_n = \{B_1, \ldots, B_n\}$. That is, we keep selecting $B_n$ so that is it disjoint from $B_1, \ldots, B_{n-1}$ and $i(B_n)$ is minimal. Note that $i(B_n)$ is strictly increasing sequence. We claim that $\cC' = \{B_1,B_2,\ldots \}$ is maximal disjoint. This is clear if $\cC'$ is finite. Thus suppose $\cC'$ is infinite and not maximal disjoint. Hence there exists $B \in \cC$ so that $B \cap B' = \emptyset$ for all $B' \in \cC'$. Now let $q_i$ be so that $i = i(B)$. As $i(B_k)$ is strictly increasing in $k$, we have that $i(B_{i+1}) > i$, which violates the choice of $B_{i+1}$. \end{proof}
+
+If $B = B(x, r)$ is an open ball, let $D_5 B = B(x, 5r)$ denote the ball with the same centre but $5$ times the radius. 
+
+\begin{thm}[Vitali's covering Lemma]Suppose that $\cC$ is a collection of non-empty open balls in $\bR^d$ such that $$D := \sup \{ diam(B) ~|~ B \in \cC \} < \infty$$ and let $U = \bigcup_{B \in \cC} B$. Then there exists a \textbf{disjoint} subcollection $\cC' \subset \cC$ so that $$U \subset \bigcup_{B \in \cC'} D_5B.$$ Moreover, such a $\cC'$ must be countable.
+
+\end{thm}
+
+\begin{proof} Let $$\cF_j = \{ B \in \cC ~|~ 2^{-j}D< diam(B) \leq 2^{-j+1} D$$ for $j = 1,2,\ldots$. Note that the $\cF_j$ partition $\cF$. Now let $\cC'_1$ be a maximal disjoint collection of $\cF_1$ and for $j > 1$ we define recursively $\cC_j$ to be a maximal disjoint collection of elements of $$\{ B \in \cF_j ~|~ B \cap B' = \emptyset \text{ for all } B' \in \bigcup_{i=1}^{j-1}\cC'_{i}\}.$$
+
+ Now let $$\cC' = \bigcup_{j=1}^{\infty} \cC'_j.$$ Clearly the elements of $\cC'$ are disjoint. Now let $B \in \cC \setminus \cC'$. Then $B \in \cF_j$ for some $j$. As $B \notin \cC_j$ this means that either $B$ intersects non-trivially some element in $\bigcup_{i=1}^{j-1}\cC'_i$ or it intersects non-trivially some element of $\cC'_j$. In either case, it intersects non-trivially some element $B'$ of $\bigcup_{i=1}^j \cC'_i$. This means that $$diam(B') > 2^{-j}D = \frac{1}{2} 2^{-j+1}D \geq \frac{1}{2} diam(B).$$ Thus $B \subset D_5B'$. Hence as $B$ was arbitrary, this shows that $$U \subset \bigcup_{B \in \cC'} D_5B.$$  \end{proof}
+
+Our next result shows that we can almost write any open set as a countable disjoint union of balls. Here almost means that the union of these balls is a subset of our open set and the remainder has measure zero.
+
+\begin{thm} Let $U \subset \bR^d$ be an open set and $\delta < 0$. Then there exists a disjoint (hence countable) collection $\cC$ of open balls in $\bR^d$ such that $diam(B) < \delta$ and $B \subset U$ for each $B \in \cC$ and $$\cL_d\left(U \setminus \bigcup_{B \in \cC} B \right) = 0.$$
+
+\end{thm}
+
+\begin{proof} 
+
+We reduce to the case where $U$ is bounded and hence has $\cL_d(U) < \infty$ since, after deleting a set of measure $0$, we can partition any such $U$ into bounded open sets. For example, after removing the sphere $\{ u \in U ~|~ |u| = n \}$ for each $n \in \bZ$.
+
+Let $\cC_0$ be the collection of non-empty open balls that are subsets of $U$ and have diameter at most $\delta$. Applying the Vitali covering lemma to this, we can choose a subset $\cC_1 \subset \cC_0$ of disjoint balls so that $$V_1 = \bigcup_{B \in \cC_1} D_5 B \supset \bigcup_{B \in \cC_0}B = U. $$ Let $$W_1 = \bigcup_{B \in \cC_1} B.$$
+
+Thus $$\cL_d(U) \leq \cL_d(V_1) \leq \sum_{B \in \cC_1} 5^d\cL_d(B) = 5^d \cL_d(W_1).$$ This means that if we let $\alpha = 5^{-d}$ then $$\cL_d(W_1) \geq \alpha \cL_d(U).$$ Now fix $0< \beta < \alpha$. This means that we can choose a finite subset $\cF_1 \subset \cC_1$ such that $\cL_d(F_1) \geq \beta \cL_d(U)$ where $$F_1 = \bigcup_{B \in \cF_1} \overline{B}.$$
+
+Now let $U_1 = U \setminus F_1$ and note that $U_1$ is open (as $F_1$, being the union of finitely many closed balls is closed). However $$\cL_d(U_1) = \cL_d(U) - \cL_d(F_1) \leq (1 - \beta) \cL_d(U).$$  
+
+Thus we can repeat the same procedure to $U_1$ in place of $U$ and find a finite set $\cF_2$ of open balls in $U_1$ of diameter at most $\delta$ such that if we delete the closure of their union then we get a set $U_2 \subset U_1$ of measure $$\cL_d(U_2) \leq (1 - \beta) \cL_d(U_1) \leq (1-\beta)^2 \cL_d(U).$$ Repeating this procedure, we can finally let $$\cC = \bigcup_{n=1}^{\infty} \cF_n.$$ Note that this is a disjoint collection by construction. The complement of the union of all $\cC$ has measure $0$ since $$\cL_d(U_n) \leq \beta ^n \cL_d(U) \to 0 \quad\text{as } n \to \infty.$$
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop: Haussdorf is Lebesgue} ] We first show the easy inequality $$\cL_d(B) \leq H^d(B).$$ This follows since $\alpha_d r^d$ is the Lebesgue measure of a ball of radius $r$ and thus $$\cL_d(B) \leq \sum_{i=1}^{\infty} \alpha_d r_i^d$$ for any cover $\bigcup_{i=1}^{\infty} B(x_i, r_i)$ of $B$. Thus $\cL_d(B) \leq H^d_{\delta}(B)$ holds for all $\delta>0$.
+
+Now we prove the reverse inequality. It is sufficient to prove it when $B = U$ is an open set (i.e., if $\mu$ is $H^d_{\delta}$ or Lebesgue, then there is always an open set $V$ containing $B$ so that $\mu(B) \leq \mu(V) < \mu(B) + \epsilon$, thus $\mu(B)$ is the infinum of $\mu(V)$ over all such $V$).
+
+For this, we know by the previous Theorem that we can write $$U = Q \cup \bigcup_{i=1}^{\infty} B_i$$ where each $B_i$ is an open ball of radius at most $\delta$ and $\cL_d(Q) = 0$. It follows that $H^d_{\delta}(Q) = 0$ since $Q$ can be covered with cubes of very small volume and thus balls of volume just a constant multiple of that, hence also arbitrarily small. In particular, this means that if we fix $\epsilon>0$ then we can cover $Q$ with balls $B'_1,B'_2, \ldots$ of radius at most $\delta$ such that $$\sum_{i=1}^{\infty} \cL_d(B'_i) < \epsilon.$$ Thus $$H^d_{\delta}(U) \leq \sum_{i=1}^{\infty} \cL_d(B_i) + \sum_{i=1}^{\infty} \cL_d(B'_i) = \cL_d(U) + \sum_{i=1}^{\infty} \cL_d(B'_i)  \leq \cL_d(U) + \epsilon. $$ Taking $\epsilon \to \infty$ completes the proof.
+
+\end{proof}
+
 \end{document}
