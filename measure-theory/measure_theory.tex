@@ -452,21 +452,21 @@ $$\varphi \left(\int_{\Omega} f(\omega) d\nu(\omega) \right) \leq \int_{\Omega} 
 \section{Haussdorf measure}
 
 \begin{mydef} Fix $s > 0$. Let $\alpha_s>0$ be chosen such that $\alpha_s$ is the volume of the unit $s$-ball. For $A \subset \bR^d$ (not necessarily Borel) we define 
-$$H^s_{\delta} (A) = \inf \left\{ \sum_{i=1}^{\infty} \alpha_s r_i^s ~|~ A \subset \bigcup_{i=1}^{\infty} B(x_i, r_i) \quad\text{for some } r_1,r_2, \ldots \in [0,\delta] \text{ and } x_1,x_2,\ldots \in \bR^d. \right\}.$$ We define the $s$-dimensional Haussdorf measure to be 
-$$H^s(A) = \lim_{s \to 0} H^s_{\delta}. $$
+$$\cH^s_{\delta} (A) = \inf \left\{ \sum_{i=1}^{\infty} \alpha_s r_i^s ~|~ A \subset \bigcup_{i=1}^{\infty} B(x_i, r_i) \quad\text{for some } r_1,r_2, \ldots \in [0,\delta] \text{ and } x_1,x_2,\ldots \in \bR^d. \right\}.$$ We define the $s$-dimensional Haussdorf measure to be 
+$$\cH^s(A) = \lim_{s \to 0} \cH^s_{\delta}. $$
 
 \end{mydef}
 
-In other words $H^s_{\delta}(A)$ measures the optimal way of covering $A$ with balls of radius at most $\delta$, where each ball of radius $r$ has measure $\alpha_s r^d$. 
+In other words $\cH^s_{\delta}(A)$ measures the optimal way of covering $A$ with balls of radius at most $\delta$, where each ball of radius $r$ has measure $\alpha_s r^d$. 
 
-It is clear the $H^s$ is an outer measure on $\bR^d$.
+It is clear the $\cH^s$ is an outer measure on $\bR^d$.
 
 \begin{mydef} Let $\mu$ be an outer measure on a metric space $X$. We say that $\mu$ is a metric outer measure if it has the property that whenever $A_1,A_2 \subset X$ are such that $d(A_1, A_2) > 0$, then $\mu(A_1 \cup A_2) = \mu(A_1) + \mu(A_2).$ 
 
 \end{mydef}
 
 Note that the Haussdorf measure is a metric outer measure as can be seen by the following argument. If the distance between $A_1,A_2 \subset \bR^d$ is strictly greater than $\epsilon>0$, then any ball of radius at most $\epsilon$ cannot intersect both $A_1$ and $A_2$. Thus for $0 < \delta <\epsilon$ we have that 
-$$H^s_{\delta}(A_1 \cup A_2) = H^s_{\delta}(A_1) + H^s_{\delta}(A_2).$$
+$$\cH^s_{\delta}(A_1 \cup A_2) = \cH^s_{\delta}(A_1) + \cH^s_{\delta}(A_2).$$
 
 \begin{lemma} Let $\mu$ be a metric outer measure on a metric space $X$. Suppose that $A \subset X$ is such that $\mu(A) < \infty$ and suppose that $A_1 \subset A_2 \subset \ldots$ are such that $A = \bigcup_{n \geq 1} A_n$ and $$d(A \setminus A_{n+1}, A_n) >0 $$ for all $n \geq 1$. Then $$\lim_{n \to \infty} \mu(A_n) = \mu(A).$$
 
@@ -493,7 +493,7 @@ Note also that if $x \in A_n$ and $y \in A' \setminus A_{n+1}$ then we must have
 
 Thus the Haussdorf measure forms a Borel measure (i.e., it is $\sigma$-additive on Borel sets).
 
-\begin{prop}\label{prop: Haussdorf is Lebesgue} For (not necessarily measurable) $B \subset \bR^d$ we have $$H^d(B) = \cL_d(B),$$ i.e., the $d$-dimensional Haussdorf measure is equal to the $d$-dimensional Lebesgue measure. In fact, $H^d(B) = H^d_{\delta}(B)$ for all $\delta>0$.
+\begin{prop}\label{prop: Haussdorf is Lebesgue} For (not necessarily measurable) $B \subset \bR^d$ we have $$\cH^d(B) = \cL_d(B),$$ i.e., the $d$-dimensional Haussdorf measure is equal to the $d$-dimensional Lebesgue measure. In fact, $\cH^d(B) = \cH^d_{\delta}(B)$ for all $\delta>0$.
 
 \end{prop}
 
@@ -536,11 +536,11 @@ Now let $U_1 = U \setminus F_1$ and note that $U_1$ is open (as $F_1$, being the
 Thus we can repeat the same procedure to $U_1$ in place of $U$ and find a finite set $\cF_2$ of open balls in $U_1$ of diameter at most $\delta$ such that if we delete the closure of their union then we get a set $U_2 \subset U_1$ of measure $$\cL_d(U_2) \leq (1 - \beta) \cL_d(U_1) \leq (1-\beta)^2 \cL_d(U).$$ Repeating this procedure, we can finally let $$\cC = \bigcup_{n=1}^{\infty} \cF_n.$$ Note that this is a disjoint collection by construction. The complement of the union of all $\cC$ has measure $0$ since $$\cL_d(U_n) \leq \beta ^n \cL_d(U) \to 0 \quad\text{as } n \to \infty.$$
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop: Haussdorf is Lebesgue} ] We first show the easy inequality $$\cL_d(B) \leq H^d(B).$$ This follows since $\alpha_d r^d$ is the Lebesgue measure of a ball of radius $r$ and thus $$\cL_d(B) \leq \sum_{i=1}^{\infty} \alpha_d r_i^d$$ for any cover $\bigcup_{i=1}^{\infty} B(x_i, r_i)$ of $B$. Thus $\cL_d(B) \leq H^d_{\delta}(B)$ holds for all $\delta>0$.
+\begin{proof}[Proof of Proposition~\ref{prop: Haussdorf is Lebesgue} ] We first show the easy inequality $$\cL_d(B) \leq \cH^d(B).$$ This follows since $\alpha_d r^d$ is the Lebesgue measure of a ball of radius $r$ and thus $$\cL_d(B) \leq \sum_{i=1}^{\infty} \alpha_d r_i^d$$ for any cover $\bigcup_{i=1}^{\infty} B(x_i, r_i)$ of $B$. Thus $\cL_d(B) \leq \cH^d_{\delta}(B)$ holds for all $\delta>0$.
 
-Now we prove the reverse inequality. It is sufficient to prove it when $B = U$ is an open set (i.e., if $\mu$ is $H^d_{\delta}$ or Lebesgue, then there is always an open set $V$ containing $B$ so that $\mu(B) \leq \mu(V) < \mu(B) + \epsilon$, thus $\mu(B)$ is the infinum of $\mu(V)$ over all such $V$).
+Now we prove the reverse inequality. It is sufficient to prove it when $B = U$ is an open set (i.e., if $\mu$ is $\cH^d_{\delta}$ or Lebesgue, then there is always an open set $V$ containing $B$ so that $\mu(B) \leq \mu(V) < \mu(B) + \epsilon$, thus $\mu(B)$ is the infinum of $\mu(V)$ over all such $V$).
 
-For this, we know by the previous Theorem that we can write $$U = Q \cup \bigcup_{i=1}^{\infty} B_i$$ where each $B_i$ is an open ball of radius at most $\delta$ and $\cL_d(Q) = 0$. It follows that $H^d_{\delta}(Q) = 0$ since $Q$ can be covered with cubes of very small volume and thus balls of volume just a constant multiple of that, hence also arbitrarily small. In particular, this means that if we fix $\epsilon>0$ then we can cover $Q$ with balls $B'_1,B'_2, \ldots$ of radius at most $\delta$ such that $$\sum_{i=1}^{\infty} \cL_d(B'_i) < \epsilon.$$ Thus $$H^d_{\delta}(U) \leq \sum_{i=1}^{\infty} \cL_d(B_i) + \sum_{i=1}^{\infty} \cL_d(B'_i) = \cL_d(U) + \sum_{i=1}^{\infty} \cL_d(B'_i)  \leq \cL_d(U) + \epsilon. $$ Taking $\epsilon \to \infty$ completes the proof.
+For this, we know by the previous Theorem that we can write $$U = Q \cup \bigcup_{i=1}^{\infty} B_i$$ where each $B_i$ is an open ball of radius at most $\delta$ and $\cL_d(Q) = 0$. It follows that $\cH^d_{\delta}(Q) = 0$ since $Q$ can be covered with cubes of very small volume and thus balls of volume just a constant multiple of that, hence also arbitrarily small. In particular, this means that if we fix $\epsilon>0$ then we can cover $Q$ with balls $B'_1,B'_2, \ldots$ of radius at most $\delta$ such that $$\sum_{i=1}^{\infty} \cL_d(B'_i) < \epsilon.$$ Thus $$\cH^d_{\delta}(U) \leq \sum_{i=1}^{\infty} \cL_d(B_i) + \sum_{i=1}^{\infty} \cL_d(B'_i) = \cL_d(U) + \sum_{i=1}^{\infty} \cL_d(B'_i)  \leq \cL_d(U) + \epsilon. $$ Taking $\epsilon \to \infty$ completes the proof.
 
 \end{proof}
 
@@ -551,11 +551,11 @@ We define the Jacobian to be $$Jf(x) = \sqrt{\det(Df(x)^*Df(x))}$$ where $Df(x)^
 
 The goal of this section is to prove the following.
 
-\begin{thm}[Area formula] Suppose that $f:X \to \bR^m$, where $X \subset \bR^n$ is open and $n \leq m$, is continuously differentiable on $X$ and is injective. Then for Borel $B \subset X$ we have that $$H^n(f(B)) = \int_B Jf(x) d\cL_n(x).$$
+\begin{thm}[Area formula]\label{thm: Area formula} Suppose that $f:X \to \bR^m$, where $X \subset \bR^n$ is open and $n \leq m$, is continuously differentiable on $X$ and is injective. Then for Borel $B \subset X$ we have that $$\cH^n(f(B)) = \int_B Jf(x) d\cL_n(x).$$
 
 \end{thm}
 
-\begin{eg}[Arc-length] Suppose $n=1$. Thus $f(x) = [f_1(x), \ldots, f_n(x)]^t$ is a column vector. Thus $Df(x)$ is the column vector of derivatives $[f'_1(x), \ldots, \partial_n f'(x)]^t$. Thus $$Jf(x) = \sqrt{\sum_{i=1}^m (f'_1(x))^2} = \| Df(x)\|$$ is magnitude of the velocity vector (if $x$ denotes time). Thus $$ H^1(f([a,b])) = \int_{a}^b \|Df(x)\| dx$$ is the arc-length of the parametrized curve $\{ f(x) ~|~ x \in [a,b]\}$.
+\begin{eg}[Arc-length] Suppose $n=1$. Thus $f(x) = [f_1(x), \ldots, f_n(x)]^t$ is a column vector. Thus $Df(x)$ is the column vector of derivatives $[f'_1(x), \ldots, \partial_n f'(x)]^t$. Thus $$Jf(x) = \sqrt{\sum_{i=1}^m (f'_1(x))^2} = \| Df(x)\|$$ is magnitude of the velocity vector (if $x$ denotes time). Thus $$ \cH^1(f([a,b])) = \int_{a}^b \|Df(x)\| dx$$ is the arc-length of the parametrized curve $\{ f(x) ~|~ x \in [a,b]\}$.
 
 \end{eg}
 
@@ -563,15 +563,15 @@ We fix for the rest of this section $f$, $X$ and $n,m$ as in the Area formula.
 
 \subsection{Area formula for Linear maps} We first examine the linear case where $f(x) = Lx$ is a linear map. Thus $L:\bR^n \to \bR^m$ has trivial kernel. By the Singular Value Decomposition, we may write $L = UDV$ where $U:\bR^n \to \bR^m$ and $V:\bR^n \to \bR^n$ are isometries and $D:\bR^n \to \bR^n$ is a diagonal matrix with positive entries on the diagonal.
 
-By Proposition~\ref{prop: Haussdorf is Lebesgue} and the fact that the Haussdorf measure is rotation invariant, we have $$\cL_n(VB) = H^n(VB) = H^n(B) = \cL_n(B)$$ for any Borel $B \subset \bR^n$. Thus $\cL_n(DVB) = \det(D) \cL_n(VB) = \cL_n(B)$ as $D$ is diagonal (i.e., the image of each rectangle is another rectangle where the sidelengths get scaled by the diagonal elements of $D$).
+By Proposition~\ref{prop: Haussdorf is Lebesgue} and the fact that the Haussdorf measure is rotation invariant, we have $$\cL_n(VB) = \cH^n(VB) = \cH^n(B) = \cL_n(B)$$ for any Borel $B \subset \bR^n$. Thus $\cL_n(DVB) = \det(D) \cL_n(VB) = \cL_n(B)$ as $D$ is diagonal (i.e., the image of each rectangle is another rectangle where the sidelengths get scaled by the diagonal elements of $D$).
 
-\begin{lemma} Let $U:\bR^n \to \bR^m$ be an isometry (as above), then for borel $B \subset \bR^n$ we have that $H^n(UB) = \cL_n(B)$.
+\begin{lemma} Let $U:\bR^n \to \bR^m$ be an isometry (as above), then for borel $B \subset \bR^n$ we have that $\cH^n(UB) = \cL_n(B)$.
 
 \end{lemma}
 
-\begin{proof} Note that since $H^n$ is rotation invariant, we may assume that $U$ is the standard embedding of $\bR^n$ into $\bR^m$ (i.e., $(x_1, \ldots, x_n) \mapsto (x_1, \ldots, x_n, 0, \ldots, 0)$). It thus suffices to show that $\cL_n(B) = H^n(B \times \{0\}^{m-n})$. This follows since for any covering of $B \times \{0\}^{n-m}$ by balls in $\bR^m$, if we project each ball onto $\bR^n$ then we get a ball of the same radius. \end{proof}
+\begin{proof} Note that since $\cH^n$ is rotation invariant, we may assume that $U$ is the standard embedding of $\bR^n$ into $\bR^m$ (i.e., $(x_1, \ldots, x_n) \mapsto (x_1, \ldots, x_n, 0, \ldots, 0)$). It thus suffices to show that $\cH^n(B) = \cH^n(B \times \{0\}^{m-n})$. The inequality $\cH^n(B) \geq \cH^n(B \times \{0\}^{m-n})$ follows since any covering of $B$ be $n$-dimensional balls corresponds to a covering of $B \times \{0\}^{m-n}$ by $m$-dimensional balls of the exact same radii and centres. For the reverse inequality note that for any covering of $B \times \{0\}^{n-m}$ by $m$-dimensional balls in $\bR^m$, if we project each ball onto $\bR^n$ then we get an $n$-dimensional ball of the same radius and these projected balls must cover $B$. \end{proof}
 
-We thus get that $H^n(LB) = \det(D)\cL_n(B)$, i.e., $$H^n(f(B)) = \int_B \det(D) d\cL_n(x).$$
+We thus get that $\cH^n(LB) = \det(D)\cL_n(B)$, i.e., $$\cH^n(f(B)) = \int_B \det(D) d\cL_n(x).$$
 
 Thus to complete the proof of the Area formula for linear functions, it remains to show that the Jacobian of $f = L$ is equal to $\det(D)$. Note that $Df = L$ and thus
 
@@ -579,6 +579,6 @@ Now $$(Jf(x))^2 = \det(L^*L) = \det(V^*D^*U^*UDV) = \det(V^*D^2V) = \det(D)^2.$$
 
 Thus we have shown the area formula when $f(x) = Lx$ is an injective linear function.
 
-\subsection{Proof of the Area formula}
+\subsection{Proof of the Area formula} We now turn to the proof of Theorem~\ref{thm: Area formula} (the Area formula). We have already shown it for injective linear maps in the previous section and our strategy will be to use this by approximating a continuously differentiable function by piece linear functions.
 
 \end{document}
