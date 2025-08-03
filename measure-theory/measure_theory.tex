@@ -87,6 +87,8 @@
 \newcommand{\bY}{\mathbb{Y}}
 \newcommand{\bZ}{\mathbb{Z}}
 
+\newcommand{\diam}{\operatorname{diam}}
+
 
 \newcounter{dummy} \numberwithin{dummy}{section}
 
@@ -451,13 +453,20 @@ $$\varphi \left(\int_{\Omega} f(\omega) d\nu(\omega) \right) \leq \int_{\Omega} 
 
 \section{Haussdorf measure}
 
-\begin{mydef} Fix $s > 0$. Let $\alpha_s>0$ be chosen such that $\alpha_s$ is the volume of the unit $s$-ball. For $A \subset \bR^d$ (not necessarily Borel) we define 
-$$\cH^s_{\delta} (A) = \inf \left\{ \sum_{i=1}^{\infty} \alpha_s r_i^s ~|~ A \subset \bigcup_{i=1}^{\infty} B(x_i, r_i) \quad\text{for some } r_1,r_2, \ldots \in [0,\delta] \text{ and } x_1,x_2,\ldots \in \bR^d. \right\}.$$ We define the $s$-dimensional Haussdorf measure to be 
-$$\cH^s(A) = \lim_{s \to 0} \cH^s_{\delta}. $$
+\subsection{Definition and Borel measurability}
+
+\begin{mydef} Fix $s \geq 0$. Let $\alpha_s>0$ be chosen such that $\alpha_s$ is the volume of the unit $s$-ball. For $A \subset \bR^d$ (not necessarily Borel) we define 
+$$\cH^s_{\delta} (A) = \inf \left\{ \sum_{i=1}^{\infty} \alpha_s \left(\frac{1}{2}\diam(C_i)\right)^s ~|~ A \subset \bigcup_{i=1}^{\infty} C_i \quad\text{for some } C_i \subset \bR^d \text{ with } \diam(C_i) \leq \delta \right\}.$$ We define the $s$-dimensional Haussdorf measure to be 
+$$\cH^s(A) = \lim_{s \to 0} \cH^s_{\delta}(A), $$ where this limit exists as the sequence is (non-strictly) increasing.
 
 \end{mydef}
 
-In other words $\cH^s_{\delta}(A)$ measures the optimal way of covering $A$ with balls of radius at most $\delta$, where each ball of radius $r$ has measure $\alpha_s r^d$. 
+In other words $\cH^s_{\delta}(A)$ measures the optimal way of covering $A$ with sets $C_i$ of diameter at most $\delta$, where the cost of using such a set is $\alpha_s (\diam(C_i)/2)^s$ (i.e., the $s$-dimensional volume of the unit $s$-ball of the same diameter). We remark that that $C_i$ can always be taken to be closed (thus Borel) as taking the closure does not change the diameter.
+
+\begin{lemma}\label{lemma: embedding Haussdorf measure} If $B \subset \bR^n$, with $n < d$ and let $\hat{B} = B \times \{0\}^{d-n} \subset \bR^d$ be the embedding of $\hat{B}$ in $\bR^d$. Then $\cH^s(\hat{B}) = \cH^s(B)$ for all $s \geq 0$.  \end{lemma}
+\begin{proof} This is clear since any cover of $\hat{B}$ can be intersected with the subspace to obtain a cover with sets of diameter no larger. \end{proof}
+
+\begin{eg}\label{eg: 1-d Haussdorf measure is length} Note that $\cH^0$ is the cardinality and $\cH^1$ on $\bR$ coincides with the Lebesgue measure $\cL^1$. Thus as $\cH^1$ is rotation invariant we see, by the previous Lemma, that if $L \subset \bR^d$ is a line then $\cH^1(B)$, for $B \subset L$, is the $1$-dimensional Lebesgue measure of $\iota(B)$, where $\iota:L \to \bR$ is an isometric isomorphism. In other words, $\cH^1$ corresponds to length.\end{eg}
 
 It is clear the $\cH^s$ is an outer measure on $\bR^d$.
 
@@ -465,7 +474,7 @@ It is clear the $\cH^s$ is an outer measure on $\bR^d$.
 
 \end{mydef}
 
-Note that the Haussdorf measure is a metric outer measure as can be seen by the following argument. If the distance between $A_1,A_2 \subset \bR^d$ is strictly greater than $\epsilon>0$, then any ball of radius at most $\epsilon$ cannot intersect both $A_1$ and $A_2$. Thus for $0 < \delta <\epsilon$ we have that 
+Note that the Haussdorf measure is a metric outer measure as can be seen by the following argument. If the distance between $A_1,A_2 \subset \bR^d$ is strictly greater than $\epsilon>0$, then any set $C \subset \bR^d$ of diameter at most $\epsilon$ cannot intersect both $A_1$ and $A_2$. Thus for $0 < \delta <\epsilon$ we have that 
 $$\cH^s_{\delta}(A_1 \cup A_2) = \cH^s_{\delta}(A_1) + \cH^s_{\delta}(A_2).$$
 
 \begin{lemma} Let $\mu$ be a metric outer measure on a metric space $X$. Suppose that $A \subset X$ is such that $\mu(A) < \infty$ and suppose that $A_1 \subset A_2 \subset \ldots$ are such that $A = \bigcup_{n \geq 1} A_n$ and $$d(A \setminus A_{n+1}, A_n) >0 $$ for all $n \geq 1$. Then $$\lim_{n \to \infty} \mu(A_n) = \mu(A).$$
@@ -493,11 +502,13 @@ Note also that if $x \in A_n$ and $y \in A' \setminus A_{n+1}$ then we must have
 
 Thus the Haussdorf measure forms a Borel measure (i.e., it is $\sigma$-additive on Borel sets).
 
-\begin{prop}\label{prop: Haussdorf is Lebesgue} For (not necessarily measurable) $B \subset \bR^d$ we have $$\cH^d(B) = \cL_d(B),$$ i.e., the $d$-dimensional Haussdorf measure is equal to the $d$-dimensional Lebesgue measure. In fact, $\cH^d(B) = \cH^d_{\delta}(B)$ for all $\delta>0$.
+\subsection{Equality of Haussdorf and Lebesgue measure when $s=d$.}
+
+\begin{prop}\label{prop: Haussdorf is Lebesgue} For (not necessarily Borel) $B \subset \bR^d$ we have $$\cH^d(B) = \cL_d(B),$$ i.e., the $d$-dimensional Haussdorf measure is equal to the $d$-dimensional Lebesgue measure. In fact, $\cH^d(B) = \cH^d_{\delta}(B)$ for all $\delta>0$.
 
 \end{prop}
 
-To prove this, we need some results about covering open sets with balls.
+Note that we have already shown the $d=1$ case in Exampel~\ref{eg: 1-d Haussdorf measure is length}. To prove this for $d \geq 1$, we need some results about covering open sets with balls.
 
 \begin{lemma} Let $\cC$ be a collection of (open or closed) balls in $\bR^d$ with non-zero radius. Then there exists $\cC' \subset \cC$ such that $\cC'$ is a maximal disjoint subcollection of $\cC$ (i.e., the elements of $\cC'$ are disjoint and for and $B \in \cC \setminus \cC'$ we have that $B \cap B' \neq \emptyset$ for some $B' \in \cC'$). Moreover, any such $\cC'$ must be countable.
 
@@ -519,7 +530,7 @@ If $B = B(x, r)$ is an open ball, let $D_5 B = B(x, 5r)$ denote the ball with th
 
 Our next result shows that we can almost write any open set as a countable disjoint union of balls. Here almost means that the union of these balls is a subset of our open set and the remainder has measure zero.
 
-\begin{thm} Let $U \subset \bR^d$ be an open set and $\delta < 0$. Then there exists a disjoint (hence countable) collection $\cC$ of open balls in $\bR^d$ such that $diam(B) < \delta$ and $B \subset U$ for each $B \in \cC$ and $$\cL_d\left(U \setminus \bigcup_{B \in \cC} B \right) = 0.$$
+\begin{thm} \label{thm: fill open set with balls} Let $U \subset \bR^d$ be an open set and $\delta < 0$. Then there exists a disjoint (hence countable) collection $\cC$ of open balls in $\bR^d$ such that $diam(B) < \delta$ and $B \subset U$ for each $B \in \cC$ and $$\cL_d\left(U \setminus \bigcup_{B \in \cC} B \right) = 0.$$
 
 \end{thm}
 
@@ -536,11 +547,79 @@ Now let $U_1 = U \setminus F_1$ and note that $U_1$ is open (as $F_1$, being the
 Thus we can repeat the same procedure to $U_1$ in place of $U$ and find a finite set $\cF_2$ of open balls in $U_1$ of diameter at most $\delta$ such that if we delete the closure of their union then we get a set $U_2 \subset U_1$ of measure $$\cL_d(U_2) \leq (1 - \beta) \cL_d(U_1) \leq (1-\beta)^2 \cL_d(U).$$ Repeating this procedure, we can finally let $$\cC = \bigcup_{n=1}^{\infty} \cF_n.$$ Note that this is a disjoint collection by construction. The complement of the union of all $\cC$ has measure $0$ since $$\cL_d(U_n) \leq \beta ^n \cL_d(U) \to 0 \quad\text{as } n \to \infty.$$
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop: Haussdorf is Lebesgue} ] We first show the easy inequality $$\cL_d(B) \leq \cH^d(B).$$ This follows since $\alpha_d r^d$ is the Lebesgue measure of a ball of radius $r$ and thus $$\cL_d(B) \leq \sum_{i=1}^{\infty} \alpha_d r_i^d$$ for any cover $\bigcup_{i=1}^{\infty} B(x_i, r_i)$ of $B$. Thus $\cL_d(B) \leq \cH^d_{\delta}(B)$ holds for all $\delta>0$.
+\begin{mydef}[Steiner symmetrization] Let $e_1, \ldots, e_d$ be the standard basis for $\bR^d$ and let $k \in \{1, \ldots, n\}$. Let $\pi_k:\bR^d \to \bR^d$ denote the orthogonal projection onto the subspace spanned by $\{e_i ~|~ i \neq k, 1 \leq i \leq n \}$, thus the image of $\pi_k$ is the orthogonal complement of $\bR e_k$. We define the $e_k$-Steiner symmetrization of $B \subset \bR^d$ to be equal to $$S_k(B) = \bigcup_{u \in \pi_k(B)}\{ u + te_k ~|~ |t| \leq \frac{1}{2} \cH^{1}(B \cap \pi_k^{-1}(u)) \}.$$
+
+\end{mydef}
+
+In other words, the Steiner-Symmetrization is a union of line segments $\{u + te_k ~|~ |t| <\frac{1}{2} T_u\}$ parralel to $e_k$ where each line segment has its centre $u$ on the plane $\pi_k(\bR^d)$ and the length of each line segment is equal to the Haussdorf measure of the set $B \cap \pi_k^{-1}(u)$, i.e., the set of those points on $B$ that lie on the line $\{ u + te_k ~|~ t \in \bR \}$. If $B$ is convex, there is a simpler definition of the Steiner-Symmetrization of $B$: one simply partitions $B$ into line segments parallel to $e_k$ and then one translates each such line segment in the $e_k$ direction so that each line segment is symmetric about the plane $\pi_k(\bR^d)$.
+
+\begin{figure}[H]
+\caption{The Steiner-Symmetrization of a polygon $B$. Notice that each vertical cross section of $B$, given by $\pi_k^{-1}(u) \cap B$, has the same length as the vertical cross section of $S_k(B)$ passing through $u$.}
+\centering
+\includegraphics[scale=0.50]{steiner_symmetrization.png}
+\end{figure}
+
+\begin{prop} If $B \subset \bR^d$ is bounded and Borel, then so is $S_k(B)$. Moreover, $$\cL_d(B)  = \cL_d(S_k(B))$$ and $$\diam(S_k(B)) \leq \diam(B).$$
+
+\end{prop}
+
+\begin{proof} We can just focus on the case $d=k$ by symmetry. We can write $\cL_d$ as a product measure $\cL_{d-1} \times \cL_1$ and use Fubini's theorem (and Example~\ref{eg: 1-d Haussdorf measure is length} which says that $\cH^1$ corresponds to $1$-dimensional Lebesgue measure on lines) to get that the map $F:\bR^{d-1} \to \bR$ given by $F(u) = \cH^1(B \cap (\{u\} \times \bR))$ is Borel and $$\cL_d(B) = \int_{\bR^{d-1}} F(u) d\cL_{d-1}(u).$$ But $$S_k(B) = \{ (v, y) \in \bR^{d-1} \times \bR ~|~ |y| \leq \frac{1}{2} F(v) \}$$ is Borel as $F$ is Borel. Applying Fubini's theorem to $S_k(B)$ we get the desired equality.
+
+Let us now show the inequality involving diameter. Let $v_1 = u_1 + t_1e_k, v_2 = u_2+t_2e_k \in S_k(B)$ where $u_1, u_2 \in \pi_k(B)$ and $|t_i| \leq \frac{1}{2}L_i$ where $$L_i = \cH^{1}(B \cap \pi_k^{-1}(u)).$$ Let $m_i$ and $M_i$ denote the infinum and superemum, respectively, of the set $$\{ y \in \bR ~|~ u_i + ye_k \in B\}.$$
+
+We have that
+$$\|v_1 - v_2\|^2 = \|u_1 - u_2\|^2 + |t_1 - t_2|^2.$$
+
+Now assume, WLOG, that $$\alpha_1 := \frac{1}{2} (M_1+m_1) \leq \alpha_2 := \frac{1}{2}(M_2 + m_2).$$
+
+This means that $m_1 \leq \alpha_1 \leq \alpha_2 \leq M_2$ and so $M_2 - m_1 \geq 0$. Thus 
+\begin{align*}
+M_2 - m_1 &= M_2 - \alpha_2 + \alpha_2 - m_1  \\
+&\geq M_2 - \alpha_2 + \alpha_1 - m_1 \\
+&= \frac{1}{2}(M_2 - m_2) + \frac{1}{2}(M_1 - m_1) \\
+&\geq \frac{1}{2}L_1 + \frac{1}{2}L_2 \\
+&\geq |t_1| + |t_2| \\
+&\geq |t_1 - t_2|
+\end{align*}
+
+Now since $u_1 + M_1e_k \in \overline{B}$ and $u_2 + m_2e_k \in \overline{B}$ we thus get that
+\begin{align*} 
+\diam(B)^2 &= \diam(\overline{B})^2 & \\
+&\geq \|u_1 + M_1e_k - (u_2 + m_2e_k) \| \\
+&= \|u_1 - u_2\|^2 + (M_2 - m_1)^2 \\
+&\geq \|u_1 - u_2\|^2 + \|t_1 - t_2\|^2 \\
+& = \|v_1 - v_2\|^2 \end{align*}
+
+Thus as $v_1,v_2$ were arbitrary, we have the desired bound $\diam(B)^2 \geq \diam(S_k(B))^2$. \end{proof}
+
+Let $R_k:\bR^d \to \bR^d$ denote the reflection in the orthogonal complement of $e_k$. That is, $$R_k(x_1, \ldots, x_d) = (x_1, \ldots, x_{k-1}, -x_k, x_{k+1}, \ldots, x_d).$$ We say that a set $B \subset \bR^d$ is $e_k$-symmetric, if $R_kB = B$. 
+
+\begin{lemma} If $B \subset \bR^d$ then $S_k(B)$ is $e_k$-symmetric. Moreover, if $B$ is $e_j$-symmetric, for some $j \neq k$, then $S_k(B)$ is also $e_j$-symmetric.
+
+\end{lemma}
+
+\begin{proof} That $S_k(B)$ is $e_k$-symmetric is clear from the definition. We now prove the second claim. Suppose $B$ is $e_j$-symmetric with $j \neq k$. 
+
+Recall the definition,  
+$$S_k(B) = \bigcup_{u \in \pi_k(B)}\{ u + te_k ~|~ |t| \leq \frac{1}{2} \cH^{1}(B \cap \pi_k^{-1}(u)) \}.$$
+
+If $u \in \pi_k(B)$ then there exists $s \in \bR$ such that $u + se_k \in B$. But now as $B$ is $e_j$-symmetric, we have that $B$ also contains $R_j(u+se_k) = R_ju + se_k$. Thus $R_ju \in \pi_k(B)$. 
+Now we use the identity $\pi_k^{-1}(R_ju) = R_j(\pi_k^{-1}(u))$ to get that 
+$$B \cap \pi_{k}^{-1}(R_ju) = R_jB \cap R_j (\pi_{k}^{-1}(u)) = R_j (B \cap \pi_k^{-1}(u))) $$ and thus $$\cH^1(B \cap \pi_{k}^{-1}(R_ju) ) = \cH^1(B \cap \pi_{k}^{-1}(u) )$$ as $\cH^1$ is invariant under $R_j$ (as $R_j$ is an isometry). This shows that if $u + te_k$ is in $S_{k}(B)$ then so is $R_j(u) + te_k = R_j(u+te_k)$, as required. \end{proof}
+
+\begin{thm}[Isodiametric inequality] If $B \subset \bR^d$ is Borel, then $$\cL_d(B) \leq \alpha_d \left(\frac{1}{2}\diam(B)\right)^d.$$ That is, any Borel set has Lebesgue measure at least that equal to a ball of the same diameter.
+\end{thm}
+
+\begin{remark} It is not necessarily true that $B$ can be covered by a ball of the same diameter. For example, let $B \subset \bR^2$ be an equilateral triangle with sidelengths $1$. Then $\diam(B)=1$, but the smallest disk that covers $B$ has radius strictly greater than $\frac{1}{2}$.
+\end{remark}
+
+\begin{proof} Let $B' = S_1S_2 \cdots S_k(B)$, i.e., $B'$ is obtained by successively applying all the Steiner-Symmetrizations. We have that $\diam(B') \leq \diam(B)$ and $\cL_d(B') = \cL_d(B)$. We also have be the previous Lemma that $B'$ is symmetric about $0$. Thus if $x \in B'$ then $-x \in B'$ and $\diam(B') \geq 2\|x\|$. Thus $\diam(B') \geq 2 \sup\{ \|x\| ~|~ x \in B'\}$ and thus $B'$ may be covered by a disk of diameter $\diam(B')$. Thus $$\cL_d(B') \leq \alpha_d \left(\frac{1}{2}\diam(B')\right)^d \leq \alpha_d \left(\frac{1}{2}\diam(B)\right)^d $$ which completes the proof as $\cL_d(B') = \cL_d(B)$. \end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop: Haussdorf is Lebesgue} ] We first show the inequality $$\cL_d(B) \leq \cH^d(B).$$ Let $C_1, C_2,\ldots $ be compact (thus Borel) sets that cover $B$ and each have diameter at most $\delta$. We thus have by the Isodiamtric inequality that  $$\cL_d(B) \leq \sum_{i=1}^{\infty} \cL_d(C_i) \leq \sum_{i=1}^d \alpha_d \left(\frac{1}{2}\diam(C_i) \right)^d.$$ As the $C_i$ are arbitrary, we get that $\cL_d(B) \leq \cH^d_{\delta}(B)$ holds for all $\delta>0$.
 
 Now we prove the reverse inequality. It is sufficient to prove it when $B = U$ is an open set (i.e., if $\mu$ is $\cH^d_{\delta}$ or Lebesgue, then there is always an open set $V$ containing $B$ so that $\mu(B) \leq \mu(V) < \mu(B) + \epsilon$, thus $\mu(B)$ is the infinum of $\mu(V)$ over all such $V$).
 
-For this, we know by the previous Theorem that we can write $$U = Q \cup \bigcup_{i=1}^{\infty} B_i$$ where each $B_i$ is an open ball of radius at most $\delta$ and $\cL_d(Q) = 0$. It follows that $\cH^d_{\delta}(Q) = 0$ since $Q$ can be covered with cubes of very small volume and thus balls of volume just a constant multiple of that, hence also arbitrarily small. In particular, this means that if we fix $\epsilon>0$ then we can cover $Q$ with balls $B'_1,B'_2, \ldots$ of radius at most $\delta$ such that $$\sum_{i=1}^{\infty} \cL_d(B'_i) < \epsilon.$$ Thus $$\cH^d_{\delta}(U) \leq \sum_{i=1}^{\infty} \cL_d(B_i) + \sum_{i=1}^{\infty} \cL_d(B'_i) = \cL_d(U) + \sum_{i=1}^{\infty} \cL_d(B'_i)  \leq \cL_d(U) + \epsilon. $$ Taking $\epsilon \to \infty$ completes the proof.
+For this, we know by the Theorem~\ref{thm: fill open set with balls}  that we can write $$U = Q \cup \bigcup_{i=1}^{\infty} B_i$$ where each $B_i$ is an open ball of radius at most $\delta$ and $\cL_d(Q) = 0$. It follows that $\cH^d_{\delta}(Q) = 0$ since $Q$ can be covered with cubes of very small volume and thus balls of volume just a constant multiple of that, hence also arbitrarily small. In particular, this means that if we fix $\epsilon>0$ then we can cover $Q$ with balls $B'_1,B'_2, \ldots$ of radius at most $\delta$ such that $$\sum_{i=1}^{\infty} \cL_d(B'_i) < \epsilon.$$ Thus $$\cH^d_{\delta}(U) \leq \sum_{i=1}^{\infty} \cL_d(B_i) + \sum_{i=1}^{\infty} \cL_d(B'_i) = \cL_d(U) + \sum_{i=1}^{\infty} \cL_d(B'_i)  \leq \cL_d(U) + \epsilon. $$ Taking $\epsilon \to \infty$ completes the proof.
 
 \end{proof}
 
@@ -569,7 +648,7 @@ By Proposition~\ref{prop: Haussdorf is Lebesgue} and the fact that the Haussdorf
 
 \end{lemma}
 
-\begin{proof} Note that since $\cH^n$ is rotation invariant, we may assume that $U$ is the standard embedding of $\bR^n$ into $\bR^m$ (i.e., $(x_1, \ldots, x_n) \mapsto (x_1, \ldots, x_n, 0, \ldots, 0)$). It thus suffices to show that $\cH^n(B) = \cH^n(B \times \{0\}^{m-n})$. The inequality $\cH^n(B) \geq \cH^n(B \times \{0\}^{m-n})$ follows since any covering of $B$ be $n$-dimensional balls corresponds to a covering of $B \times \{0\}^{m-n}$ by $m$-dimensional balls of the exact same radii and centres. For the reverse inequality note that for any covering of $B \times \{0\}^{n-m}$ by $m$-dimensional balls in $\bR^m$, if we project each ball onto $\bR^n$ then we get an $n$-dimensional ball of the same radius and these projected balls must cover $B$. \end{proof}
+\begin{proof} Note that since $\cH^n$ is rotation invariant, we may assume that $U$ is the standard embedding of $\bR^n$ into $\bR^m$ (i.e., $(x_1, \ldots, x_n) \mapsto (x_1, \ldots, x_n, 0, \ldots, 0)$). It thus suffices to show that $\cH^n(B) = \cH^n(B \times \{0\}^{m-n})$. This follows from Lemma~\ref{lemma: embedding Haussdorf measure}. \end{proof}
 
 We thus get that $\cH^n(LB) = \det(D)\cL_n(B)$, i.e., $$\cH^n(f(B)) = \int_B \det(D) d\cL_n(x).$$
 
