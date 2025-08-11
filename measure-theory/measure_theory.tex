@@ -630,9 +630,11 @@ We define the Jacobian to be $$Jf(x) = \sqrt{\det(Df(x)^*Df(x))}$$ where $Df(x)^
 
 The goal of this section is to prove the following.
 
-\begin{thm}[Area formula]\label{thm: Area formula} Suppose that $f:X \to \bR^m$, where $X \subset \bR^n$ is open and $n \leq m$, is continuously differentiable on $X$ and is injective. Then for Borel $B \subset X$ we have that $$\cH^n(f(B)) = \int_B Jf(x) d\cL_n(x).$$
+\begin{thm}[Area formula]\label{thm: Area formula} Suppose that $X \subset \bR^n$ is open and $n \leq m$ are positive integers. Let $f:X \to \bR^m$ be continuously differentiable function on $X$ that is injective and satisfies $(Jf)(x)>0$ for all $x \in X$. Then for Borel $B \subset X$ we have that $$\cH^n(f(B)) = \int_B Jf(x) d\cL_n(x).$$
 
 \end{thm}
+
+TODO: can we remove $Jf>0$ ?
 
 \begin{eg}[Arc-length] Suppose $n=1$. Thus $f(x) = [f_1(x), \ldots, f_n(x)]^t$ is a column vector. Thus $Df(x)$ is the column vector of derivatives $[f'_1(x), \ldots, \partial_n f'(x)]^t$. Thus $$Jf(x) = \sqrt{\sum_{i=1}^m (f'_1(x))^2} = \| Df(x)\|$$ is magnitude of the velocity vector (if $x$ denotes time). Thus $$ \cH^1(f([a,b])) = \int_{a}^b \|Df(x)\| dx$$ is the arc-length of the parametrized curve $\{ f(x) ~|~ x \in [a,b]\}$.
 
@@ -658,6 +660,39 @@ Now $$(Jf(x))^2 = \det(L^*L) = \det(V^*D^*U^*UDV) = \det(V^*D^2V) = \det(D)^2.$$
 
 Thus we have shown the area formula when $f(x) = Lx$ is an injective linear function.
 
-\subsection{Proof of the Area formula} We now turn to the proof of Theorem~\ref{thm: Area formula} (the Area formula). We have already shown it for injective linear maps in the previous section and our strategy will be to use this by approximating a continuously differentiable function by piece linear functions.
+\subsection{Proof of the Area formula} We now turn to the proof of Theorem~\ref{thm: Area formula} (the Area formula). We have already shown it for injective linear maps in the previous section and our strategy will be to use this by approximating a continuously differentiable function by piecewise linear functions.
+
+In this section, we fix the data as in Theorem~\ref{thm: Area formula}, i.e., $f:X \to \bR^m$, where $X \subset \bR^n$ is open and $n \leq m$, is continuously differentiable on $X$ and is injective.
+
+\begin{lemma}\label{lemma: Area formula main bound} Suppose that $B \subset X$ is a bounded convex Borel subset of $X$. Suppose $\epsilon, \rho >0$ are such $T:\bR^n \to \bR^m$ is a linear map such that 
+$$\|Tu\| \geq \rho\|u\|\quad \text{for all } u \in \bR^n$$ and 
+$$\|Df(x) - T \| \leq \epsilon \quad \text{for all } x \in B.$$ Then 
+$$(1-\epsilon \rho)^n \cH^n(TB)\leq \cH^n(f(B)) \leq (1+\epsilon \rho)^n \cH^n(TB).$$
+
+\end{lemma}
+
+\begin{proof} Note that $h = f-T$ is continuously differentiable with derivative $Dh = Df-T$, thus by the mean value inequality (which we can use as $B$ is convex) we have that $$\|h(x_1) - h(x_2)\| \leq \sup_{x \in B}\|Dh(x)\| \|x_1 -x_2\|$$ for all $x_1,x_2 \in B$. But $\|Dh(x)\| < \epsilon$ and thus we have that $$\|f(x_1) - Tx_1 - (f(x_2) - Tx_2)\| \leq \epsilon \|x_1 - x_2 \|,$$ we thus have that $$\|f(x_1) - f(x_2) - (Tx_1 - Tx_2)\| \leq \epsilon \|x_1 - x_2\|.$$ Note that $T$ is injective as $\|Tu\| \geq \rho \|u\| >0$ for non-zero $u$ and so we can let $g:TB \to f(B)$ be defined by $g(y) = f(T^{-1}y)$ for $y \in TB$. So for each $y_1, y_2 \in T(B)$, we have write $$\|g(y_1) - g(y_1) - (y_1 - y_2)\| \leq  \epsilon \|T^{-1}y_1 - T^{-1}y_2\| \leq \epsilon \rho \|y_1 - y_2\|.$$ We thus have 
+$$(1 - \epsilon\rho)\|y_1  - y_2\| \leq \|g(y_1) - g(y_2)\| \leq (1 + \epsilon\rho)\|y_1  - y_2\|$$
+for all $y_1,y_2 \in TB.$ As $g:TB \to f(B)$ is a bijection, we can also write the first inequality as 
+$$\| g^{-1}(z_1) - g^{-1}(z_2)\| \leq (1 - \epsilon\rho)^{-1} \|z_1 - z_2\|$$ for all $z_1,z_2 \in f(B)$. These inequalities now imply that 
+$$\cH^n(f(B)) = \cH^n(g(TB)) \leq (1+\epsilon \rho)^n \cH^n(TB) $$ and $$\cH^n(TB) =  \cH^n(g^{-1}(f(B))) \leq (1- \epsilon \rho)^{-n} \cH^n(f(B)).$$
+
+\end{proof}
+
+\begin{lemma} If $B \subset X$ is Borel, then $f(B)$ is also Borel.
+
+\end{lemma}
+
+\begin{proof} If $B$ is compact, then $f(B)$ is compact and thus Borel (as $f$ is continuous). Now let $\cA$ denote those Borel $B \subset X$ such that $f(B)$ is Borel. We see that $\cA$ contains all compact sets. Every open set can be written as a nested union of open sets, thus $\cA$ contains all open sets. In particular, this shows that $f(X)$ is open. Thus $f$ is a bijection $X \to f(X)$ and in particular $\cA$ is closed under complements since if $f(B)$ is measurable then $f(X \setminus B) = f(X) \setminus B$, as $f$ is injective, and thus $f(X \setminus B)$ is Borel, thus $X \setminus B$ is Borel. Thus $\cA$ is indeed a $\sigma$-algebra. \end{proof}
+
+We are now ready to complete the proof of the Area formula.
+
+Let $K \subset U$ be a compact box (cartesian product of $n$ compact intervals in $\bR$). We first prove the Area formula for $B = K$. Now as $Df$ is continuous on $K$ we have that $(x, u) \mapsto \| Df(x)u \|$ is a continous function on $K \times \bR^d$ that never vanishes. Thus $\{Df(x)u ~|~ x \in K, u \in \bR^d \text{ and } \|u\|= 1\}$ is a compact set that does not contain $0$, and thus its infinium is $\rho > 0$. Thus there exists $\rho>0$ such that $\| Df(x)u \| \geq \rho \|u\|$ for all $u \in \bR^d$. Now fix $\epsilon > 0$. As $Df$ is uniformly continuous on $K$, so we can partition $K$ into finitely many rectangles $B_1, \ldots, B_q$ such that $$\|Df(x) - Df(x')\| \leq \epsilon$$ whenever $x,x' \in B_i$. Choose an $x_i \in B_i$ and let $T_i = Df(x_i)$. Thus $\|T_iu\| \geq \rho \|u\|$ for all $u \in \bR^d$ and $$\| Df(x) - T_i\| \leq \epsilon \quad\text{for all }x \in B_i.$$ Thus we may apply Lemma~\ref{lemma: Area formula main bound} to $B_i$ and $T_i$ and get that 
+$$(1-\epsilon \rho)^n \sum_{i=1}^q \cH^n(T_iB_i)\leq \cH^n(f(B_i)) \leq (1+\epsilon \rho)^n \sum_{i=1}^q\cH^n(T_iB_i).$$
+Now apply the area formula to $T_i$, which we already know is true as $T_i$ is linear and injective, to get that $$\sum_{i=1}^q \cH^n(T_iB_i) = \sum_{i=1}^q  (Jf)(x_i) \cL_d(B_i).$$ By making the $B_i$ diameters converge to $0$, we see that this sum converges to the Riemann integral of $Jf$. Thus we have shown that $$ (1-\epsilon \rho)^n  \int_{B} Jf d\cL_d \leq \cH^n(f(B_i)) \leq (1 + \epsilon \rho)^n \int_{B} Jf \cL_d.$$ Note that we used here that $f(B_1), \ldots, f(B_q)$ are disjoint (as $f$ is injective) and Borel (as shown) and thus were allowed to use the additivity of the Haussdorf measure.
+
+As $\epsilon$ was arbitrary, we can let $\epsilon \to 0$ and this completes the proof (note that $\rho$ was chosen before $\epsilon$ and thus is fixed).
+
+Thus we know that the Area formula holds for compact rectangles. It now holds in general since set of all $B$ where it holds is a monotone class.
 
 \end{document}
