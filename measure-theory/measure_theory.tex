@@ -623,14 +623,14 @@ For this, we know by the Theorem~\ref{thm: fill open set with balls}  that we ca
 
 \end{proof}
 
-\section{Area formula}
+\section{Area formula and change of variables in integration}
 
 Suppose $X \subset \bR^n$ is open and $f:X \to \bR^n$ with $n \leq m$ is coninuously differentiable. We let $Df(x)$ denote the derivative of $f$ at $x \in X$, which is a linear map $Df(x):\bR^n \to \bR^m$ where $$Df(x)u = \lim_{t \to 0} t^{-1}(f(x+tu) - u).$$ Recall that to say that it is continously differentiable is to say that $x \mapsto Df(x)$ is a continuous map in the operator norm on the space of linear maps $\bR^n \to \bR^m$. 
-We define the Jacobian to be $$Jf(x) = \sqrt{\det(Df(x)^*Df(x))}$$ where $Df(x)^*:\bR^m \to \bR^n$ denotes the transpose (adjoint) of $Df(x):\bR^n \to \bR^m$.
+We define the Jacobian to be $$Jf(x) = \sqrt{\det(Df(x)^*Df(x))}$$ where $Df(x)^*:\bR^m \to \bR^n$ denotes the transpose (adjoint) of $Df(x):\bR^n \to \bR^m$. Note that if $n=m$, then $Jf(x) = |\det(Df(x))|$ is the absolute value of the determinant of the derivative.
 
 The goal of this section is to prove the following.
 
-\begin{thm}[Area formula]\label{thm: Area formula} Suppose that $X \subset \bR^n$ is open and $n \leq m$ are positive integers. Let $f:X \to \bR^m$ be continuously differentiable function on $X$ that is injective and satisfies $(Jf)(x)>0$ for all $x \in X$. Then for Borel $B \subset X$ we have that $$\cH^n(f(B)) = \int_B Jf(x) d\cL_n(x).$$
+\begin{thm}[Area formula]\label{thm: Area formula} Suppose that $X \subset \bR^n$ is open and $n \leq m$ are positive integers. Let $f:X \to \bR^m$ be continuously differentiable function on $X$ that is injective. Then for Borel $B \subset X$ we have that $$\cH^n(f(B)) = \int_B Jf(x) d\cL_n(x).$$
 
 \end{thm}
 
@@ -642,7 +642,7 @@ TODO: can we remove $Jf>0$ ?
 
 We fix for the rest of this section $f$, $X$ and $n,m$ as in the Area formula.
 
-\subsection{Area formula for Linear maps} We first examine the linear case where $f(x) = Lx$ is a linear map. Thus $L:\bR^n \to \bR^m$ has trivial kernel. By the Singular Value Decomposition, we may write $L = UDV$ where $U:\bR^n \to \bR^m$ and $V:\bR^n \to \bR^n$ are isometries and $D:\bR^n \to \bR^n$ is a diagonal matrix with positive entries on the diagonal.
+\subsection{Area formula for Linear maps} We first examine the linear case where $f(x) = Lx$ is a linear map. By the Singular Value Decomposition, we may write $L = UDV$ where $U:\bR^n \to \bR^m$ and $V:\bR^n \to \bR^n$ are isometries and $D:\bR^n \to \bR^n$ is a diagonal matrix with non-negative entries on the diagonal.
 
 By Proposition~\ref{prop: Haussdorf is Lebesgue} and the fact that the Haussdorf measure is rotation invariant, we have $$\cL_n(VB) = \cH^n(VB) = \cH^n(B) = \cL_n(B)$$ for any Borel $B \subset \bR^n$. Thus $\cL_n(DVB) = \det(D) \cL_n(VB) = \cL_n(B)$ as $D$ is diagonal (i.e., the image of each rectangle is another rectangle where the sidelengths get scaled by the diagonal elements of $D$).
 
@@ -660,9 +660,9 @@ Now $$(Jf(x))^2 = \det(L^*L) = \det(V^*D^*U^*UDV) = \det(V^*D^2V) = \det(D)^2.$$
 
 Thus we have shown the area formula when $f(x) = Lx$ is an injective linear function.
 
-\subsection{Proof of the Area formula} We now turn to the proof of Theorem~\ref{thm: Area formula} (the Area formula). We have already shown it for injective linear maps in the previous section and our strategy will be to use this by approximating a continuously differentiable function by piecewise linear functions.
+\subsection{Proof of the Area formula when $Jf(x) > 0$ for all $x \in X$.} We now turn to the proof of Theorem~\ref{thm: Area formula} (the Area formula) in the case that $Jf(x) > 0$ for all $x \in X$, i.e., $Df(x)$ has trivial Kernel for all $x \in X$. We have already shown it for linear maps in the previous section and our strategy will be to use this by approximating a continuously differentiable function by piecewise linear functions.
 
-In this section, we fix the data as in Theorem~\ref{thm: Area formula}, i.e., $f:X \to \bR^m$, where $X \subset \bR^n$ is open and $n \leq m$, is continuously differentiable on $X$ and is injective.
+In this section, we fix the data as in Theorem~\ref{thm: Area formula}, i.e., $f:X \to \bR^m$, where $X \subset \bR^n$ is open and $n \leq m$, is continuously differentiable on $X$ and is injective. Moreover, as mentioned above, we assume in this subsection that $Jf(x)>0$ for all $x \in X$.
 
 \begin{lemma}\label{lemma: Area formula main bound} Suppose that $B \subset X$ is a bounded convex Borel subset of $X$. Suppose $\epsilon, \rho >0$ are such $T:\bR^n \to \bR^m$ is a linear map such that 
 $$\|Tu\| \geq \rho\|u\|\quad \text{for all } u \in \bR^n$$ and 
@@ -694,5 +694,70 @@ Now apply the area formula to $T_i$, which we already know is true as $T_i$ is l
 As $\epsilon$ was arbitrary, we can let $\epsilon \to 0$ and this completes the proof (note that $\rho$ was chosen before $\epsilon$ and thus is fixed).
 
 Thus we know that the Area formula holds for compact rectangles. It now holds in general since set of all $B$ where it holds is a monotone class.
+
+\subsection{Proof of the area formula without assuming $Jf(x)>0$} We now turn to the general case where of the Area Formula where we drop the assumptiont that $Jf(x)>0$ for all $x \in X$. To do this, we simple adjust $f$ slightly so that it does satisfy this hypothesis. To do this, choose Borel $B \subset X$ and write $B = B' \cup B_0$ where $B' = B \cap X'$ where $$X' = \{ x \in X ~|~ Jf(x) > 0 \}$$ and $B_0 = B \cap C_0$ where 
+$$ C_0 = \{ x \in X ~|~ Jf(x) = 0 \}.$$ Note that $X'$ is an open subset of $\bR^n$ on which $Jf$ never vanishes and so the special case of the area Area Formula we have already proved, applies and thus shows that $$\int_{B'} Jf(x) d\cL_n(x) = \cH^n(f(B')).$$ It thus remains to show that 
+$$0 = \int_{B_0} Jf(x) d\cL_n(x) = \cH^n(f(B_0))$$ and for this it will suffice to show that $$\cH^n(f(C_0)) = 0.$$ In fact, as $U$ can be written as a countable union of compact sets, it is enough to show that $\cH^n(f(C_0 \cap K)) = 0$ for each compact $K \subset X$. We thus let $C = C_0 \cap K$ for some compact $K \subset U$, thus $C$ is a bounded set with $Jf(x) = 0$ for all $x \in C$ and $\{ Df(x) ~|~ x \in C\}$ is a bounded set of matrices (i.e., each entry of this matrix is a bounded function of $x \in C$).
+
+Let $f_{\epsilon}:\bR^n \to \bR^n \times \bR^m$ be given by $$f_{\epsilon}(x) = (\epsilon x, f(x)).$$ Note that $Df_{\epsilon}(x)$ has full rank $n$ and thus we can apply the Area Formula to get that
+$$ \int_{C} Jf_{\epsilon}(x) d\cL_n(x) = \cH^n(f_{\epsilon}(C)). $$
+
+Let $P:\bR^n \times \bR^m \to \bR^m$ be the projection.
+Note that $P(f_{\epsilon}(C)) = f(C)$ but $$\cH^n(P(f_{\epsilon}(C))) \leq \cH^n(f_{\epsilon}(C))$$ as $\diam (P(A)) \leq \diam (A)$ for all $A \subset \bR^n$. Thus it will be enough to show that as $\epsilon \to 0$, we have $$\int_{C} Jf_{\epsilon}(x) d\cL_n(x) \to 0. $$ First we observe that since $Df(x)$ is bounded on $C$ we have $Df_{\epsilon}(x)$  is also bounded on $C$. Now $Df_{\epsilon}(x)$, as a matrix, can be decomposed into two matrices: the submatrix formed by the first $n$ rows is $\epsilon I_n$, where $I_n$ is the $n$ by $n$ identity matrix while the submatrix formed by the last $m$ rows is $Df(x)$. Thus the transpose is $Df_{\epsilon}(x)^* = (\epsilon I_n | Df(x))$ where $|$ means concatenate columns. Thus 
+$$Jf_{\epsilon}(x) = \sqrt{\det(Df_{\epsilon}(x)^*Df_{\epsilon}(x))} =  \sqrt{\det(\epsilon^2 I_n + Df(x)^*Df(x))}.$$ 
+This shows that $Jf_{\epsilon}(x) \to Jf(x)$ as $\epsilon \to 0$. Thus the Lebesgue dominated convergence will give us the desired conclusion, as soon as we can show it can be applied. To see that it applies, first observe that $C$ is bounded and thus has finite Lebesgue measure. Also, the set $$\{ Jf_{\epsilon}(x) ~|~ x \in C, \epsilon \in [0,1] \}$$ is bounded since $\{Df(x) ~|~ x \in C\}$ is bounded as argued above. Thus we have uniform boundedness of the integral by an $L^{\infty}$-function, thus an $L^1$ function as $C$ is bounded (of finite measure). Thus Lebesgue's dominated converge theorem indeed applies. 
+
+This completes the full proof of the Area Formula.
+
+\subsection{Change of variables}
+
+We can now compute surface integrals using the following corollary of the Area formula.
+
+\begin{thm} Let $n \leq m$ be integers, $X \subset \bR^n$ open, and suppose that $f:X \to \bR^m$ is injective and continuously differentiable. Let $g:\bR^n \to \bR$ be a Borel measurable function such that either $g(y) \geq 0$ for all $y \in \bR$ or $g$ is $L^1$ w.r.t the Haussdorf measure on $\cH^n$ on $f(X)$. Then $$\int_{X} g(f(x)) Jf(x) d\cL_n(x) = \int_{f(X)} g(y) d\cH^n(y).$$
+
+\end{thm}
+
+\begin{proof} When $g = \mathds{1}_B$ for some Borel $B \subset \bR^m$ we know this is true by the Area formula applied to $f^{-1}(B)$. The result now follows for $g \geq 0$ by applying the monotone convergence theorem and the fact that $g$ can be written as a monotonic limit of simple functions. $g$ is $L^1$ w.r.t the Haussdorf measure on $\cH^n$ on $f(X)$, then the result follows by writing $g$ as a sum of a positive and a negative function. \end{proof}
+
+\begin{eg}[Polar co-ordinates] Let $X = \bR_{>0} \times (0,2\pi)$ and $f:X \to \bR^2$ be given by $f(r,\theta) = (r \cos(\theta), r\sin(\theta))$. Note that this is injective thus the Area formula applies. Here $$Df(r,\theta) = \begin{bmatrix}
+    cos(\theta)   & -r\sin(\theta) \\
+    sin(\theta)  & r\cos(\theta) \\
+\end{bmatrix} $$
+
+and thus $Jf(r,\theta) = |\det(Df(r,\theta))| = r$. Hence we have integration in polar co-ordinates given by
+$$ \int_{f(X)} g(x,y) dxdy = \int_{0}^{\infty} \int_{0}^{2\pi} g(r\cos(\theta), r\sin(\theta)) r d\theta dr$$ whenever $g$ is integrable or positive. Note that $f(X) = \bR^2 \setminus [0,\infty) \times \{0\}$ thus integrating over $f(X)$ is equivalent to integrating over $\bR^2$. 
+
+In particular, if one sets $g(x,y)$ to be the indicator function of the unit disc, one then gets that the area of the unit disk is given by $$\int_{0}^1 \int_{0}^{2\pi} r d\theta dr = 2\pi \int_{0}^1 r dr = \pi.$$
+
+\end{eg}
+
+We can extend this example to higher dimensions by showing that volume integrals may be computed as an integral of spherical integrals.
+
+\begin{prop}[Co-area formula for spheres] \label{prop: co-area spherical} Let $n \geq 2$. Let $g:\bR^n \to [0,\infty]$ be any Borel measurable function and let $S_r$ denote the unit sphere in $r$. Then $$\int_{\bR^n} f d\cL_n = \int_{0}^{\infty} \int_{S_r} g(u) d\cH^n(u) dr,$$ where this integrand is indeed a Borel measurable function of $r$ if $g$ is positive, while if $g$ is merely integrable then it is Borel on a co-null subset of $\bR_{>0}$ (thus still makes sense).
+
+\end{prop}
+
+\begin{proof} We first parametrize the unit sphere. We have an injective countinuously differentiable map $\rho:\bR^{n-1} \to S_1$ whose image is $S_1$ without a single point, for example we can let $\rho$ be the stereographic projection. Now define $f:\bR_{>0} \times \bR^{n-1}$ by $$f(r,x_1, \ldots, x_{n-1}) = r \rho(x_1, \ldots, x_{n-1}).$$ We thus have that $$\int_{\bR^n} g d\cL_n = \int_{\bR \times \bR^{n-1}} g(f(r, x_1, \ldots, x_{n-1})) Jf(r,x_1, \ldots, x_{n-1}) dr dx_1 \cdots dx_{n-1}.$$
+
+Note that the image of $f$ is a co-null subset of $\bR^n$, thus the integration can be taken over the whole of $\bR^n$.
+
+Let us compute this Jacobian. The first column of $Df(r,x_1, \ldots, x_{n-1})$ is $$\frac{\partial}{\partial r} f(r,x_1, \ldots, x_{n-1}) = \frac{\partial}{\partial r} r \rho(x_1, \ldots, x_{n-1}) = \rho(x_1, \ldots, x_{n-1})$$ where we identify vectors with column vectors naturally.
+The other columns are $$\frac{\partial}{\partial x_1} r \rho(x_1, \ldots, x_{n-1}) = r (\partial_i \rho)(x_1, \ldots, x_{n-1}).$$
+
+Observe now that the first column $\rho(x_1, \ldots, x_{n-1})$ is a unit vector that is orthogonal to the other columns $r (\partial_i \rho)(x_1, \ldots, x_{n-1})$, as these other columns are in the tangent space of the unit spehre at the point $\rho(x_1, \ldots, x_{n-1})$. It now follows that $Df^* Df$ has as its first column (and row) the unit vector $(1, 0, \ldots, 0)$ while for $1 \leq i, j \leq n$ the $(i,j)$-entry of $Df^* Df$ is the inner product $$\langle r (\partial_i \rho)(x_1, \ldots, x_{n-1}), r (\partial_j \rho)(x_1, \ldots, x_{n-1}) \rangle.$$ It follows that $det(Df^* Df)$ is the determinant of this submatrix (obtained by deleting first and second column) which we see is $$r^{2(n-1)} (J\rho(x_1, \ldots, x_{n-1}))^2.$$ Thus $Jf(r,x_1, \ldots, x_{n-1}) = r^{n-1} J\rho(x_1, \ldots, x_{n-1})$.
+
+We thus get that
+
+$$\int_{\bR^n} g d\cL_n = \int_{0}^{\infty} \left( \int_{\bR^{n-1}} g(r \rho(x_1, \ldots, x_n)) r^{n-1} J\rho(x_1, \ldots, x_{n-1}) dx_1 \cdots dx_{n-1} \right) dr$$ 
+and the integrand is indeed Borel measurable (as a function of $r$) by the Fubini-Tonelli theorem if $g$ is positive, while if $g$ is mere integrable then we have that it is Borel on a co-null subset of $\bR_{>0}$.
+
+We now simplify this spherical integral by relating it to an integral over $S_r$. Note that the mapping $\rho_r = r \rho$ is an injective mapping $\rho_r:\bR^{n-1} \to S_r$ which only omits one point. Thus 
+$$\int_{S_r} g(u) d\cH^{n-1}(u) = \int_{\bR^{n-1}}  g (\rho_r(x_1, \ldots, x_{n-1})) J\rho_r(x_1, \ldots, x_{n-1}) dx_1 \cdots dx_{n-1} .$$ But now $D\rho_r(x_1, \ldots, x_{n-1})$ has $i$-th column equal to $r (\partial_i\rho)(x_1, \ldots, x_{n-1})$ and thus $$J\rho_r(x_1, \ldots, x_{n-1}) = r^{n-1} J\rho(x_1,\ldots, x_{n-1}).$$
+Thus $$\int_{S_r} g(u) d\cH^{n-1}(u) = \int_{\bR^{n-1}} g(r \rho(x_1, \ldots, x_n)) r^{n-1} J\rho(x_1, \ldots, x_{n-1}) dx_1 \cdots dx_{n-1},$$ which completes the proof after plugging this expression into the iterated integral above. \end{proof}
+
+\subsection{Volume and surface area of the unit ball}
+
+Recall that $\alpha_d$ denotes the volume ($n$-dimensional Lebesgue measure) of the $d$-dimensional unit ball. Let $$\alpha'_d = \cH^{d-1}(\{ x \in \bR^d ~|~ \|x \| = 1\})$$ denote the \textit{surface area} of the unit sphere. Thus $\alpha'_d r^{d-1}$ is the surface area of the sphere of radius $r$, while $\alpha_d r^d$ is the volume of the ball of radius $r$. Thus by Proposition~\ref{prop: co-area spherical} (spherical integration) applied to $g$ being the indicator function of the ball of radius $R$, we see that $$\alpha_d R^d = \int_{0}^R \alpha'_d r^{d-1} dr = \frac{1}{d} \alpha'_d R^d,$$ that is, $$\alpha'_d = d \alpha_d.$$
+Thus we get the surface area immediately once we know the volume of the unit ball.
 
 \end{document}
